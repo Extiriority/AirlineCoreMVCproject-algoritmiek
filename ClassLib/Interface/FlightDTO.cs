@@ -4,11 +4,15 @@ using System.Text;
 
 namespace ClassLib.Interface
 {
-    public class FlightDTO
+    public class FlightDto
     {
-        public string Destination { get; set; }
-        public string AircraftType { get; set; }
-        public bool FlightStatus { get; set; }
+        public int flightId { get; set; }
+        public string aircraftType { get; set; }
+        public string departureCountry { get; set; }
+        public string arrivalCountry { get; set; }
+        public DateTime departureDate { get; set; }
+        public DateTime arrivalDate { get; set; }
+        public bool flightStatus { get; set; }
         
         
     }

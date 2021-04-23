@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/.idea.AirlineCoreMVCproject.iml
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+# Datasource local storage ignored files
+/../../../../../../../../../../../:\Users\Giang\OneDrive - Office 365 Fontys\1. jaar\2. Semester\Individueel\AirlineCoreMVCproject\.idea\.idea.AirlineCoreMVCproject\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

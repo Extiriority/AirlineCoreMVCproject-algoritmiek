@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ClassLib.Data;
+using ClassLib.Logic;
 
 namespace Airline.Controllers
 {
@@ -25,6 +27,11 @@ namespace Airline.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+        public IActionResult Flight()
+        {
+            
             return View();
         }
 

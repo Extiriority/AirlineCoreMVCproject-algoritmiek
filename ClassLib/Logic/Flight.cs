@@ -7,15 +7,42 @@ namespace ClassLib.Logic
 {
     public class Flight
     {
-        public string Destination { get; set; }
-        public string AircraftType { get; set; }
-        public bool FlightStatus { get; set; }
-
-        public Flight(FlightDTO flightDTO)
+        public FlightDto data { get; }
+        public Flight (FlightDto flightDto)
         {
-            this.Destination = flightDTO.Destination;
-            this.AircraftType = flightDTO.AircraftType;
-            this.FlightStatus = flightDTO.FlightStatus;
+            data = flightDto;
+        }
+
+        public int flightId => data.flightId;
+        public string AircraftType => data.aircraftType;
+        public string departureCountry => data.departureCountry;
+        public string arrivalCountry => data.arrivalCountry;
+        public DateTime departureTime => data.departureDate;
+        public DateTime arrivalTime => data.arrivalDate;
+        public bool flightStatus => data.flightStatus;
+
+        private readonly IFlightPersist flight;
+        
+        public void Delete(int id)
+        {
+            
         }
     }
+
+
+    /*public int aircraftId { get; set; }
+    public string AircraftType { get; set; }
+    public string departureCountry { get; set; }
+    public string arrivalCountry { get; set; }
+    public DateTime departureTime { get; set; }
+    public DateTime arrivalTime { get; set; }
+    public bool FlightStatus { get; set; }
+
+    public Flight(FlightDto flightDto)
+    {
+        this.Destination = flightDto.Destination;
+        this.AircraftType = flightDto.AircraftType;
+        this.FlightStatus = flightDto.FlightStatus;
+    }*/
 }
+

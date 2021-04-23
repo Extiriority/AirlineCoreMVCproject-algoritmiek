@@ -7,20 +7,20 @@ namespace ClassLib.Logic
 {
     public class FlightContainer
     {
-        private IFlightContainer flightContainer;
+        private readonly IFlightFetch flightContainer;
 
-        public FlightContainer(IFlightContainer flightContainer)
+        public FlightContainer(IFlightFetch flightContainer)
         {
             this.flightContainer = flightContainer;
         }
         public List<Flight> GetAllFlights()
         {
-            List<FlightDTO> flightTemp = flightContainer.GetAllFlights();
+            List<FlightDto> flightTemp = flightContainer.getAll();
             List<Flight> flights = new List<Flight>();
 
-            foreach (FlightDTO flightDTO in flightTemp)
+            foreach (FlightDto flightDto in flightTemp)
             {
-                flights.Add(new Flight(flightDTO));
+                flights.Add(new Flight(flightDto));
             }
             return flights;
         }
