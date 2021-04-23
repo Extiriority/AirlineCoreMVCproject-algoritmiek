@@ -8,6 +8,6 @@ namespace ClassLib.Interface
     {
         List<FlightDto> getAll();
 
-        FlightDto getById(int id);
+        FlightDto getById(int Id);
     }
 }

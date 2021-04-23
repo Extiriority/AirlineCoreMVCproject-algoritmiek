@@ -21,11 +21,17 @@ namespace ClassLib.Logic
         public DateTime arrivalTime => data.arrivalDate;
         public bool flightStatus => data.flightStatus;
 
+
         private readonly IFlightPersist flight;
-        
-        public void Delete(int id)
+
+        public Flight(IFlightPersist flight)
         {
-            
+            this.flight = flight;
+        }
+        public FlightDto Delete(int id)
+        {
+           
+            throw new System.NotImplementedException();
         }
     }
 

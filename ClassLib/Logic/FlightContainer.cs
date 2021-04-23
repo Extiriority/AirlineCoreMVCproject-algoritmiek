@@ -24,5 +24,13 @@ namespace ClassLib.Logic
             }
             return flights;
         }
+
+        public FlightDto FlightGetById(int Id)
+        {
+            FlightDto flightTemp = flightContainer.getById(Id);
+
+
+            return flightTemp;
+        }
     }
 }

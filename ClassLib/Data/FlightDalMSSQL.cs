@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ClassLib.Data 
 {
-    public class FlightDalMSSQL : IFlightPersist, IFlightFetch
+    public class FlightDalMsSql : IFlightPersist, IFlightFetch
     {
         
         private readonly SqlConnection conn = new SqlConnection(@"Data Source=mssql.fhict.local;Initial Catalog=dbi463189_airline;Persist Security Info=True;User ID=dbi463189_airline;Password=m4VEw2tX;");
@@ -46,42 +46,63 @@ namespace ClassLib.Data
             return flights;
         }
 
-        public FlightDto getById(int id)
+        public FlightDto getById(int Id)
         {
-            return null;
-        }
-
-        public void delete(int id)
-        {
-            /*List<FlightDto> flights = new List<FlightDto>();
             try
             {
-                this.conn.Open();
+                conn.Open();
 
-                string query = "DELETE FROM Flight WHERE Id = @flightId";
-                SqlCommand cmd = new SqlCommand(query, this.conn);
+                string query = "SELECT * FROM Flight WHERE Id = @flightId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.Add("@flightId", System.Data.SqlDbType.Int).Value = Id;
+
                 using SqlDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read())
+                FlightDto flight = new FlightDto();
+
+                if (reader.HasRows)
                 {
-                    FlightDto flightDto = new FlightDto
+                    while (reader.Read())
                     {
-                        flightId = (int)reader["Id"],
-                        aircraftType = Convert.ToString(reader["aircraftType"]),
-                        departureCountry = Convert.ToString(reader["departureCountry"]),
-                        arrivalCountry = Convert.ToString(reader["arrivalCountry"]),
-                        departureDate = (DateTime)reader["departureDate"],
-                        arrivalDate = (DateTime)reader["arrivalDate"],
-                        flightStatus = (bool)reader["flightStatus"]
-                    };
-                    flights.Add(flightDto);
+                        
+                        {
+                            flight.flightId = (int)reader["Id"];
+                            flight.aircraftType = Convert.ToString(reader["aircraftType"]);
+                            flight.departureCountry = Convert.ToString(reader["departureCountry"]);
+                            flight.arrivalCountry = Convert.ToString(reader["arrivalCountry"]);
+                            flight.departureDate = (DateTime)reader["departureDate"];
+                            flight.arrivalDate = (DateTime)reader["arrivalDate"];
+                            flight.flightStatus = (bool)reader["flightStatus"];
+                        }; 
+                    }
                 }
+                return flight;
             }
             finally
             {
-                this.conn.Close();
+                conn.Close();
             }
-            return flights;*/
+            
+        }
+
+        public void delete(int Id)
+        {
+            try
+            {
+                conn.Open();
+
+                string query = "DELETE FROM Flight WHERE Id = @flightId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.Add("@flightId", System.Data.SqlDbType.Int).Value = Id;
+                
+                using SqlDataReader reader = cmd.ExecuteReader();
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         public void save(FlightDto flight)

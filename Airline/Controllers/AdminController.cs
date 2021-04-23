@@ -1,5 +1,6 @@
 ﻿using Airline.Models;
 using ClassLib.Data;
+using ClassLib.Interface;
 using ClassLib.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace Airline.Controllers
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
 
-            FlightContainer flightContainer = new FlightContainer(new FlightDalMSSQL());
+            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
             List<Flight> flights = flightContainer.GetAllFlights();
 
             foreach (Flight flight in flights)
@@ -30,9 +31,12 @@ namespace Airline.Controllers
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+        public ActionResult Details(int Id)
+        { 
+            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
+            FlightDto flight = flightContainer.FlightGetById(Id);
+
+            return View("Details", flight);
         }
 
         // GET: Admin/Create
@@ -80,16 +84,9 @@ namespace Airline.Controllers
         // GET: Admin/Delete/5
         public ActionResult Delete(int id)
         {
-            /*FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
-            flightDetailView.Flights = new List<FlightViewModel>();
-
-            FlightContainer flightContainer = new FlightContainer(new FlightDalMSSQL());
-            List<Flight> flights = flightContainer.delete();
-
-            foreach (Flight flight in flights)
-            {
-                flightDetailView.Flights.Add(new FlightViewModel(flight));
-            }*/
+            
+            
+            
 
             return View();
         }

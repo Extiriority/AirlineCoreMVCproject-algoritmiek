@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ClassLib.Interface
 {
-    interface IFlightPersist
+    public interface IFlightPersist
     {
         void save(FlightDto flight);
-        void delete(int id);
+        void delete(int Id);
     }
 }

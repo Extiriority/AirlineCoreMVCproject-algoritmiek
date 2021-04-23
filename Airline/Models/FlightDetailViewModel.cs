@@ -8,5 +8,7 @@ namespace Airline.Models
     public class FlightDetailViewModel
     {
         public List<FlightViewModel> Flights { get; set; }
+        
+        
     }
 }

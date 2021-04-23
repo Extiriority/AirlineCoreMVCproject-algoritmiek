@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var flight in Model.Flights)
+   @foreach (var flight in Model.Flights)
     {
         <tr>
             <th scope="row">@flight.flightId</th>
@@ -30,8 +30,10 @@
             <td>@flight.arrivalDate</td>
             <td>@flight.flightStatus</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@flight.flightId">Edit</a>
-                <a asp-action="Delete" asp-route-id="@flight.flightId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@flight.flightId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@flight.flightId">Detail</a>
+                @*<a asp-action="Delete" asp-route-id="@flight.flightId">Delete</a>*@
+                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Delete" asp-route-id="@flight.flightId">Delete</a>
             </td>
         </tr>
     }
