@@ -36,7 +36,7 @@ namespace Airline.Controllers
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
             FlightDto flight = flightContainer.FlightGetById(Id);
 
-            return View("Details", flight);
+            return View(flight);
         }
 
         // GET: Admin/Create
@@ -48,16 +48,31 @@ namespace Airline.Controllers
         // POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(FlightViewModel flightViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    Flight flight = new Flight(new FlightDalMsSql());
+                    flight.aircraftType = flightViewModel.aircraftType;
+                    flight.departureCountry = flightViewModel.departureCountry;
+                    flight.arrivalCountry = flightViewModel.arrivalCountry;
+                    flight.departureDate = flightViewModel.departureDate;
+                    flight.arrivalDate = flightViewModel.arrivalDate;
+                    flight.flightStatus = flightViewModel.flightStatus;
+
+                    if (flight.Create())
+                    {
+                        return RedirectToAction("Flight", "Admin");
+                    }
+                }
+                catch
+                {
+                    return View("Create", "Admin");
+                }               
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: Admin/Edit/5
@@ -81,29 +96,36 @@ namespace Airline.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            
-            
-            
-
-            return View();
-        }
 
         // POST: Admin/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, FlightViewModel flightViewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Flight flight = new Flight(new FlightDalMsSql());
+
+                flight.Delete(id);
+
+                FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
+                flightDetailView.Flights = new List<FlightViewModel>();
+
+                FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
+                List<Flight> newFlightList = flightContainer.GetAllFlights();
+
+                foreach (Flight flights in newFlightList)
+                {
+                    flightDetailView.Flights.Add(new FlightViewModel(flights));
+                }
+
+                return View("Flight", flightDetailView);
             }
             catch
             {
-                return View();
+                return View("Flight", "Admin");
             }
+
         }
     }
 }

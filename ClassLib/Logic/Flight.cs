@@ -7,48 +7,76 @@ namespace ClassLib.Logic
 {
     public class Flight
     {
-        public FlightDto data { get; }
-        public Flight (FlightDto flightDto)
+        public IFlightPersist flight;
+
+        public int flightId { get; set; }
+        public string aircraftType { get; set; }
+        public string departureCountry { get; set; }
+        public string arrivalCountry { get; set; }
+        public DateTime departureDate { get; set; }
+        public DateTime arrivalDate { get; set; }
+        public bool flightStatus { get; set; }
+
+        public Flight(FlightDto flightDto)
         {
-            data = flightDto;
+            this.flightId = flightDto.flightId;
+            this.aircraftType = flightDto.aircraftType;
+            this.departureCountry = flightDto.departureCountry;
+            this.arrivalCountry = flightDto.arrivalCountry;
+            this.departureDate = flightDto.departureDate;
+            this.arrivalDate = flightDto.arrivalDate;
+            this.flightStatus = flightDto.flightStatus;
         }
-
-        public int flightId => data.flightId;
-        public string AircraftType => data.aircraftType;
-        public string departureCountry => data.departureCountry;
-        public string arrivalCountry => data.arrivalCountry;
-        public DateTime departureTime => data.departureDate;
-        public DateTime arrivalTime => data.arrivalDate;
-        public bool flightStatus => data.flightStatus;
-
-
-        private readonly IFlightPersist flight;
 
         public Flight(IFlightPersist flight)
         {
             this.flight = flight;
         }
-        public FlightDto Delete(int id)
+
+        public bool Create()
         {
-           
+            FlightDto data = new FlightDto();
+            data.aircraftType = this.aircraftType;
+            data.departureCountry = this.departureCountry;
+            data.arrivalCountry = this.arrivalCountry;
+            data.departureDate = this.departureDate;
+            data.arrivalDate = this.arrivalDate;
+            data.flightStatus = this.flightStatus;
+
+            flight.create(data);
+            return true;
+        }
+
+        public FlightDto Save(FlightDto flight)
+        {
+
             throw new System.NotImplementedException();
+        }
+        public bool Delete(int id)
+        {
+            flight.delete(id);
+            return true;
+
         }
     }
 
 
-    /*public int aircraftId { get; set; }
-    public string AircraftType { get; set; }
-    public string departureCountry { get; set; }
-    public string arrivalCountry { get; set; }
-    public DateTime departureTime { get; set; }
-    public DateTime arrivalTime { get; set; }
-    public bool FlightStatus { get; set; }
+    /*/*public int aircraftId { get; set; }
+        public string aircraftType { get; set; }
+        public string departureCountry { get; set; }
+        public string arrivalCountry { get; set; }
+        public DateTime departureDate { get; set; }
+        public DateTime arrivalDate { get; set; }
+        public bool flightStatus { get; set; }
 
-    public Flight(FlightDto flightDto)
-    {
-        this.Destination = flightDto.Destination;
-        this.AircraftType = flightDto.AircraftType;
-        this.FlightStatus = flightDto.FlightStatus;
-    }*/
+        public Flight(FlightDto flightDto)
+        {
+            this.aircraftType = flightDto.aircraftType;
+            this.departureCountry = flightDto.departureCountry;
+            this.arrivalCountry = flightDto.arrivalCountry;
+            this.departureDate = flightDto.departureDate;
+            this.arrivalDate = flightDto.arrivalDate;
+            this.flightStatus = flightDto.flightStatus;
+        }*/
 }
 

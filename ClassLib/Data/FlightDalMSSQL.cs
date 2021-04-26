@@ -11,8 +11,6 @@ namespace ClassLib.Data
         
         private readonly SqlConnection conn = new SqlConnection(@"Data Source=mssql.fhict.local;Initial Catalog=dbi463189_airline;Persist Security Info=True;User ID=dbi463189_airline;Password=m4VEw2tX;");
 
-        
-
         public List<FlightDto> getAll()
         {
             List<FlightDto> flights = new List<FlightDto>();
@@ -50,10 +48,11 @@ namespace ClassLib.Data
         {
             try
             {
-                conn.Open();
+                this.conn.Open();
 
-                string query = "SELECT * FROM Flight WHERE Id = @flightId";
-                SqlCommand cmd = new SqlCommand(query, conn);
+                string query = "SELECT * FROM Flight " +
+                               "WHERE Id = @flightId";
+                SqlCommand cmd = new SqlCommand(query, this.conn);
 
                 cmd.Parameters.Add("@flightId", System.Data.SqlDbType.Int).Value = Id;
 
@@ -81,33 +80,60 @@ namespace ClassLib.Data
             }
             finally
             {
-                conn.Close();
+                this.conn.Close();
             }
             
         }
 
-        public void delete(int Id)
+        public bool delete(int Id)
         {
             try
             {
-                conn.Open();
+                this.conn.Open();
 
                 string query = "DELETE FROM Flight WHERE Id = @flightId";
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, this.conn);
 
-                cmd.Parameters.Add("@flightId", System.Data.SqlDbType.Int).Value = Id;
-                
-                using SqlDataReader reader = cmd.ExecuteReader();
+                cmd.Parameters.AddWithValue("@flightId", Id);
+
+                cmd.ExecuteNonQuery();
             }
             finally
             {
-                conn.Close();
+                this.conn.Close();
             }
+            return false;
         }
 
         public void save(FlightDto flight)
         {
             throw new NotImplementedException();
+        }
+
+        public bool create(FlightDto data)
+        {
+            try
+            {
+                this.conn.Open();
+
+                string query = "INSERT INTO Flight (AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus) " +
+                               "VALUES (@AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus)";
+                SqlCommand cmd = new SqlCommand(query, this.conn);
+
+                cmd.Parameters.AddWithValue("@AircraftType", data.aircraftType);
+                cmd.Parameters.AddWithValue("@DepartureCountry", data.departureCountry);
+                cmd.Parameters.AddWithValue("@ArrivalCountry", data.arrivalCountry);
+                cmd.Parameters.AddWithValue("@DepartureDate", data.departureDate);
+                cmd.Parameters.AddWithValue("@ArrivalDate", data.arrivalDate);
+                cmd.Parameters.AddWithValue("@FlightStatus", data.flightStatus);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            return false;
         }
     }
 }

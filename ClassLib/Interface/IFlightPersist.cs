@@ -6,7 +6,9 @@ namespace ClassLib.Interface
 {
     public interface IFlightPersist
     {
+        bool create(FlightDto flight);
         void save(FlightDto flight);
-        void delete(int Id);
+        bool delete(int Id);
+
     }
 }
