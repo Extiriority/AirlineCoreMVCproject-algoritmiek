@@ -85,7 +85,7 @@ namespace ClassLib.Data
             
         }
 
-        public bool delete(int Id)
+        public void delete(int Id)
         {
             try
             {
@@ -102,15 +102,9 @@ namespace ClassLib.Data
             {
                 this.conn.Close();
             }
-            return false;
         }
 
-        public void save(FlightDto flight)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool create(FlightDto data)
+        public void save(FlightDto data)
         {
             try
             {
@@ -132,8 +126,7 @@ namespace ClassLib.Data
             finally
             {
                 this.conn.Close();
-            }
-            return false;
+            }           
         }
     }
 }

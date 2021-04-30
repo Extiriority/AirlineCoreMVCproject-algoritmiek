@@ -43,7 +43,7 @@ namespace ClassLib.Logic
             data.arrivalDate = this.arrivalDate;
             data.flightStatus = this.flightStatus;
 
-            flight.create(data);
+            flight.save(data);
             return true;
         }
 
