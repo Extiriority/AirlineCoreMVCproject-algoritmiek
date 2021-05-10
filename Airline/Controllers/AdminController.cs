@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,9 +35,9 @@ namespace Airline.Controllers
         public ActionResult Details(int Id)
         { 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            FlightDto flight = flightContainer.FlightGetById(Id);
+            FlightDto flightDetail = flightContainer.FlightGetById(Id);
 
-            return View(flight);
+            return View(flightDetail);
         }
 
         // GET: Admin/Create
@@ -55,6 +56,7 @@ namespace Airline.Controllers
                 try
                 {
                     Flight flight = new Flight(new FlightDalMsSql());
+                    flight.aircraftCode = flightViewModel.aircraftCode;
                     flight.aircraftType = flightViewModel.aircraftType;
                     flight.departureCountry = flightViewModel.departureCountry;
                     flight.arrivalCountry = flightViewModel.arrivalCountry;
@@ -62,10 +64,9 @@ namespace Airline.Controllers
                     flight.arrivalDate = flightViewModel.arrivalDate;
                     flight.flightStatus = flightViewModel.flightStatus;
 
-                    if (flight.Create())
-                    {
-                        return RedirectToAction("Flight", "Admin");
-                    }
+                    flight.Save();
+                    
+                    return RedirectToAction("Flight", "Admin");           
                 }
                 catch
                 {
@@ -76,24 +77,44 @@ namespace Airline.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int Id)
         {
-            return View();
+
+            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
+            FlightDto flightEditDetail = flightContainer.FlightGetById(Id);
+
+            return View(flightEditDetail);
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int Id, FlightViewModel flightViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    Flight flight = new Flight(new FlightDalMsSql());
+                    flight.flightId = Id;
+                    flight.aircraftCode = flightViewModel.aircraftCode;
+                    flight.aircraftType = flightViewModel.aircraftType;
+                    flight.departureCountry = flightViewModel.departureCountry;
+                    flight.arrivalCountry = flightViewModel.arrivalCountry;
+                    flight.departureDate = flightViewModel.departureDate;
+                    flight.arrivalDate = flightViewModel.arrivalDate;
+                    flight.flightStatus = flightViewModel.flightStatus;
+
+                    flight.Update();
+
+                    return RedirectToAction("Flight", "Admin");
+                }
+                catch
+                {
+                    return View("Edit", "Admin");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
 
@@ -108,18 +129,7 @@ namespace Airline.Controllers
 
                 flight.Delete(id);
 
-                FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
-                flightDetailView.Flights = new List<FlightViewModel>();
-
-                FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-                List<Flight> newFlightList = flightContainer.GetAllFlights();
-
-                foreach (Flight flights in newFlightList)
-                {
-                    flightDetailView.Flights.Add(new FlightViewModel(flights));
-                }
-
-                return View("Flight", flightDetailView);
+                return RedirectToAction("Flight", "Admin");
             }
             catch
             {

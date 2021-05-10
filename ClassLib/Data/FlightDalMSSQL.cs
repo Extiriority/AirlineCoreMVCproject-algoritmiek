@@ -1,6 +1,7 @@
 ﻿using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -27,6 +28,7 @@ namespace ClassLib.Data
                     FlightDto flightDto = new FlightDto
                     {
                         flightId = (int)reader["Id"],
+                        aircraftCode = Convert.ToString(reader["aircraftCode"]),
                         aircraftType = Convert.ToString(reader["aircraftType"]),
                         departureCountry = Convert.ToString(reader["departureCountry"]),
                         arrivalCountry = Convert.ToString(reader["arrivalCountry"]),
@@ -67,6 +69,7 @@ namespace ClassLib.Data
                         
                         {
                             flight.flightId = (int)reader["Id"];
+                            flight.aircraftCode = Convert.ToString(reader["aircraftCode"]);
                             flight.aircraftType = Convert.ToString(reader["aircraftType"]);
                             flight.departureCountry = Convert.ToString(reader["departureCountry"]);
                             flight.arrivalCountry = Convert.ToString(reader["arrivalCountry"]);
@@ -110,10 +113,11 @@ namespace ClassLib.Data
             {
                 this.conn.Open();
 
-                string query = "INSERT INTO Flight (AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus) " +
-                               "VALUES (@AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus)";
+                string query = "INSERT INTO Flight (AircraftCode, AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus) " +
+                               "VALUES (@aircraftCode, @AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus)";
                 SqlCommand cmd = new SqlCommand(query, this.conn);
 
+                cmd.Parameters.AddWithValue("@AircraftCode", data.aircraftCode);
                 cmd.Parameters.AddWithValue("@AircraftType", data.aircraftType);
                 cmd.Parameters.AddWithValue("@DepartureCountry", data.departureCountry);
                 cmd.Parameters.AddWithValue("@ArrivalCountry", data.arrivalCountry);
@@ -127,6 +131,41 @@ namespace ClassLib.Data
             {
                 this.conn.Close();
             }           
+        }
+
+        public void update(FlightDto edit)
+        {
+            try
+            {
+                this.conn.Open();
+
+                string query = "UPDATE Flight " +
+                    "SET AircraftCode = @aircraftCode, " +
+                    "AircraftType = @AircraftType, " +
+                    "DepartureCountry = @DepartureCountry, " +
+                    "ArrivalCountry = @ArrivalCountry, " +
+                    "DepartureDate = @DepartureDate, " +
+                    "ArrivalDate = @ArrivalDate, " +
+                    "FlightStatus = @FlightStatus " +
+                    "WHERE Id = @flightId";
+
+                SqlCommand cmd = new SqlCommand(query, this.conn);
+
+                cmd.Parameters.AddWithValue("@flightId", edit.flightId);
+                cmd.Parameters.AddWithValue("@AircraftCode", edit.aircraftCode);
+                cmd.Parameters.AddWithValue("@AircraftType", edit.aircraftType);
+                cmd.Parameters.AddWithValue("@DepartureCountry", edit.departureCountry);
+                cmd.Parameters.AddWithValue("@ArrivalCountry", edit.arrivalCountry);
+                cmd.Parameters.AddWithValue("@DepartureDate", edit.departureDate);
+                cmd.Parameters.AddWithValue("@ArrivalDate", edit.arrivalDate);
+                cmd.Parameters.AddWithValue("@FlightStatus", edit.flightStatus);
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                this.conn.Close();
+            }         
         }
     }
 }

@@ -10,6 +10,7 @@ namespace ClassLib.Logic
         public IFlightPersist flight;
 
         public int flightId { get; set; }
+        public string aircraftCode { get; set; }
         public string aircraftType { get; set; }
         public string departureCountry { get; set; }
         public string arrivalCountry { get; set; }
@@ -20,6 +21,7 @@ namespace ClassLib.Logic
         public Flight(FlightDto flightDto)
         {
             this.flightId = flightDto.flightId;
+            this.aircraftCode = flightDto.aircraftCode;
             this.aircraftType = flightDto.aircraftType;
             this.departureCountry = flightDto.departureCountry;
             this.arrivalCountry = flightDto.arrivalCountry;
@@ -33,9 +35,10 @@ namespace ClassLib.Logic
             this.flight = flight;
         }
 
-        public bool Create()
+        public void Save()
         {
             FlightDto data = new FlightDto();
+            data.aircraftCode = this.aircraftCode;
             data.aircraftType = this.aircraftType;
             data.departureCountry = this.departureCountry;
             data.arrivalCountry = this.arrivalCountry;
@@ -44,39 +47,27 @@ namespace ClassLib.Logic
             data.flightStatus = this.flightStatus;
 
             flight.save(data);
-            return true;
+            
         }
 
-        public FlightDto Save(FlightDto flight)
+        public void Update()
         {
+            FlightDto data = new FlightDto();
+            data.flightId = this.flightId;
+            data.aircraftCode = this.aircraftCode;
+            data.aircraftType = this.aircraftType;
+            data.departureCountry = this.departureCountry;
+            data.arrivalCountry = this.arrivalCountry;
+            data.departureDate = this.departureDate;
+            data.arrivalDate = this.arrivalDate;
+            data.flightStatus = this.flightStatus;
 
-            throw new System.NotImplementedException();
+            flight.update(data);
         }
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             flight.delete(id);
-            return true;
-
         }
     }
-
-
-    /*/*public int aircraftId { get; set; }
-        public string aircraftType { get; set; }
-        public string departureCountry { get; set; }
-        public string arrivalCountry { get; set; }
-        public DateTime departureDate { get; set; }
-        public DateTime arrivalDate { get; set; }
-        public bool flightStatus { get; set; }
-
-        public Flight(FlightDto flightDto)
-        {
-            this.aircraftType = flightDto.aircraftType;
-            this.departureCountry = flightDto.departureCountry;
-            this.arrivalCountry = flightDto.arrivalCountry;
-            this.departureDate = flightDto.departureDate;
-            this.arrivalDate = flightDto.arrivalDate;
-            this.flightStatus = flightDto.flightStatus;
-        }*/
 }
 

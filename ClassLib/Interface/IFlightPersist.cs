@@ -8,6 +8,6 @@ namespace ClassLib.Interface
     {
         void save(FlightDto flight);
         void delete(int Id);
-
+        void update(FlightDto flight);
     }
 }

@@ -8,6 +8,7 @@ namespace ClassLib.Interface
     {
 
         public int flightId { get; set; }
+        public string aircraftCode { get; set; }
         public string aircraftType { get; set; }
         public string departureCountry { get; set; }
         public string arrivalCountry { get; set; }

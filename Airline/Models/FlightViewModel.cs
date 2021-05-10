@@ -11,7 +11,9 @@ namespace Airline.Models
     {
         [Key]
         public int flightId { get; set; }
-        [Required(ErrorMessage = "An aircraft type is required to proceed!")]
+        [Required(ErrorMessage = "An aircraft code is required to proceed!")]
+        public string aircraftCode { get; set; }
+        [Required(ErrorMessage = "An aircraft type is required to proceed!")]        
         public string aircraftType { get; set; }
         [Required(ErrorMessage = "A departure country is required to proceed!")]
         public string departureCountry { get; set; }
@@ -31,6 +33,7 @@ namespace Airline.Models
         public FlightViewModel(Flight flight)
         {
             this.flightId = flight.flightId;
+            this.aircraftCode = flight.aircraftCode;
             this.aircraftType = flight.aircraftType;
             this.departureCountry = flight.departureCountry;
             this.arrivalCountry = flight.arrivalCountry;
