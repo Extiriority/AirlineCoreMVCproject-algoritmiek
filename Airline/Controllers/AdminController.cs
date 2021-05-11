@@ -21,7 +21,7 @@ namespace Airline.Controllers
             flightDetailView.Flights = new List<FlightViewModel>();
 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            List<Flight> flights = flightContainer.GetAllFlights();
+            List<Flight> flights = flightContainer.getAll();
 
             foreach (Flight flight in flights)
             {
@@ -35,7 +35,7 @@ namespace Airline.Controllers
         public ActionResult Details(int Id)
         { 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            FlightDto flightDetail = flightContainer.FlightGetById(Id);
+            FlightDto flightDetail = flightContainer.getById(Id);
 
             return View(flightDetail);
         }
@@ -81,7 +81,7 @@ namespace Airline.Controllers
         {
 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            FlightDto flightEditDetail = flightContainer.FlightGetById(Id);
+            FlightDto flightEditDetail = flightContainer.getById(Id);
 
             return View(flightEditDetail);
         }

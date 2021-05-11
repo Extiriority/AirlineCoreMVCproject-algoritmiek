@@ -13,7 +13,7 @@ namespace ClassLib.Logic
         {
             this.flightContainer = flightContainer;
         }
-        public List<Flight> GetAllFlights()
+        public List<Flight> getAll()
         {
             List<FlightDto> flightTemp = flightContainer.getAll();
             List<Flight> flights = new List<Flight>();
@@ -25,9 +25,9 @@ namespace ClassLib.Logic
             return flights;
         }
 
-        public FlightDto FlightGetById(int Id)
+        public FlightDto getById(int id)
         {
-            FlightDto flight = flightContainer.getById(Id);
+            FlightDto flight = flightContainer.getById(id);
 
             return flight;
         }

@@ -17,7 +17,7 @@ namespace ClassLib.Logic
         public DateTime departureDate { get; set; }
         public DateTime arrivalDate { get; set; }
         public bool flightStatus { get; set; }
-
+       
         public Flight(FlightDto flightDto)
         {
             this.flightId = flightDto.flightId;
@@ -38,6 +38,7 @@ namespace ClassLib.Logic
         public void Save()
         {
             FlightDto data = new FlightDto();
+            data.flightId = this.flightId;
             data.aircraftCode = this.aircraftCode;
             data.aircraftType = this.aircraftType;
             data.departureCountry = this.departureCountry;
@@ -46,8 +47,7 @@ namespace ClassLib.Logic
             data.arrivalDate = this.arrivalDate;
             data.flightStatus = this.flightStatus;
 
-            flight.save(data);
-            
+            flight.save(data);         
         }
 
         public void Update()
