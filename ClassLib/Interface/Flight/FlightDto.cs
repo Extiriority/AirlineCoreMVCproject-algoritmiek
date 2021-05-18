@@ -6,7 +6,6 @@ namespace ClassLib.Interface
 {
     public struct FlightDto
     {
-
         public int flightId { get; set; }
         public string aircraftCode { get; set; }
         public string aircraftType { get; set; }
@@ -15,6 +14,5 @@ namespace ClassLib.Interface
         public DateTime departureDate { get; set; }
         public DateTime arrivalDate { get; set; }
         public bool flightStatus { get; set; }
- 
     }
 }

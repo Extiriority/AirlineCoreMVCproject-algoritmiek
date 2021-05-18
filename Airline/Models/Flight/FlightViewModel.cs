@@ -32,14 +32,14 @@ namespace Airline.Models
         }
         public FlightViewModel(Flight flight)
         {
-            this.flightId = flight.flightId;
-            this.aircraftCode = flight.aircraftCode;
-            this.aircraftType = flight.aircraftType;
-            this.departureCountry = flight.departureCountry;
-            this.arrivalCountry = flight.arrivalCountry;
-            this.departureDate = flight.departureDate;
-            this.arrivalDate = flight.arrivalDate;
-            this.flightStatus = flight.flightStatus;
+            this.flightId           = flight.flightId;
+            this.aircraftCode       = flight.aircraftCode;
+            this.aircraftType       = flight.aircraftType;
+            this.departureCountry   = flight.departureCountry;
+            this.arrivalCountry     = flight.arrivalCountry;
+            this.departureDate      = flight.departureDate;
+            this.arrivalDate        = flight.arrivalDate;
+            this.flightStatus       = flight.flightStatus;
 
         }
     }

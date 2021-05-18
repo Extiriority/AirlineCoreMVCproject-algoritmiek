@@ -1,11 +1,11 @@
-﻿    @{
-        ViewData["Title"] = "Flight Management";
-    }
-    <h1>@ViewData["Title"]</h1>
+﻿@{
+    ViewData["Title"] = "Flight Management";
+}
+<h1>@ViewData["Title"]</h1>
 
-    <p>list managable flights.</p>
+<p>list managable flights.</p>
 
-    <a class="btn-link" asp-area="" asp-controller="Admin" asp-action="Create">Create new flight</a>
+@Html.ActionLink("+", "Create", "Admin", null, new { @class = "btn btn-primary btn-large" })
 <table class="table">
     <thead>
         <tr>
@@ -19,25 +19,25 @@
         </tr>
     </thead>
     <tbody>
-   @foreach (var flight in Model.Flights)
-    {
-        <tr>
-            <td>@flight.aircraftCode</td>
-            <td>@flight.aircraftType</td>
-            <td>@flight.departureCountry</td>
-            <td>@flight.arrivalCountry</td>
-            <td>@flight.departureDate</td>
-            <td>@flight.arrivalDate</td>
-            <td>@flight.flightStatus</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@flight.flightId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@flight.flightId">Detail</a>
-                <form asp-action="Delete" asp-route-id="@flight.flightId" method="post">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-    }
+        @foreach (var flight in Model.Flights)
+        {
+            <tr>
+                <td>@flight.aircraftCode</td>
+                <td>@flight.aircraftType</td>
+                <td>@flight.departureCountry</td>
+                <td>@flight.arrivalCountry</td>
+                <td>@flight.departureDate</td>
+                <td>@flight.arrivalDate</td>
+                <td>@flight.flightStatus</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Detail", "Details", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })
+                    <form asp-action="Delete" asp-route-id="@flight.flightId" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

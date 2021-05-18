@@ -133,7 +133,7 @@ namespace ClassLib.Data
             }           
         }
 
-        public void update(FlightDto edit)
+        public void update(FlightDto data)
         {
             try
             {
@@ -151,14 +151,14 @@ namespace ClassLib.Data
 
                 SqlCommand cmd = new SqlCommand(query, this.conn);
 
-                cmd.Parameters.AddWithValue("@flightId", edit.flightId);
-                cmd.Parameters.AddWithValue("@AircraftCode", edit.aircraftCode);
-                cmd.Parameters.AddWithValue("@AircraftType", edit.aircraftType);
-                cmd.Parameters.AddWithValue("@DepartureCountry", edit.departureCountry);
-                cmd.Parameters.AddWithValue("@ArrivalCountry", edit.arrivalCountry);
-                cmd.Parameters.AddWithValue("@DepartureDate", edit.departureDate);
-                cmd.Parameters.AddWithValue("@ArrivalDate", edit.arrivalDate);
-                cmd.Parameters.AddWithValue("@FlightStatus", edit.flightStatus);
+                cmd.Parameters.AddWithValue("@flightId", data.flightId);
+                cmd.Parameters.AddWithValue("@AircraftCode", data.aircraftCode);
+                cmd.Parameters.AddWithValue("@AircraftType", data.aircraftType);
+                cmd.Parameters.AddWithValue("@DepartureCountry", data.departureCountry);
+                cmd.Parameters.AddWithValue("@ArrivalCountry", data.arrivalCountry);
+                cmd.Parameters.AddWithValue("@DepartureDate", data.departureDate);
+                cmd.Parameters.AddWithValue("@ArrivalDate", data.arrivalDate);
+                cmd.Parameters.AddWithValue("@FlightStatus", data.flightStatus);
 
                 cmd.ExecuteNonQuery();
             }

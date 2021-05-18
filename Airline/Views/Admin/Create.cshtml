@@ -7,7 +7,6 @@
 <h1>@ViewData["Title"]</h1>
 
 <!DOCTYPE html>
-
 <form method="post" asp-controller="Admin" asp-action="Create">
     <div class="form-group">
         <label for="aircraftCode">Code</label>
@@ -18,16 +17,15 @@
         <label for="aircraftType">Aircraft type</label>
         <span asp-validation-for="aircraftType" class="text-danger"></span>
         <select class="form-control" asp-for="aircraftType">
-            @{ 
-                    string[] aircraftTypes = { "Boeing 737", "Boeing 777", "Boeing 777X", "Boeing 787", "Airbus A320", "Airbus A330", "Airbus A340" };
-
+            @{
+                string[] aircraftTypes = { "Boeing 737", "Boeing 777", "Boeing 777X", "Boeing 787", "Airbus A320", "Airbus A330", "Airbus A340" };
                 foreach (var aircraftype in aircraftTypes)
                 {
                     <option value="@aircraftype">@aircraftype</option>
                 }
             }
         </select>
-           
+
     </div>
     <div class="form-group">
         <label for="departureCountry">From</label>
@@ -38,6 +36,7 @@
     </div>
     <div class="form-group">
         <label for="arrivalCountry">To</label>
+        <span asp-validation-for="arrivalCountry" class="text-danger"></span>
         <select class="form-control" asp-for="arrivalCountry">
             @{
                 var countries = new Dictionary<string, string>() { { "Afghanistan", "AF" }, { "Albania", "AL" }, { "Algeria", "DZ" }, { "American Samoa", "AS" }, { "Andorra", "AD" }, { "Angola", "AG" }, { "Anguilla", "AI" }, { "Antigua &amp; Barbuda", "AG" }, { "Argentina", "AR" }, { "Armenia", "AA" }, { "Aruba", "AW" }, { "Australia", "AU" }, { "Austria", "AT" }, { "Azerbaijan", "AZ" }, { "Bahamas", "BS" }, { "Bahrain", "BH" }, { "Bangladesh", "BD" }, { "Barbados", "BB" }, { "Belarus", "BY" }, { "Belgium", "BE" }, { "Belize", "BZ" }, { "Benin", "BJ" }, { "Bermuda", "BM" }, { "Bhutan", "BT" }, { "Bolivia", "BO" }, { "Bonaire", "BL" }, { "Bosnia &amp; Herzegovina", "BA" }, { "Botswana", "BW" }, { "Brazil", "BR" }, { "British Indian Ocean Ter", "BC" }, { "Brunei", "BN" }, { "Bulgaria", "BG" }, { "Burkina Faso", "BF" }, { "Burundi", "BI" }, { "Cambodia", "KH" }, { "Cameroon", "CM" }, { "Canada", "CA" }, { "Canary Islands", "IC" }, { "Cape Verde", "CV" }, { "Cayman Islands", "KY" }, { "Central African Republic", "CF" }, { "Chad", "TD" }, { "Channel Islands", "CD" }, { "Chile", "CL" }, { "China", "CN" }, { "Christmas Island", "CI" }, { "Cocos Island", "CS" }, { "Colombia", "CO" }, { "Comoros", "CC" }, { "Congo", "CG" }, { "Cook Islands", "CK" }, { "Costa Rica", "CR" }, { "Cote D'Ivoire", "CT" }, { "Croatia", "HR" }, { "Cuba", "CU" }, { "Curacao", "CB" }, { "Cyprus", "CY" }, { "Czech Republic", "CZ" }, { "Denmark", "DK" }, { "Djibouti", "DJ" }, { "Dominica", "DM" }, { "Dominican Republic", "DO" }, { "East Timor", "TM" }, { "Ecuador", "EC" }, { "Egypt", "EG" }, { "El Salvador", "SV" }, { "Equatorial Guinea", "GQ" }, { "Eritrea", "ER" }, { "Estonia", "EE" }, { "Ethiopia", "ET" }, { "Falkland Islands", "FA" }, { "Faroe Islands", "FO" }, { "Fiji", "FJ" }, { "Finland", "FI" }, { "France", "FR" }, { "French Guiana", "GF" }, { "French Polynesia", "PF" }, { "French Southern Ter", "FS" }, { "Gabon", "GA" }, { "Gambia", "GM" }, { "Georgia", "GE" }, { "Germany", "DE" }, { "Ghana", "GH" }, { "Gibraltar", "GI" }, { "Great Britain", "GB" }, { "Greece", "GR" }, { "Greenland", "GL" }, { "Grenada", "GD" }, { "Guadeloupe", "GP" }, { "Guam", "GU" }, { "Guatemala", "GT" }, { "Guinea", "GN" }, { "Guyana", "GY" }, { "Haiti", "HT" }, { "Hawaii", "HW" }, { "Honduras", "HN" }, { "Hong Kong", "HK" }, { "Hungary", "HU" }, { "Iceland", "IS" }, { "India", "IN" }, { "Indonesia", "ID" }, { "Iran", "IA" }, { "Iraq", "IQ" }, { "Ireland", "IR" }, { "Isle of Man", "IM" }, { "Israel", "IL" }, { "Italy", "IT" }, { "Jamaica", "JM" }, { "Japan", "JP" }, { "Jordan", "JO" }, { "Kazakhstan", "KZ" }, { "Kenya", "KE" }, { "Kiribati", "KI" }, { "Korea North", "NK" }, { "Korea South", "KS" }, { "Kuwait", "KW" }, { "Kyrgyzstan", "KG" }, { "Laos", "LA" }, { "Latvia", "LV" }, { "Lebanon", "LB" }, { "Lesotho", "LS" }, { "Liberia", "LR" }, { "Libya", "LY" }, { "Liechtenstein", "LI" }, { "Lithuania", "LT" }, { "Luxembourg", "LU" }, { "Macau", "MO" }, { "Macedonia", "MK" }, { "Madagascar", "MG" }, { "Malaysia", "MY" }, { "Malawi", "MW" }, { "Maldives", "MV" }, { "Mali", "ML" }, { "Malta", "MT" }, { "Marshall Islands", "MH" }, { "Martinique", "MQ" }, { "Mauritania", "MR" }, { "Mauritius", "MU" }, { "Mayotte", "ME" }, { "Mexico", "MX" }, { "Midway Islands", "MI" }, { "Moldova", "MD" }, { "Monaco", "MC" }, { "Mongolia", "MN" }, { "Montserrat", "MS" }, { "Morocco", "MA" }, { "Mozambique", "MZ" }, { "Myanmar", "MM" }, { "Nambia", "NA" }, { "Nauru", "NU" }, { "Nepal", "NP" }, { "Netherland Antilles", "AN" }, { "Netherlands (Holland, Europe)", "NL" }, { "Nevis", "NV" }, { "New Caledonia", "NC" }, { "New Zealand", "NZ" }, { "Nicaragua", "NI" }, { "Niger", "NE" }, { "Nigeria", "NG" }, { "Niue", "NW" }, { "Norfolk Island", "NF" }, { "Norway", "NO" }, { "Oman", "OM" }, { "Pakistan", "PK" }, { "Palau Island", "PW" }, { "Palestine", "PS" }, { "Panama", "PA" }, { "Papua New Guinea", "PG" }, { "Paraguay", "PY" }, { "Peru", "PE" }, { "Philippines", "PH" }, { "Pitcairn Island", "PO" }, { "Poland", "PL" }, { "Portugal", "PT" }, { "Puerto Rico", "PR" }, { "Qatar", "QA" }, { "Republic of Montenegro", "ME" }, { "Republic of Serbia", "RS" }, { "Reunion", "RE" }, { "Romania", "RO" }, { "Russia", "RU" }, { "Rwanda", "RW" }, { "St Barthelemy", "NT" }, { "St Eustatius", "EU" }, { "St Helena", "HE" }, { "St Kitts-Nevis", "KN" }, { "St Lucia", "LC" }, { "St Maarten", "MB" }, { "St Pierre &amp; Miquelon", "PM" }, { "St Vincent &amp; Grenadines", "VC" }, { "Saipan", "SP" }, { "Samoa", "SO" }, { "Samoa American", "AS" }, { "San Marino", "SM" }, { "Sao Tome &amp; Principe", "ST" }, { "Saudi Arabia", "SA" }, { "Senegal", "SN" }, { "Serbia", "RS" }, { "Seychelles", "SC" }, { "Sierra Leone", "SL" }, { "Singapore", "SG" }, { "Slovakia", "SK" }, { "Slovenia", "SI" }, { "Solomon Islands", "SB" }, { "Somalia", "OI" }, { "South Africa", "ZA" }, { "Spain", "ES" }, { "Sri Lanka", "LK" }, { "Sudan", "SD" }, { "Suriname", "SR" }, { "Swaziland", "SZ" }, { "Sweden", "SE" }, { "Switzerland", "CH" }, { "Syria", "SY" }, { "Tahiti", "TA" }, { "Taiwan", "TW" }, { "Tajikistan", "TJ" }, { "Tanzania", "TZ" }, { "Thailand", "TH" }, { "Togo", "TG" }, { "Tokelau", "TK" }, { "Tonga", "TO" }, { "Trinidad &amp; Tobago", "TT" }, { "Tunisia", "TN" }, { "Turkey", "TR" }, { "Turkmenistan", "TU" }, { "Turks &amp; Caicos Is", "TC" }, { "Tuvalu", "TV" }, { "Uganda", "UG" }, { "Ukraine", "UA" }, { "United Arab Emirates", "AE" }, { "United Kingdom", "GB" }, { "United States of America", "US" }, { "Uruguay", "UY" }, { "Uzbekistan", "UZ" }, { "Vanuatu", "VU" }, { "Vatican City State", "VS" }, { "Venezuela", "VE" }, { "Vietnam", "VN" }, { "Virgin Islands (Brit)", "VB" }, { "Virgin Islands (USA)", "VA" }, { "Wake Island", "WK" }, { "Wallis &amp; Futana Is", "WF" }, { "Yemen", "YE" }, { "Zaire", "ZR" }, { "Zambia", "ZM" }, { "Zimbabwe", "Z" } };
@@ -50,12 +49,12 @@
     </div>
     <div class="form-group">
         <label for="departureDate">Departure</label>
-        <input asp-for="departureDate" class="form-control">
+        <input asp-for="departureDate" type="date" class="form-control">
         <span asp-validation-for="departureDate" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label for="arrivalDate">Arrival</label>
-        <input asp-for="arrivalDate" class="form-control">
+        <input asp-for="arrivalDate" type="date" class="form-control">
         <span asp-validation-for="arrivalDate" class="text-danger"></span>
     </div>
     <div class="form-group form-check">

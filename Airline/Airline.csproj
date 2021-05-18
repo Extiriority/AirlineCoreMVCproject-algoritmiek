@@ -40,4 +40,8 @@
     <Content Remove="Docker\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>
