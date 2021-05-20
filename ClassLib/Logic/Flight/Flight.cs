@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ClassLib.Logic
 {
-    public class Flight
+    public class Flight 
     {
         public IFlightPersist flight;
 

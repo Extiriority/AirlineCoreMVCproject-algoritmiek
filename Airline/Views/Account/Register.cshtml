@@ -38,17 +38,17 @@
                 </div>
             </div>
             <div class="form-outer">
-                <form method="post" asp-controller="Account" asp-action="Create">
+                <form method="post" asp-controller="Account" asp-action="Register">
                     <div class="page slide-page">
                         <div class="title">Basic Info:</div>
                         <div class="field">
                             <div class="label">First Name</div>
-                            <input class="form-control" type="text" name="firstName" asp-for="firstName">
+                            <input class="form-control" type="text" name="firstName" asp-for="firstName" placeholder="Jan">
                             <span asp-validation-for="firstName" class="text-danger"></span>
                         </div>
                         <div class="field">
                             <div class="label">Last Name</div>
-                            <input class="form-control" type="text" name="lastName" asp-for="lastName">
+                            <input class="form-control" type="text" name="lastName" asp-for="lastName" placeholder="Modaal">
                             <span asp-validation-for="lastName" class="text-danger"></span>
                         </div>
                         <div class="field">
@@ -59,12 +59,12 @@
                         <div class="title">Contact Info:</div>
                         <div class="field">
                             <div class="label">Email Adress</div>
-                            <input class="form-control" type="text" name="Email" asp-for="email">
+                            <input class="form-control" type="text" name="Email" asp-for="email" placeholder="Jan@gmail.nl">
                             <span asp-validation-for="email" class="text-danger"></span>
                         </div>
                         <div class="field">
                             <div class="label">Phone number</div>
-                            <input class="form-control" type="text" name="PhoneNumber" asp-for="phoneNumber">
+                            <input class="form-control" type="text" name="PhoneNumber" asp-for="phoneNumber" placeholder="0659437584">
                             <span asp-validation-for="phoneNumber" class="text-danger"></span>
                         </div>
                         <div class="field btns">
@@ -76,7 +76,7 @@
                         <div class="title">Date of Birth:</div>
                         <div class="field">
                             <div class="label">Date</div>
-                            <input class="form-control" type="date" name="DateOfBirth" asp-for="dateOfBirth">
+                            <input class="form-control" type="date" name="DateOfBirth" asp-for="dateOfBirth" >
                             <span asp-validation-for="dateOfBirth" class="text-danger"></span>
                         </div>
                         <div class="field">
@@ -100,14 +100,14 @@
                     <div class="page">
                         <div class="title">Login Details:</div>
                         <div class="field">
-                            <div class="label">Username</div>
-                            <input class="form-control" type="text" name="Username" asp-for="username">
-                            <span asp-validation-for="username" class="text-danger"></span>
+                            <div class="label">Password</div>
+                            <input class="form-control" type="password" name="Password" asp-for="password" placeholder="Password">
+                            <span asp-validation-for="password" class="text-danger"></span>
                         </div>
                         <div class="field">
-                            <div class="label">Password</div>
-                            <input class="form-control" type="password" name="Password" asp-for="password">
-                            <span asp-validation-for="password" class="text-danger"></span>
+                            <div class="label">Confirm Password</div>
+                            <input class="form-control" type="password" name="confirmPassword" asp-for="confirmPassword" placeholder="Confirm Password">
+                            <span asp-validation-for="confirmPassword" class="text-danger"></span>
                         </div>
                         <div class="field">
                             <button class="prev-3 prev" style="margin-right: 3px;">Previous</button>

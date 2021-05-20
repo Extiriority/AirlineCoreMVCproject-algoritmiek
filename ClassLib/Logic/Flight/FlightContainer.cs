@@ -25,10 +25,10 @@ namespace ClassLib.Logic
             return flights;
         }
 
-        public FlightDto getById(int id)
+        public Flight getById(int id)
         {
-            FlightDto flight = flightContainer.getById(id);
-
+            FlightDto flightDto = flightContainer.getById(id);
+            Flight flight = new Flight(flightDto);
             return flight;
         }
     }

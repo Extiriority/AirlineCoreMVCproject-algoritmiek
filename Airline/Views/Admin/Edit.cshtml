@@ -1,4 +1,4 @@
-﻿@model ClassLib.Interface.FlightDto
+﻿@model Airline.Models.FlightViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,6 +12,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="aircraftCode">Aircraft Code</label>
+                <span asp-validation-for="aircraftCode" class="text-danger"></span>
+                <input class="form-control" type="text" name="aircraftCode" asp-for="aircraftCode">
+            </div>
             <div class="form-group">
                 <label for="aircraftType">Aircraft type</label>
                 <span asp-validation-for="aircraftType" class="text-danger"></span>
@@ -70,7 +75,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Flight">Back to List</a>
 </div>
 
 @section Scripts {

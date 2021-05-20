@@ -70,6 +70,7 @@ namespace Airline.UnitTests
             Assert.AreEqual("FD444", flights[3].aircraftCode, "The codename and index is not equal.");
             Assert.AreEqual("Brazil", flights[4].arrivalCountry, "The arrival country and index is not equal.");
          
+            //loop all parameters check
         }
 
         [TestMethod]
@@ -92,6 +93,7 @@ namespace Airline.UnitTests
             
 
         }
+
         [TestMethod]
         public void delete_MockFlights_AreEqual()
         {

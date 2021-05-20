@@ -11,22 +11,33 @@ namespace Airline.Models
     {
         [Key]
         public int customerId { get; set; }
-        [Required(ErrorMessage = "A first name is required to proceed!")]
+
+        [Required(ErrorMessage = "Enter first name")]
         public string firstName { get; set; }
-        [Required(ErrorMessage = "A last name is required to proceed!")]
+
+        [Required(ErrorMessage = "Enter last name")]
         public string lastName { get; set; }
-        [Required(ErrorMessage = "An Email adress is required to proceed!")]
+
+        [Required(ErrorMessage = "Enter Email adress")]
         public string email { get; set; }
-        [Required(ErrorMessage = "An phone number is required to proceed!")]
+
+        [Required(ErrorMessage = "Enter phone number")]
         public string phoneNumber { get; set; }
-        [Required(ErrorMessage = "An date of your birth is required to proceed!")]
+
+        [Required(ErrorMessage = "Enter birthdate")]
         public DateTime dateOfBirth { get; set; }
-        [Required(ErrorMessage = "A gender is required to proceed!")]
+
+        [Required(ErrorMessage = "Enter gender type")]
         public string gender { get; set; }
-        [Required(ErrorMessage = "An username is required to proceed!")]
-        public string username { get; set; }
-        [Required(ErrorMessage = "A password is required to proceed!")]
+
+        [Required(ErrorMessage = "Enter password")]
+        [DataType(DataType.Password)]
         public string password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Compare("password", ErrorMessage = "Confirm password doesn't match")]
+        public string confirmPassword { get; set; }
+        
 
         public CustomerViewModel()
         {
@@ -41,9 +52,7 @@ namespace Airline.Models
             this.phoneNumber    = customer.phoneNumber;
             this.dateOfBirth    = customer.dateOfBirth;
             this.gender         = customer.gender;
-            this.username       = customer.username;
             this.password       = customer.password;
-
         }
     }
 }

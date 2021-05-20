@@ -13,7 +13,6 @@ namespace ClassLib.Interface
         public string phoneNumber { get; set; }
         public DateTime dateOfBirth { get; set; }
         public string gender { get; set; }
-        public string username { get; set; }
         public string password { get; set; }
     }
 }

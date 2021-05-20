@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Scrypt;
+using ClassLib.Interface;
 
 namespace Airline.Controllers
 {
@@ -33,12 +35,14 @@ namespace Airline.Controllers
         // POST: AccountController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CustomerViewModel customerViewModel)
+        public ActionResult Register(CustomerViewModel customerViewModel)
         {
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    ScryptEncoder encoder = new ScryptEncoder();                                     
                     Customer customer = new Customer(new CustomerDalMsSql());
                     customer.firstName      = customerViewModel.firstName;
                     customer.lastName       = customerViewModel.lastName;
@@ -46,21 +50,50 @@ namespace Airline.Controllers
                     customer.phoneNumber    = customerViewModel.phoneNumber;
                     customer.dateOfBirth    = customerViewModel.dateOfBirth;
                     customer.gender         = customerViewModel.gender;
-                    customer.username       = customerViewModel.username;
-                    customer.password       = customerViewModel.password;
-
+                    customer.password       = encoder.Encode(customerViewModel.confirmPassword);
+                    
                     customer.Save();
 
                     return RedirectToAction("Index", "Home");
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Register", "Account");
+                    throw new Exception($"Error in Encode: {ex.Message}");
                 }
+            
             }
-            return RedirectToAction();
+            return View();
         }
-    
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(CustomerViewModel customerViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    CustomerContainer customerContainer = new CustomerContainer(new CustomerDalMsSql());
+                    //CustomerDto flightDetail = customerContainer.getById(Id);
+                    ScryptEncoder encoder = new ScryptEncoder();
+                    //bool validCustomer = encoder.Compare(customerViewModel.password, );
+                    
+                    //hier gebleven!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //customer.Save();
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error in Encode: {ex.Message}");
+                }
+
+            }
+            return View();
+        }
 
         // GET: AccountController/Edit/5
         public ActionResult Edit(int id)

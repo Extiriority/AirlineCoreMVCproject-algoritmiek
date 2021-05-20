@@ -17,7 +17,6 @@ namespace ClassLib.Logic
         public string phoneNumber { get; set; }
         public DateTime dateOfBirth { get; set; }
         public string gender { get; set; }
-        public string username { get; set; }
         public string password { get; set; }
 
         public Customer(CustomerDto data)
@@ -29,7 +28,6 @@ namespace ClassLib.Logic
             this.phoneNumber    = data.phoneNumber;
             this.dateOfBirth    = data.dateOfBirth;
             this.gender         = data.gender;
-            this.username       = data.username;
             this.password       = data.password;
 
             customer.save(data);
@@ -50,7 +48,6 @@ namespace ClassLib.Logic
             data.phoneNumber    = this.phoneNumber;
             data.dateOfBirth    = this.dateOfBirth;
             data.gender         = this.gender;
-            data.username       = this.username;
             data.password       = this.password;
 
             customer.save(data);
@@ -66,7 +63,6 @@ namespace ClassLib.Logic
             data.phoneNumber    = this.phoneNumber;
             data.dateOfBirth    = this.dateOfBirth;
             data.gender         = this.gender;
-            data.username       = this.username;
             data.password       = this.password;
 
             customer.update(data);

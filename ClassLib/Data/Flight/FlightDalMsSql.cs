@@ -7,22 +7,15 @@ using System.Text;
 
 namespace ClassLib.Data 
 {
-    public class FlightDalMsSql : IFlightPersist, IFlightFetch
+    public class FlightDalMsSql : Database, IFlightPersist, IFlightFetch
     {
-        
-        private readonly SqlConnection conn = new SqlConnection(@"Data Source=mssql.fhict.local;Initial Catalog=dbi463189_airline;Persist Security Info=True;User ID=dbi463189_airline;Password=m4VEw2tX;");
-
         public List<FlightDto> getAll()
         {
             List<FlightDto> flights = new List<FlightDto>();
             try
             {
-                this.conn.Open();
-
-                string query = "SELECT * FROM Flight";
-                SqlCommand cmd = new SqlCommand(query, this.conn);
-                using SqlDataReader reader = cmd.ExecuteReader();
-
+                databaseConnection("SELECT * FROM Flight ORDER BY departureDate");
+                using (reader = cmd.ExecuteReader())
                 while (reader.Read())
                 {
                     FlightDto flightDto = new FlightDto
@@ -37,7 +30,7 @@ namespace ClassLib.Data
                         flightStatus = (bool)reader["flightStatus"]
                     };
                     flights.Add(flightDto);
-                }
+                }                
             }
             finally
             {
@@ -50,55 +43,43 @@ namespace ClassLib.Data
         {
             try
             {
-                this.conn.Open();
-
                 string query = "SELECT * FROM Flight " +
                                "WHERE Id = @flightId";
-                SqlCommand cmd = new SqlCommand(query, this.conn);
-
-                cmd.Parameters.Add("@flightId", System.Data.SqlDbType.Int).Value = Id;
-
-                using SqlDataReader reader = cmd.ExecuteReader();
-
                 FlightDto flight = new FlightDto();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
+                
+                databaseConnection(query);
+                cmd.Parameters.Add("@flightId", System.Data.SqlDbType.Int).Value = Id;
+                using (reader = cmd.ExecuteReader())
+                using (SqlCommand command = new SqlCommand(query, conn))                
+                while (reader.Read())
+                {                       
                     {
-                        
-                        {
-                            flight.flightId = (int)reader["Id"];
-                            flight.aircraftCode = Convert.ToString(reader["aircraftCode"]);
-                            flight.aircraftType = Convert.ToString(reader["aircraftType"]);
-                            flight.departureCountry = Convert.ToString(reader["departureCountry"]);
-                            flight.arrivalCountry = Convert.ToString(reader["arrivalCountry"]);
-                            flight.departureDate = (DateTime)reader["departureDate"];
-                            flight.arrivalDate = (DateTime)reader["arrivalDate"];
-                            flight.flightStatus = (bool)reader["flightStatus"];
-                        }; 
-                    }
+                        flight.flightId = (int)reader["Id"];
+                        flight.aircraftCode = Convert.ToString(reader["aircraftCode"]);
+                        flight.aircraftType = Convert.ToString(reader["aircraftType"]);
+                        flight.departureCountry = Convert.ToString(reader["departureCountry"]);
+                        flight.arrivalCountry = Convert.ToString(reader["arrivalCountry"]);
+                        flight.departureDate = (DateTime)reader["departureDate"];
+                        flight.arrivalDate = (DateTime)reader["arrivalDate"];
+                        flight.flightStatus = (bool)reader["flightStatus"];
+                    }; 
                 }
                 return flight;
             }
             finally
             {
                 this.conn.Close();
-            }
-            
+            }  
         }
 
         public void delete(int Id)
         {
             try
             {
-                this.conn.Open();
-
                 string query = "DELETE FROM Flight WHERE Id = @flightId";
+                databaseConnection(query);
                 SqlCommand cmd = new SqlCommand(query, this.conn);
-
                 cmd.Parameters.AddWithValue("@flightId", Id);
-
                 cmd.ExecuteNonQuery();
             }
             finally
@@ -111,11 +92,9 @@ namespace ClassLib.Data
         {
             try
             {
-                this.conn.Open();
-
                 string query = "INSERT INTO Flight (AircraftCode, AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus) " +
                                "VALUES (@aircraftCode, @AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus)";
-                SqlCommand cmd = new SqlCommand(query, this.conn);
+                databaseConnection(query);
 
                 cmd.Parameters.AddWithValue("@AircraftCode", data.aircraftCode);
                 cmd.Parameters.AddWithValue("@AircraftType", data.aircraftType);
@@ -129,7 +108,7 @@ namespace ClassLib.Data
             }
             finally
             {
-                this.conn.Close();
+                connClose();
             }           
         }
 
@@ -137,8 +116,6 @@ namespace ClassLib.Data
         {
             try
             {
-                this.conn.Open();
-
                 string query = "UPDATE Flight " +
                     "SET AircraftCode = @aircraftCode, " +
                     "AircraftType = @AircraftType, " +
@@ -148,8 +125,8 @@ namespace ClassLib.Data
                     "ArrivalDate = @ArrivalDate, " +
                     "FlightStatus = @FlightStatus " +
                     "WHERE Id = @flightId";
+                databaseConnection(query);
 
-                SqlCommand cmd = new SqlCommand(query, this.conn);
 
                 cmd.Parameters.AddWithValue("@flightId", data.flightId);
                 cmd.Parameters.AddWithValue("@AircraftCode", data.aircraftCode);

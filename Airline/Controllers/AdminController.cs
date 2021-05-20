@@ -14,6 +14,13 @@ namespace Airline.Controllers
 {
     public class AdminController : Controller
     {
+        private FlightContainer flightContainer;
+
+        public AdminController()
+        {
+            flightContainer = new FlightContainer(new FlightDalMsSql());
+        }
+
         // GET: Admin
         public IActionResult Flight()
         {
@@ -33,11 +40,9 @@ namespace Airline.Controllers
 
         // GET: Admin/Details/5
         public ActionResult Details(int Id)
-        { 
-            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            FlightDto flightDetail = flightContainer.getById(Id);
-
-            return View(flightDetail);
+        {
+            Flight flight = flightContainer.getById(Id);
+            return View(new FlightViewModel(flight));
         }
 
         // GET: Admin/Create
@@ -78,23 +83,20 @@ namespace Airline.Controllers
 
         // GET: Admin/Edit/5
         public ActionResult Edit(int Id)
-        {
-
-            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            FlightDto flightEditDetail = flightContainer.getById(Id);
-
-            return View(flightEditDetail);
+        {           
+            Flight flight = flightContainer.getById(Id);
+            return View(new FlightViewModel(flight));
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int Id, FlightViewModel flightViewModel)
-        {
+        {          
             if (ModelState.IsValid)
             {
                 try
-                {
+                {                  
                     Flight flight = new Flight(new FlightDalMsSql());
                     flight.flightId = Id;
                     flight.aircraftCode = flightViewModel.aircraftCode;
