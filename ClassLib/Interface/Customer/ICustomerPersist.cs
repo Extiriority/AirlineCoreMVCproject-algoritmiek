@@ -9,5 +9,6 @@ namespace ClassLib.Interface.Customer
         void save(CustomerDto customer);
         void delete(int Id);
         void update(CustomerDto customer);
+        void compareLogin(CustomerDto customer);
     }
 }

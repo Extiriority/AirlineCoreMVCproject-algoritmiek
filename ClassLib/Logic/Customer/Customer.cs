@@ -29,8 +29,6 @@ namespace ClassLib.Logic
             this.dateOfBirth    = data.dateOfBirth;
             this.gender         = data.gender;
             this.password       = data.password;
-
-            customer.save(data);
         }
 
         public Customer(ICustomerPersist customer)
@@ -40,36 +38,48 @@ namespace ClassLib.Logic
 
         public void Save()
         {
-            CustomerDto data = new CustomerDto();
-            data.customerId     = this.customerId;
-            data.firstName      = this.firstName;
-            data.lastName       = this.lastName;
-            data.email          = this.email;
-            data.phoneNumber    = this.phoneNumber;
-            data.dateOfBirth    = this.dateOfBirth;
-            data.gender         = this.gender;
-            data.password       = this.password;
-
+            CustomerDto data = new CustomerDto
+            {
+                customerId = this.customerId,
+                firstName = this.firstName,
+                lastName = this.lastName,
+                email = this.email,
+                phoneNumber = this.phoneNumber,
+                dateOfBirth = this.dateOfBirth,
+                gender = this.gender,
+                password = this.password
+            };
             customer.save(data);
         }
 
         public void Update()
         {
-            CustomerDto data = new CustomerDto();
-            data.customerId     = this.customerId;
-            data.firstName      = this.firstName;
-            data.lastName       = this.lastName;
-            data.email          = this.email;
-            data.phoneNumber    = this.phoneNumber;
-            data.dateOfBirth    = this.dateOfBirth;
-            data.gender         = this.gender;
-            data.password       = this.password;
-
+            CustomerDto data = new CustomerDto
+            {
+                customerId = this.customerId,
+                firstName = this.firstName,
+                lastName = this.lastName,
+                email = this.email,
+                phoneNumber = this.phoneNumber,
+                dateOfBirth = this.dateOfBirth,
+                gender = this.gender,
+                password = this.password
+            };
             customer.update(data);
         }
         public void Delete(int id)
         {
             customer.delete(id);
+        }
+
+        public void compareLogin()
+        {
+            CustomerDto data = new CustomerDto
+            {
+                email = this.email,
+                password = this.password
+            };
+            customer.compareLogin(data);
         }
     }
 }

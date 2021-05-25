@@ -6,6 +6,7 @@ namespace ClassLib.Interface.Customer
 {
     public interface ICustomerFetch
     {
-        CustomerDto getById(int Id);
+        CustomerDto getById(int id);
+        
     }
 }

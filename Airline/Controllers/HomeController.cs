@@ -14,7 +14,7 @@ namespace Airline.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -32,6 +32,11 @@ namespace Airline.Controllers
         public IActionResult Flight()
         {
             
+            return View();
+        }
+
+        public IActionResult Search(string searchBy, string search)
+        {
             return View();
         }
 

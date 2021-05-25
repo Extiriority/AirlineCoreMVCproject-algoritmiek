@@ -34,7 +34,7 @@ namespace ClassLib.Data
             }
             finally
             {
-                this.conn.Close();
+                connClose();
             }
             return flights;
         }
@@ -48,9 +48,10 @@ namespace ClassLib.Data
                 FlightDto flight = new FlightDto();
                 
                 databaseConnection(query);
-                cmd.Parameters.Add("@flightId", System.Data.SqlDbType.Int).Value = Id;
+                cmd.Parameters.Add("@flightId", SqlDbType.Int).Value = Id;
                 using (reader = cmd.ExecuteReader())
-                using (SqlCommand command = new SqlCommand(query, conn))                
+                using (SqlCommand command = new SqlCommand(query, conn))      
+                    
                 while (reader.Read())
                 {                       
                     {
@@ -68,7 +69,7 @@ namespace ClassLib.Data
             }
             finally
             {
-                this.conn.Close();
+                connClose();
             }  
         }
 
@@ -84,7 +85,7 @@ namespace ClassLib.Data
             }
             finally
             {
-                this.conn.Close();
+                connClose();
             }
         }
 
@@ -141,7 +142,7 @@ namespace ClassLib.Data
             }
             finally
             {
-                this.conn.Close();
+                connClose();
             }         
         }
     }

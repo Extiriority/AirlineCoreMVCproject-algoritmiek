@@ -60,14 +60,16 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Flight flight = new Flight(new FlightDalMsSql());
-                    flight.aircraftCode = flightViewModel.aircraftCode;
-                    flight.aircraftType = flightViewModel.aircraftType;
-                    flight.departureCountry = flightViewModel.departureCountry;
-                    flight.arrivalCountry = flightViewModel.arrivalCountry;
-                    flight.departureDate = flightViewModel.departureDate;
-                    flight.arrivalDate = flightViewModel.arrivalDate;
-                    flight.flightStatus = flightViewModel.flightStatus;
+                    Flight flight = new Flight(new FlightDalMsSql())
+                    {
+                        aircraftCode = flightViewModel.aircraftCode,
+                        aircraftType = flightViewModel.aircraftType,
+                        departureCountry = flightViewModel.departureCountry,
+                        arrivalCountry = flightViewModel.arrivalCountry,
+                        departureDate = flightViewModel.departureDate,
+                        arrivalDate = flightViewModel.arrivalDate,
+                        flightStatus = flightViewModel.flightStatus
+                    };
 
                     flight.Save();
                     
@@ -96,16 +98,18 @@ namespace Airline.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {                  
-                    Flight flight = new Flight(new FlightDalMsSql());
-                    flight.flightId = Id;
-                    flight.aircraftCode = flightViewModel.aircraftCode;
-                    flight.aircraftType = flightViewModel.aircraftType;
-                    flight.departureCountry = flightViewModel.departureCountry;
-                    flight.arrivalCountry = flightViewModel.arrivalCountry;
-                    flight.departureDate = flightViewModel.departureDate;
-                    flight.arrivalDate = flightViewModel.arrivalDate;
-                    flight.flightStatus = flightViewModel.flightStatus;
+                {
+                    Flight flight = new Flight(new FlightDalMsSql())
+                    {
+                        flightId = Id,
+                        aircraftCode = flightViewModel.aircraftCode,
+                        aircraftType = flightViewModel.aircraftType,
+                        departureCountry = flightViewModel.departureCountry,
+                        arrivalCountry = flightViewModel.arrivalCountry,
+                        departureDate = flightViewModel.departureDate,
+                        arrivalDate = flightViewModel.arrivalDate,
+                        flightStatus = flightViewModel.flightStatus
+                    };
 
                     flight.Update();
 

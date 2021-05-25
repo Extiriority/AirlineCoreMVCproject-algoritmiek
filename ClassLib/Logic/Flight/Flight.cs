@@ -37,30 +37,34 @@ namespace ClassLib.Logic
 
         public void Save()
         {
-            FlightDto data = new FlightDto();
-            data.flightId           = this.flightId;
-            data.aircraftCode       = this.aircraftCode;
-            data.aircraftType       = this.aircraftType;
-            data.departureCountry   = this.departureCountry;
-            data.arrivalCountry     = this.arrivalCountry;
-            data.departureDate      = this.departureDate;
-            data.arrivalDate        = this.arrivalDate;
-            data.flightStatus       = this.flightStatus;
+            FlightDto data = new FlightDto
+            {
+                flightId = this.flightId,
+                aircraftCode = this.aircraftCode,
+                aircraftType = this.aircraftType,
+                departureCountry = this.departureCountry,
+                arrivalCountry = this.arrivalCountry,
+                departureDate = this.departureDate,
+                arrivalDate = this.arrivalDate,
+                flightStatus = this.flightStatus
+            };
 
             flight.save(data);         
         }
 
         public void Update()
         {
-            FlightDto data = new FlightDto();
-            data.flightId           = this.flightId;
-            data.aircraftCode       = this.aircraftCode;
-            data.aircraftType       = this.aircraftType;
-            data.departureCountry   = this.departureCountry;
-            data.arrivalCountry     = this.arrivalCountry;
-            data.departureDate      = this.departureDate;
-            data.arrivalDate        = this.arrivalDate;
-            data.flightStatus       = this.flightStatus;
+            FlightDto data = new FlightDto
+            {
+                flightId = this.flightId,
+                aircraftCode = this.aircraftCode,
+                aircraftType = this.aircraftType,
+                departureCountry = this.departureCountry,
+                arrivalCountry = this.arrivalCountry,
+                departureDate = this.departureDate,
+                arrivalDate = this.arrivalDate,
+                flightStatus = this.flightStatus
+            };
 
             flight.update(data);
         }

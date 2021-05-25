@@ -12,7 +12,6 @@ namespace ClassLib.Data
         public SqlCommand cmd;
         public SqlDataReader reader;
 
-
         public Database()
         {
             connectionString = "Data Source=mssql.fhict.local;Initial Catalog=dbi463189_airline;Persist Security Info=True;User ID=dbi463189_airline;Password=m4VEw2tX;";

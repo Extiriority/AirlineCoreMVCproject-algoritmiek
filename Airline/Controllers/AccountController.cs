@@ -4,11 +4,13 @@ using ClassLib.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Scrypt;
-using ClassLib.Interface;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+using Microsoft.AspNetCore.Session;
+using System.Security;
 
 namespace Airline.Controllers
 {
@@ -26,6 +28,66 @@ namespace Airline.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Login(CustomerLoginViewModel customerLoginViewModel)
+        {
+            string connectionString = "Data Source=mssql.fhict.local;Initial Catalog=dbi463189_airline;Persist Security Info=True;User ID=dbi463189_airline;Password=m4VEw2tX;";
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = "SELECT Email,Password FROM Customer " +
+                               "WHERE Email = @email" +
+                               "Password = @password";
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Email", customerLoginViewModel.email);
+            cmd.Parameters.AddWithValue("@Password", customerLoginViewModel.password);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                
+                
+            }
+            return RedirectToAction("Index", "Home");
+            /*try
+             {
+                 ScryptEncoder encoder = new ScryptEncoder();
+                 
+                 Customer validCustomer = new Customer(new CustomerDalMsSql())
+                 {
+                     email = customerLoginViewModel.email,
+                     password = encoder.Encode(customerLoginViewModel.password)
+                 };
+
+                 validCustomer.compareLogin();
+
+                 if (validCustomer == null)
+                 {
+                     ViewBag.Error = "Username or password is invalid.";
+                     return View();
+                 }
+
+                 bool isValidCustomer = encoder.Compare(customerLoginViewModel.password, validCustomer.password);
+                 if (isValidCustomer)
+                 {
+                     return View("User");
+                 }
+                 else
+                 { 
+                     ViewBag.Error = "Username or password is invalid.";
+                 }
+
+                 return RedirectToAction("Index", "Home");
+             }
+             catch (Exception ex)
+             {
+                 throw new Exception($"Error in Encode: {ex.Message}");
+             }       */
+        }
         // GET: AccountController/Create
         public ActionResult Register()
         {
@@ -42,16 +104,18 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    ScryptEncoder encoder = new ScryptEncoder();                                     
-                    Customer customer = new Customer(new CustomerDalMsSql());
-                    customer.firstName      = customerViewModel.firstName;
-                    customer.lastName       = customerViewModel.lastName;
-                    customer.email          = customerViewModel.email;
-                    customer.phoneNumber    = customerViewModel.phoneNumber;
-                    customer.dateOfBirth    = customerViewModel.dateOfBirth;
-                    customer.gender         = customerViewModel.gender;
-                    customer.password       = encoder.Encode(customerViewModel.confirmPassword);
-                    
+                    ScryptEncoder encoder = new ScryptEncoder();
+                    Customer customer = new Customer(new CustomerDalMsSql())
+                    {
+                        firstName = customerViewModel.firstName,
+                        lastName = customerViewModel.lastName,
+                        email = customerViewModel.email,
+                        phoneNumber = customerViewModel.phoneNumber,
+                        dateOfBirth = customerViewModel.dateOfBirth,
+                        gender = customerViewModel.gender,
+                        password = encoder.Encode(customerViewModel.confirmPassword)
+                    };
+
                     customer.Save();
 
                     return RedirectToAction("Index", "Home");
@@ -65,35 +129,6 @@ namespace Airline.Controllers
             return View();
         }
 
-        public ActionResult Login()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Login(CustomerViewModel customerViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    CustomerContainer customerContainer = new CustomerContainer(new CustomerDalMsSql());
-                    //CustomerDto flightDetail = customerContainer.getById(Id);
-                    ScryptEncoder encoder = new ScryptEncoder();
-                    //bool validCustomer = encoder.Compare(customerViewModel.password, );
-                    
-                    //hier gebleven!!!!!!!!!!!!!!!!!!!!!!!!!
-                    //customer.Save();
-
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Error in Encode: {ex.Message}");
-                }
-
-            }
-            return View();
-        }
 
         // GET: AccountController/Edit/5
         public ActionResult Edit(int id)

@@ -78,6 +78,12 @@ body .register-body {
     background: url("C:\Users\Giang\OneDrive - Office 365 Fontys\1. jaar\2. Semester\Individueel\AirlineCoreMVCproject\Airline\wwwroot\Images\wp3258554.png"), -webkit-linear-gradient(bottom, #16A085, #F4D03F);
 }
 
+.booking-div {
+    display: flex;
+    justify-content: center;
+
+}
+
 .register-container {
   width: 420px;
   background: #fff;
@@ -119,6 +125,10 @@ body .register-body {
   margin: 45px 0;
   display: flex;
   position: relative;
+}
+
+.form-outer form .page .radio {   
+    margin: 25px 20px;
 }
 
 form .page .field .label {
