@@ -1,5 +1,5 @@
 ﻿using Airline.Models;
-using ClassLib.Logic.Ticket;
+using ClassLib.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,15 +15,44 @@ namespace Airline.Controllers
 
         // GET: TicketController
         public ActionResult Index()
-        {
+        {           
             return View();
         }
 
-        // GET: TicketController/Details/5
-        public ActionResult Details(int id)
+        // GET:
+        public IActionResult Search()
         {
-            return View();
+            FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
+            flightDetailView.Flights = new List<FlightViewModel>();
+
+            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
+            List<Flight> flights = flightContainer.getAll();
+
+            foreach (Flight flight in flights)
+            {
+                flightDetailView.Flights.Add(new FlightViewModel(flight));
+            }
+            return View(flightDetailView);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(string searchString)
+        {
+            FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
+            flightDetailView.Flights = new List<FlightViewModel>();
+
+            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
+            List<Flight> flights = flightContainer.searchFlight(searchString);
+
+            foreach (Flight flight in flights)
+            {
+                flightDetailView.Flights.Add(new FlightViewModel(flight));
+            }
+            return View(flightDetailView);
+        }
+
+
 
         // GET: TicketController/Create
         public ActionResult Create()
@@ -48,7 +77,7 @@ namespace Airline.Controllers
                     };
                     ticket.Save();
 
-                    return RedirectToAction("Search", "Home");
+                    return RedirectToAction("Search", "Flight");
                 }
                 catch
                 {
@@ -58,11 +87,6 @@ namespace Airline.Controllers
             return View();
         }
 
-        // GET: TicketController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
         // POST: TicketController/Edit/5
         [HttpPost]
@@ -79,11 +103,7 @@ namespace Airline.Controllers
             }
         }
 
-        // GET: TicketController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
 
         // POST: TicketController/Delete/5
         [HttpPost]

@@ -14,7 +14,7 @@ namespace Airline.Controllers
 {
     public class AdminController : Controller
     {
-        private FlightContainer flightContainer;
+        private readonly FlightContainer flightContainer;
 
         public AdminController()
         {
@@ -68,9 +68,9 @@ namespace Airline.Controllers
                         arrivalCountry = flightViewModel.arrivalCountry,
                         departureDate = flightViewModel.departureDate,
                         arrivalDate = flightViewModel.arrivalDate,
-                        flightStatus = flightViewModel.flightStatus
+                        flightStatus = flightViewModel.flightStatus,
+                        price = flightViewModel.price
                     };
-
                     flight.Save();
                     
                     return RedirectToAction("Flight", "Admin");           
@@ -108,7 +108,8 @@ namespace Airline.Controllers
                         arrivalCountry = flightViewModel.arrivalCountry,
                         departureDate = flightViewModel.departureDate,
                         arrivalDate = flightViewModel.arrivalDate,
-                        flightStatus = flightViewModel.flightStatus
+                        flightStatus = flightViewModel.flightStatus,
+                        price = flightViewModel.price
                     };
 
                     flight.Update();
@@ -127,7 +128,7 @@ namespace Airline.Controllers
         // POST: Admin/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, FlightViewModel flightViewModel)
+        public ActionResult Delete(int id)
         {
             try
             {

@@ -18,10 +18,19 @@ namespace ClassLib.Logic
             List<FlightDto> flightTemp = flightContainer.getAll();
             List<Flight> flights = new List<Flight>();
 
-            foreach (FlightDto flightDto in flightTemp)
-            {
+            foreach (FlightDto flightDto in flightTemp)           
                 flights.Add(new Flight(flightDto));
-            }
+            
+            return flights;
+        }
+        public List<Flight> searchFlight(string searchString)
+        {
+            List<FlightDto> flightTemp = flightContainer.searchFlight(searchString);
+            List<Flight> flights = new List<Flight>();
+
+            foreach (FlightDto flightDto in flightTemp)
+                flights.Add(new Flight(flightDto));
+
             return flights;
         }
 

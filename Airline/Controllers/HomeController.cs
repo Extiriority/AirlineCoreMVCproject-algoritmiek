@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClassLib.Data;
 using ClassLib.Logic;
+using Microsoft.AspNetCore.Http;
 
 namespace Airline.Controllers
 {
@@ -22,11 +23,13 @@ namespace Airline.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 
         public IActionResult Privacy()
         {
+           
             return View();
         }
         public IActionResult Flight()
@@ -35,10 +38,6 @@ namespace Airline.Controllers
             return View();
         }
 
-        public IActionResult Search(string searchBy, string search)
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

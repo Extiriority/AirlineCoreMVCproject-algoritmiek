@@ -80,7 +80,7 @@ namespace Airline.UnitTests
             FlightContainer flightContainer = new FlightContainer(new FlightDALStub());
 
             // Act
-            FlightDto flight = flightContainer.getById(1);
+            Flight flight = flightContainer.getById(1);
 
             // Assert
             Assert.AreEqual("Japan", flight.arrivalCountry, "The arrival country and flight id is not equal.");

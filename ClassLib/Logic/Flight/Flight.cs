@@ -17,7 +17,8 @@ namespace ClassLib.Logic
         public DateTime departureDate { get; set; }
         public DateTime arrivalDate { get; set; }
         public bool flightStatus { get; set; }
-       
+        public int price { get; set; }
+
         public Flight(FlightDto data)
         {
             this.flightId           = data.flightId;
@@ -28,6 +29,7 @@ namespace ClassLib.Logic
             this.departureDate      = data.departureDate;
             this.arrivalDate        = data.arrivalDate;
             this.flightStatus       = data.flightStatus;
+            this.price              = data.price;
         }
 
         public Flight(IFlightPersist flight)
@@ -46,7 +48,8 @@ namespace ClassLib.Logic
                 arrivalCountry = this.arrivalCountry,
                 departureDate = this.departureDate,
                 arrivalDate = this.arrivalDate,
-                flightStatus = this.flightStatus
+                flightStatus = this.flightStatus,
+                price = this.price
             };
 
             flight.save(data);         
@@ -63,7 +66,8 @@ namespace ClassLib.Logic
                 arrivalCountry = this.arrivalCountry,
                 departureDate = this.departureDate,
                 arrivalDate = this.arrivalDate,
-                flightStatus = this.flightStatus
+                flightStatus = this.flightStatus,
+                price = this.price
             };
 
             flight.update(data);

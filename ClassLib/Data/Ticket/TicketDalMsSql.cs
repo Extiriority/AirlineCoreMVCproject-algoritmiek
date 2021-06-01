@@ -1,4 +1,4 @@
-﻿using ClassLib.Interface.Ticket;
+﻿using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;

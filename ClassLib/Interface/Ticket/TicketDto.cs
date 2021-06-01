@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClassLib.Interface.Ticket
+namespace ClassLib.Interface
 {
     public class TicketDto
     {

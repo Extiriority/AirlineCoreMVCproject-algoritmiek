@@ -1,4 +1,4 @@
-﻿using ClassLib.Logic.Ticket;
+﻿using ClassLib.Logic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

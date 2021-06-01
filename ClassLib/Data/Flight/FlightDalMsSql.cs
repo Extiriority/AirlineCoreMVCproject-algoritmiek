@@ -27,7 +27,9 @@ namespace ClassLib.Data
                         arrivalCountry = Convert.ToString(reader["arrivalCountry"]),
                         departureDate = (DateTime)reader["departureDate"],
                         arrivalDate = (DateTime)reader["arrivalDate"],
-                        flightStatus = (bool)reader["flightStatus"]
+                        flightStatus = (bool)reader["flightStatus"],
+                        price = (int)reader["price"]
+
                     };
                     flights.Add(flightDto);
                 }                
@@ -63,6 +65,7 @@ namespace ClassLib.Data
                         flight.departureDate = (DateTime)reader["departureDate"];
                         flight.arrivalDate = (DateTime)reader["arrivalDate"];
                         flight.flightStatus = (bool)reader["flightStatus"];
+                        flight.price = (int)reader["price"];
                     }; 
                 }
                 return flight;
@@ -93,8 +96,8 @@ namespace ClassLib.Data
         {
             try
             {
-                string query = "INSERT INTO Flight (AircraftCode, AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus) " +
-                               "VALUES (@aircraftCode, @AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus)";
+                string query = "INSERT INTO Flight (AircraftCode, AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus, Price) " +
+                               "VALUES (@aircraftCode, @AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus, @price)";
                 databaseConnection(query);
 
                 cmd.Parameters.AddWithValue("@AircraftCode", data.aircraftCode);
@@ -104,6 +107,7 @@ namespace ClassLib.Data
                 cmd.Parameters.AddWithValue("@DepartureDate", data.departureDate);
                 cmd.Parameters.AddWithValue("@ArrivalDate", data.arrivalDate);
                 cmd.Parameters.AddWithValue("@FlightStatus", data.flightStatus);
+                cmd.Parameters.AddWithValue("@Price", data.price);
 
                 cmd.ExecuteNonQuery();
             }
@@ -124,7 +128,8 @@ namespace ClassLib.Data
                     "ArrivalCountry = @ArrivalCountry, " +
                     "DepartureDate = @DepartureDate, " +
                     "ArrivalDate = @ArrivalDate, " +
-                    "FlightStatus = @FlightStatus " +
+                    "FlightStatus = @FlightStatus, " +
+                    "Price = @price " +
                     "WHERE Id = @flightId";
                 databaseConnection(query);
 
@@ -137,6 +142,7 @@ namespace ClassLib.Data
                 cmd.Parameters.AddWithValue("@DepartureDate", data.departureDate);
                 cmd.Parameters.AddWithValue("@ArrivalDate", data.arrivalDate);
                 cmd.Parameters.AddWithValue("@FlightStatus", data.flightStatus);
+                cmd.Parameters.AddWithValue("@price", data.price);
 
                 cmd.ExecuteNonQuery();
             }
@@ -144,6 +150,41 @@ namespace ClassLib.Data
             {
                 connClose();
             }         
+        }
+
+        public List<FlightDto> searchFlight(string searchString)
+        {
+             List<FlightDto> flights = new List<FlightDto>();
+             try
+             {
+                string query = "SELECT * FROM Flight WHERE arrivalCountry LIKE '%" + searchString + "%'";
+                databaseConnection(query);
+
+                    using (reader = cmd.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand(query, conn))
+                    while (reader.Read())
+                    {
+                         FlightDto flightDto = new FlightDto
+                         {
+                             flightId = (int)reader["Id"],
+                             aircraftCode = Convert.ToString(reader["aircraftCode"]),
+                             aircraftType = Convert.ToString(reader["aircraftType"]),
+                             departureCountry = Convert.ToString(reader["departureCountry"]),
+                             arrivalCountry = Convert.ToString(reader["arrivalCountry"]),
+                             departureDate = (DateTime)reader["departureDate"],
+                             arrivalDate = (DateTime)reader["arrivalDate"],
+                             flightStatus = (bool)reader["flightStatus"],
+                             price = (int)reader["price"]
+             
+                         };
+                         flights.Add(flightDto);
+                    }
+             }
+             finally
+             {
+                 connClose();
+             }
+             return flights;           
         }
     }
 }

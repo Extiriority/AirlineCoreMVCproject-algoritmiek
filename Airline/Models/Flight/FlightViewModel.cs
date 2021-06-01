@@ -1,4 +1,5 @@
 ﻿using ClassLib.Logic;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,6 +34,10 @@ namespace Airline.Models
         [Required(ErrorMessage = "A flight status is required to proceed!")]
         public bool flightStatus { get; set; }
 
+        [Required(ErrorMessage = "A price is required to proceed!")]
+        public int price { get; set; }
+
+        
         public FlightViewModel()
         {
 
@@ -47,7 +52,7 @@ namespace Airline.Models
             this.departureDate      = flight.departureDate;
             this.arrivalDate        = flight.arrivalDate;
             this.flightStatus       = flight.flightStatus;
-
+            this.price              = flight.price;
         }
     }
 }

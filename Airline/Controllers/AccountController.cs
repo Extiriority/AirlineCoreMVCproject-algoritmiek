@@ -11,32 +11,25 @@ using System.Data.SqlClient;
 using System.Configuration;
 using Microsoft.AspNetCore.Session;
 using System.Security;
+using Microsoft.AspNetCore.Http;
 
 namespace Airline.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: AccountController
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        // GET: AccountController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            return RedirectToAction("Index");
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult Login(CustomerLoginViewModel customerLoginViewModel)
         {
+            
             string connectionString = "Data Source=mssql.fhict.local;Initial Catalog=dbi463189_airline;Persist Security Info=True;User ID=dbi463189_airline;Password=m4VEw2tX;";
             SqlConnection conn = new SqlConnection(connectionString);
             string query = "SELECT Email,Password FROM Customer " +
@@ -127,49 +120,6 @@ namespace Airline.Controllers
             
             }
             return View();
-        }
-
-
-        // GET: AccountController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AccountController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AccountController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AccountController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

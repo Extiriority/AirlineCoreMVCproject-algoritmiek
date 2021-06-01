@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Airline.Models.FlightDetailViewModel
+@{
     ViewData["Title"] = "Flight Management";
 }
 <h1>@ViewData["Title"]</h1>
@@ -16,6 +17,7 @@
             <th scope="col">Departure</th>
             <th scope="col">Arrival</th>
             <th scope="col">Status</th>
+            <th scope="col">Price</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +31,7 @@
                 <td>@flight.departureDate</td>
                 <td>@flight.arrivalDate</td>
                 <td>@flight.flightStatus</td>
+                <td>@flight.price</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Detail", "Details", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })

@@ -36,6 +36,11 @@ namespace ClassLib.Data
             flightDtoList.Add(flight);
         }
 
+        public List<FlightDto> searchFlight(string searchString)
+        {
+            throw new NotImplementedException();
+        }
+
         public void update(FlightDto flight)
         {
             flightDtoList.Add(flight);

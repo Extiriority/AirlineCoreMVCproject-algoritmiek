@@ -81,8 +81,7 @@ namespace ClassLib.Data.Customer
             try
             {
                 string query = "SELECT Email,Password FROM Customer " +
-                               "WHERE Email = @email" +
-                               "Password = @password";
+                               "WHERE Email = '$email' AND Password = '$password'";
                 databaseConnection(query);
 
                 cmd.Parameters.AddWithValue("@Email", data.email);

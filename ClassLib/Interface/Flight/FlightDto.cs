@@ -14,5 +14,6 @@ namespace ClassLib.Interface
         public DateTime departureDate { get; set; }
         public DateTime arrivalDate { get; set; }
         public bool flightStatus { get; set; }
+        public int price { get; set; }
     }
 }

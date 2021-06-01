@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Session;
 
 namespace Airline
 {
@@ -27,7 +28,7 @@ namespace Airline
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -51,11 +52,11 @@ namespace Airline
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+            
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
