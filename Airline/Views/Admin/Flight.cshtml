@@ -31,7 +31,7 @@
                 <td>@flight.departureDate</td>
                 <td>@flight.arrivalDate</td>
                 <td>@flight.flightStatus</td>
-                <td>@flight.price</td>
+                <td>€@flight.price,-</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Detail", "Details", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })

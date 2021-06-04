@@ -1,14 +1,9 @@
 ﻿using Airline.Models;
 using ClassLib.Data;
-using ClassLib.Interface;
 using ClassLib.Logic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Airline.Controllers
 {

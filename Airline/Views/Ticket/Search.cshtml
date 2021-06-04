@@ -37,7 +37,7 @@
                 <td>@flight.departureCountry</td>
                 <td>@flight.arrivalCountry</td>
                 <td>@flight.departureDate</td>
-                <td>@flight.price</td>
+                <td>€@flight.price,-</td>
                 <td>
                     @Html.ActionLink("Book Flight", "Book", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })
                 </td>

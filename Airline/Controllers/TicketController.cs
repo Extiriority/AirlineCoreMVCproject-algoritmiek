@@ -77,7 +77,7 @@ namespace Airline.Controllers
                     };
                     ticket.Save();
 
-                    return RedirectToAction("Search", "Flight");
+                    return RedirectToAction("Search");
                 }
                 catch
                 {
@@ -89,9 +89,8 @@ namespace Airline.Controllers
 
 
         // POST: TicketController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+
+        public ActionResult Book(int id, TicketViewModel ticketViewModel)
         {
             try
             {
