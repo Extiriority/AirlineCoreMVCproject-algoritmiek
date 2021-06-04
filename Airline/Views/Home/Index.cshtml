@@ -1,14 +1,16 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http;
+@{
     ViewData["Title"] = "Home Page";
 }
 
 
 <div class="text-center">
     <h1 class="display-4">Welcome to flying Dutchman</h1>
+    Welcome @Context.Session.GetString("email")
     <p>First step to explore the world!</p>
 </div>
 
 <div style="display: flex; justify-content: center;">
-    <a class="btn btn-primary" asp-controller="Ticket" asp-action="Create">Book a flight now!</a> 
+    <a class="btn btn-primary" asp-controller="Ticket" asp-action="Create">Book a flight now!</a>
 </div>
 

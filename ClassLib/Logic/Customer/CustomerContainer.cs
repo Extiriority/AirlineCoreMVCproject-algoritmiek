@@ -21,7 +21,6 @@ namespace ClassLib.Logic
 
             return customer;
         }
-
-        
+        public bool verifyLogin(string email, string password) => customerContainer.verifyLogin(email, password);
     }
 }

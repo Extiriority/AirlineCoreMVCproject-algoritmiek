@@ -28,7 +28,7 @@ namespace Airline
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -52,11 +52,9 @@ namespace Airline
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseSession();
-            
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

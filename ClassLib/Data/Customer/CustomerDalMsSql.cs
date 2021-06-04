@@ -2,6 +2,7 @@
 using ClassLib.Interface.Customer;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -76,21 +77,15 @@ namespace ClassLib.Data.Customer
             }
         }
 
-        public void compareLogin(CustomerDto data)
-        {
-            try
-            {
-                string query = "SELECT Email,Password FROM Customer " +
-                               "WHERE Email = '$email' AND Password = '$password'";
-                databaseConnection(query);
 
-                cmd.Parameters.AddWithValue("@Email", data.email);
-                cmd.Parameters.AddWithValue("@Password", data.password);
-            }
-            finally
-            {
-                connClose();
-            }
+        public bool verifyLogin(string email, string password)
+        {
+            string query = "SELECT CustomerId FROM Customer WHERE Email='" + email + "' AND Password='" + password + "'";
+            databaseConnection(query);
+
+            var result = cmd.ExecuteScalar();
+            bool trueOrFalse = result != null ? (int)result > 0 : false;
+            return trueOrFalse;
         }
     }
 }

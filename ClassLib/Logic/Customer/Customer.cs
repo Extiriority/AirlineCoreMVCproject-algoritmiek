@@ -71,15 +71,5 @@ namespace ClassLib.Logic
         {
             customer.delete(id);
         }
-
-        public void compareLogin()
-        {
-            CustomerDto data = new CustomerDto
-            {
-                email = this.email,
-                password = this.password
-            };
-            customer.compareLogin(data);
-        }
     }
 }
