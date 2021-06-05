@@ -1,15 +1,20 @@
 ﻿using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 
 namespace ClassLib.Data 
 {
-    public class FlightDalMsSql : Database, IFlightPersist, IFlightFetch
+    public class FlightDalMsSql : IPersistDal<FlightDto>, IFetchDal<FlightDto>
     {
-        public IEnumerable<FlightDto> getAll()
+
+        public IEnumerable<FlightDto> getAll() => Database.query<FlightDto>("SELECT * FROM Flight ORDER BY departureDate");
+
+        /*public IEnumerable<FlightDto> getAll()
         {
             List<FlightDto> flights = new List<FlightDto>();
             try
@@ -39,9 +44,20 @@ namespace ClassLib.Data
                 connClose();
             }
             return flights;
-        }
+        }*/
+        public FlightDto getById(int flightId)
+        {
+            var result = Database.query<FlightDto>(
+                "SELECT * FROM Flight WHERE FlightId = @flightId",
+                new
+                {
+                    flightId
+                }
+            ).ToImmutableList();
 
-        public FlightDto getById(int Id)
+            return result.Count != 1 ? null : result.Single();
+        }
+        /*public FlightDto getById(int Id)
         {
             try
             {
@@ -74,9 +90,17 @@ namespace ClassLib.Data
             {
                 connClose();
             }  
+        }*/
+        public void delete(int flightId)
+        {
+            Database.execute("DELETE FROM Flight WHERE FlightId = @flightId",
+                new
+                {
+                    flightId
+                }
+            );
         }
-
-        public void delete(int Id)
+        /*public void delete(int Id)
         {
             try
             {
@@ -90,9 +114,26 @@ namespace ClassLib.Data
             {
                 connClose();
             }
+        }*/
+        public void save(FlightDto data)
+        {
+            Database.execute(
+                "INSERT INTO Flight (AircraftCode, AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus, Price) VALUES (@aircraftCode, @AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus, @price) ON CONFLICT (Id) DO UPDATE SET AircraftCode = @aircraftCode, AircraftType = @aircraftType, DepartureCountry = @departureCountry, ArrivalCountry = @arrivalCountry, DepartureDate = @DepartureDate, ArrivalDate = @ArrivalDate, FlightStatus = @FlightStatus, Price = @price",
+                new
+                {
+                    data.aircraftCode,
+                    data.aircraftType,
+                    data.departureCountry,
+                    data.arrivalCountry,
+                    data.departureDate,
+                    data.arrivalDate,
+                    data.flightStatus,
+                    data.price
+                }
+            );
         }
 
-        public void save(FlightDto data)
+        /*public void save(FlightDto data)
         {
             try
             {
@@ -115,9 +156,26 @@ namespace ClassLib.Data
             {
                 connClose();
             }           
-        }
-
+        }*/
         public void update(FlightDto data)
+        {
+            Database.execute(
+                "UPDATE Flight SET AircraftCode = @aircraftCode, AircraftType = @aircraftType, DepartureCountry = @departureCountry, ArrivalCountry = @arrivalCountry, DepartureDate = @DepartureDate, ArrivalDate = @ArrivalDate, FlightStatus = @FlightStatus, Price = @price WHERE FlightId = @flightId",
+                new
+                {
+                    data.flightId,
+                    data.aircraftCode,
+                    data.aircraftType,
+                    data.departureCountry,
+                    data.arrivalCountry,
+                    data.departureDate,
+                    data.arrivalDate,
+                    data.flightStatus,
+                    data.price
+                }
+            );
+        }
+        /*public void update(FlightDto data)
         {
             try
             {
@@ -150,9 +208,11 @@ namespace ClassLib.Data
             {
                 connClose();
             }         
-        }
+        }*/
 
-        public IEnumerable<FlightDto> searchFlight(string searchString)
+        public IEnumerable<FlightDto> search(string searchString) => Database.query<FlightDto>("SELECT * FROM Flight WHERE arrivalCountry LIKE '%" + searchString + "%'");
+
+        /*public IEnumerable<FlightDto> search(string searchString)
         {
              List<FlightDto> flights = new List<FlightDto>();
              try
@@ -185,6 +245,6 @@ namespace ClassLib.Data
                  connClose();
              }
              return flights;           
-        }
+        }*/
     }
 }

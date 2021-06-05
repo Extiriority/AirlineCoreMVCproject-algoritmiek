@@ -1,4 +1,5 @@
-﻿using ClassLib.Interface;
+﻿using ClassLib.Data;
+using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,8 +8,8 @@ namespace ClassLib.Logic
 {
     public class Flight 
     {
-        public IFlightPersist flight;
-        public Flight(IFlightPersist flight)
+        public IPersistDal<FlightDto> flight;
+        public Flight(IPersistDal<FlightDto> flight)
         {
             this.flight = flight;
         }

@@ -6,7 +6,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace ClassLib.Data.Customer
+/*namespace ClassLib.Data.Customer
 {
     public class CustomerDalMsSql : Database, ICustomerPersist, ICustomerFetch
     {
@@ -88,4 +88,4 @@ namespace ClassLib.Data.Customer
             return trueOrFalse;
         }
     }
-}
+}*/

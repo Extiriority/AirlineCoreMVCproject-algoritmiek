@@ -1,10 +1,11 @@
-﻿using ClassLib.Interface;
+﻿using ClassLib.Data;
+using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ClassLib.Data
+namespace Airline.UnitTests
 {
     public class FlightDALStub : IFetchDal<FlightDto>, IPersistDal<FlightDto>
     {

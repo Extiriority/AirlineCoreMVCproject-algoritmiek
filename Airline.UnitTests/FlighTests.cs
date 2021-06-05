@@ -5,6 +5,7 @@ using ClassLib.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Airline.UnitTests
 {
@@ -20,23 +21,26 @@ namespace Airline.UnitTests
             FlightContainer flightContainer = new FlightContainer(new FlightDALStub());
 
             // Act
-            List<Flight> flights = flightContainer.getAll();
+            IEnumerable<Flight> flights = flightContainer.getAll();
+            List<Flight> asList = flights.ToList();
 
             // Assert
-            Assert.AreEqual(3, flights.Count, "Not all flights are present.");
+            Assert.AreEqual(3, asList.Count, "Not all flights are present.");
         }
 
         [TestMethod]
         public void save_MockFlights_AreEqual()
         {
             // Arrange
-            FlightDALStub flightDALStub = new FlightDALStub();
-            FlightContainer flightContainer = new FlightContainer(flightDALStub);
+            FlightDALStub flightDalStub = new FlightDALStub();
+            FlightContainer flightContainer = new FlightContainer(flightDalStub);
             Flight flightTest1 = new Flight(new FlightDto() { flightId = 4, aircraftCode = "FD444", aircraftType = "777X", departureCountry = "Netherlands", arrivalCountry = "Australia", departureDate = new DateTime(2009, 5, 3, 14, 30, 00), arrivalDate = new DateTime(2009, 5, 4, 1, 45, 00), flightStatus = true });
             Flight flightTest2 = new Flight(new FlightDto() { flightId = 5, aircraftCode = "FD879", aircraftType = "A340", departureCountry = "Netherlands", arrivalCountry = "Brazil", departureDate = new DateTime(2009, 5, 3, 14, 30, 00), arrivalDate = new DateTime(2009, 5, 3, 20, 45, 00), flightStatus = true });
 
 
-            Flight flight1 = new Flight(flightDALStub)
+
+            Flight flight1 = new Flight(flightDalStub);
+            FlightDto flightA = new FlightDto
             {
                 flightId = flightTest1.flightId,
                 aircraftCode = flightTest1.aircraftCode,
@@ -48,7 +52,8 @@ namespace Airline.UnitTests
                 flightStatus = flightTest1.flightStatus
             };
 
-            Flight flight2 = new Flight(flightDALStub)
+            Flight flight2 = new Flight(flightDalStub);
+            FlightDto flightB = new FlightDto
             {
                 flightId = flightTest2.flightId,
                 aircraftCode = flightTest2.aircraftCode,
@@ -59,16 +64,16 @@ namespace Airline.UnitTests
                 arrivalDate = flightTest2.arrivalDate,
                 flightStatus = flightTest2.flightStatus
             };
-            
-            // Act
-            flight1.Save();
-            flight2.Save();
-            List<Flight> flights = flightContainer.getAll();
 
+            // Act
+            flight1.save(new Flight(flightA));
+            flight2.save(new Flight(flightB));
+            IEnumerable<Flight> flights = flightContainer.getAll();
+            List<Flight> asList = flights.ToList();
             // Assert
-            Assert.AreEqual(5, flights.Count, "Not all flights are present.");
-            Assert.AreEqual("FD444", flights[3].aircraftCode, "The codename and index is not equal.");
-            Assert.AreEqual("Brazil", flights[4].arrivalCountry, "The arrival country and index is not equal.");
+            Assert.AreEqual(5, asList.Count, "Not all flights are present.");
+            Assert.AreEqual("FD444", asList[3].aircraftCode, "The codename and index is not equal.");
+            Assert.AreEqual("Brazil", asList[4].arrivalCountry, "The arrival country and index is not equal.");
          
             //loop all parameters check
         }
@@ -104,11 +109,11 @@ namespace Airline.UnitTests
 
             // Act
             flight.Delete(1);
-            List<Flight> flights = flightContainer.getAll();
-
+            IEnumerable<Flight> flights = flightContainer.getAll();
+            List<Flight> asList = flights.ToList();
             // Assert
-            Assert.AreEqual(2, flights.Count);
-            Assert.AreEqual("A321", flights[1].aircraftType);
+            Assert.AreEqual(2, asList.Count);
+            Assert.AreEqual("A321", asList[1].aircraftType);
         }
     }
 }

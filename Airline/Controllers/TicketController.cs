@@ -16,7 +16,7 @@ namespace Airline.Controllers
 
         // GET: TicketController
         public ActionResult Index()
-        {           
+        {
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Airline.Controllers
             return View();
         }
         // POST: TicketController/Create
-        [HttpPost]
+/*        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TicketViewModel ticketViewModel)
         {
@@ -85,7 +85,7 @@ namespace Airline.Controllers
                 }
             }
             return View();
-        }
+        }*/
 
 
         // POST: TicketController/Edit/5

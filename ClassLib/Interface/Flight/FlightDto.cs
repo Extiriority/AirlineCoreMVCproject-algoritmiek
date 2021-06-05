@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClassLib.Interface
 {
-    public struct FlightDto
+    public class FlightDto
     {
         public int flightId { get; set; }
         public string aircraftCode { get; set; }
