@@ -1,5 +1,6 @@
 ﻿using Airline.Models;
 using ClassLib.Data.Customer;
+using ClassLib.Interface;
 using ClassLib.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +56,8 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Customer customer = new Customer(new CustomerDalMsSql())
+                    Customer customer = new Customer(new CustomerDalMsSql());
+                    CustomerDto customerDto = new CustomerDto
                     {
                         firstName = customerViewModel.firstName,
                         lastName = customerViewModel.lastName,
@@ -66,7 +68,7 @@ namespace Airline.Controllers
                         password = customerViewModel.confirmPassword
                     };
 
-                    customer.Save();
+                    customer.save(new Customer(customerDto));
 
                     return RedirectToAction("Index", "Home");
                 }

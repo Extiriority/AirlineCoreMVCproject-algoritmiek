@@ -9,67 +9,27 @@ namespace ClassLib.Logic
     public class Customer
     {
         public ICustomerPersist customer;
-
-        public int customerId { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
-        public DateTime dateOfBirth { get; set; }
-        public string gender { get; set; }
-        public string password { get; set; }
-
-        public Customer(CustomerDto data)
-        {
-            this.customerId     = data.customerId;
-            this.firstName      = data.firstName;
-            this.lastName       = data.lastName;
-            this.email          = data.email;
-            this.phoneNumber    = data.phoneNumber;
-            this.dateOfBirth    = data.dateOfBirth;
-            this.gender         = data.gender;
-            this.password       = data.password;
-        }
-
         public Customer(ICustomerPersist customer)
         {
             this.customer = customer;
         }
+        public CustomerDto data { get; }
 
-        public void Save()
+        public Customer(CustomerDto customerDto)
         {
-            CustomerDto data = new CustomerDto
-            {
-                customerId = this.customerId,
-                firstName = this.firstName,
-                lastName = this.lastName,
-                email = this.email,
-                phoneNumber = this.phoneNumber,
-                dateOfBirth = this.dateOfBirth,
-                gender = this.gender,
-                password = this.password
-            };
-            customer.save(data);
+            data = customerDto;
         }
+        public int customerId => data.customerId;
+        public string firstName => data.firstName;
+        public string lastName => data.lastName;
+        public string email => data.email;
+        public string phoneNumber => data.phoneNumber;
+        public DateTime dateOfBirth => data.dateOfBirth;
+        public string gender => data.gender;
+        public string password => data.password;
 
-        public void Update()
-        {
-            CustomerDto data = new CustomerDto
-            {
-                customerId = this.customerId,
-                firstName = this.firstName,
-                lastName = this.lastName,
-                email = this.email,
-                phoneNumber = this.phoneNumber,
-                dateOfBirth = this.dateOfBirth,
-                gender = this.gender,
-                password = this.password
-            };
-            customer.update(data);
-        }
-        public void Delete(int id)
-        {
-            customer.delete(id);
-        }
-    }
+        public void save(Customer customer) => this.customer.save(customer.data);
+        public void update(Customer customer) => this.customer.update(customer.data);       
+        public void delete(int id) => customer.delete(id);
+    }   
 }

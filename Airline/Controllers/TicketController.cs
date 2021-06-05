@@ -7,6 +7,7 @@ using ClassLib.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClassLib.Interface;
 
 namespace Airline.Controllers
 {
@@ -26,7 +27,7 @@ namespace Airline.Controllers
             flightDetailView.Flights = new List<FlightViewModel>();
 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            List<Flight> flights = flightContainer.getAll();
+            IEnumerable<Flight> flights = flightContainer.getAll();
 
             foreach (Flight flight in flights)
             {
@@ -43,7 +44,7 @@ namespace Airline.Controllers
             flightDetailView.Flights = new List<FlightViewModel>();
 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            List<Flight> flights = flightContainer.searchFlight(searchString);
+            IEnumerable<Flight> flights = flightContainer.searchFlight(searchString);
 
             foreach (Flight flight in flights)
             {
@@ -51,8 +52,6 @@ namespace Airline.Controllers
             }
             return View(flightDetailView);
         }
-
-
 
         // GET: TicketController/Create
         public ActionResult Create()
@@ -68,14 +67,15 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Ticket ticket = new Ticket(new TicketDalMsSql())
+                    Ticket ticket = new Ticket(new TicketDalMsSql());
+                    TicketDto ticketDto = new TicketDto
                     {
                         ticketId = ticketViewModel.ticketId,
                         travelType = ticketViewModel.travelType,
                         classType = ticketViewModel.classType,
                         numberOfPassengers = ticketViewModel.numberOfpassenger
                     };
-                    ticket.Save();
+                    ticket.save(new Ticket(ticketDto));
 
                     return RedirectToAction("Search");
                 }

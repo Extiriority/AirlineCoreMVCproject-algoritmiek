@@ -1,6 +1,7 @@
 ﻿using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ClassLib.Logic
@@ -12,17 +13,8 @@ namespace ClassLib.Logic
         public TicketContainer(ITicketFetch ticketContainer)
         {
             this.ticketContainer = ticketContainer;
-        }
-       
-        public List<Ticket> getAll()
-        {
-            List<TicketDto> ticketTemp = ticketContainer.getAll();
-            List<Ticket> tickets = new List<Ticket>();
-
-            foreach (TicketDto ticketDto in ticketTemp)
-                tickets.Add(new Ticket(ticketDto));
-
-            return tickets;
-        }
+        }      
+        public IEnumerable<Ticket> getAll() => ticketContainer.getAll().Select(ticketDto => new Ticket(ticketDto));
     }
 }
+

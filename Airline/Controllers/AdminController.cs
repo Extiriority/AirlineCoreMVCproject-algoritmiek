@@ -1,5 +1,6 @@
 ﻿using Airline.Models;
 using ClassLib.Data;
+using ClassLib.Interface;
 using ClassLib.Logic;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Airline.Controllers
             flightDetailView.Flights = new List<FlightViewModel>();
 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            List<Flight> flights = flightContainer.getAll();
+            IEnumerable<Flight> flights = flightContainer.getAll();
 
             foreach (Flight flight in flights)
             {
@@ -55,7 +56,8 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Flight flight = new Flight(new FlightDalMsSql())
+                    Flight flight = new Flight(new FlightDalMsSql());
+                    FlightDto flightDto = new FlightDto
                     {
                         aircraftCode = flightViewModel.aircraftCode,
                         aircraftType = flightViewModel.aircraftType,
@@ -66,7 +68,7 @@ namespace Airline.Controllers
                         flightStatus = flightViewModel.flightStatus,
                         price = flightViewModel.price
                     };
-                    flight.Save();
+                    flight.save(new Flight(flightDto));
                     
                     return RedirectToAction("Flight", "Admin");           
                 }
@@ -94,7 +96,8 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Flight flight = new Flight(new FlightDalMsSql())
+                    Flight flight = new Flight(new FlightDalMsSql());
+                    FlightDto flightDto = new FlightDto
                     {
                         flightId = Id,
                         aircraftCode = flightViewModel.aircraftCode,
@@ -107,7 +110,7 @@ namespace Airline.Controllers
                         price = flightViewModel.price
                     };
 
-                    flight.Update();
+                    flight.update(new Flight(flightDto));
 
                     return RedirectToAction("Flight", "Admin");
                 }

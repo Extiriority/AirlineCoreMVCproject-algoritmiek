@@ -7,6 +7,6 @@ namespace ClassLib.Interface
 {
     public interface ITicketFetch
     {
-        List<TicketDto> getAll();
+        IEnumerable<TicketDto> getAll();
     }
 }

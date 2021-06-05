@@ -14,13 +14,7 @@ namespace ClassLib.Logic
         {
             this.customerContainer = customerContainer;
         }
-
-        public CustomerDto getById(int id)
-        {
-            CustomerDto customer = customerContainer.getById(id);
-
-            return customer;
-        }
+        public Customer getById(int id) => new Customer(customerContainer.getById(id));
         public bool verifyLogin(string email, string password) => customerContainer.verifyLogin(email, password);
     }
 }

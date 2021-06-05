@@ -9,7 +9,7 @@ namespace ClassLib.Data
 {
     public class FlightDalMsSql : Database, IFlightPersist, IFlightFetch
     {
-        public List<FlightDto> getAll()
+        public IEnumerable<FlightDto> getAll()
         {
             List<FlightDto> flights = new List<FlightDto>();
             try
@@ -152,7 +152,7 @@ namespace ClassLib.Data
             }         
         }
 
-        public List<FlightDto> searchFlight(string searchString)
+        public IEnumerable<FlightDto> searchFlight(string searchString)
         {
              List<FlightDto> flights = new List<FlightDto>();
              try

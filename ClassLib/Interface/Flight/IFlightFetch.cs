@@ -6,8 +6,8 @@ namespace ClassLib.Interface
 {
     public interface IFlightFetch
     {
-        List<FlightDto> getAll();
-        List<FlightDto> searchFlight(string searchString);
+        IEnumerable<FlightDto> getAll();
+        IEnumerable<FlightDto> searchFlight(string searchString);
         FlightDto getById(int Id);
     }
 }

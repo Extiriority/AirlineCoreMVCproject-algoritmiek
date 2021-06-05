@@ -20,7 +20,7 @@ namespace ClassLib.Data
             flightDtoList.RemoveAt(id);         
         }
 
-        public List<FlightDto> getAll()
+        public IEnumerable<FlightDto> getAll()
         {
             return flightDtoList;
         }
@@ -36,7 +36,7 @@ namespace ClassLib.Data
             flightDtoList.Add(flight);
         }
 
-        public List<FlightDto> searchFlight(string searchString)
+        public IEnumerable<FlightDto> searchFlight(string searchString)
         {
             throw new NotImplementedException();
         }

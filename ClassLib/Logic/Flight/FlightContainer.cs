@@ -1,6 +1,7 @@
 ﻿using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ClassLib.Logic
@@ -13,32 +14,8 @@ namespace ClassLib.Logic
         {
             this.flightContainer = flightContainer;
         }
-        public List<Flight> getAll()
-        {
-            List<FlightDto> flightTemp = flightContainer.getAll();
-            List<Flight> flights = new List<Flight>();
-
-            foreach (FlightDto flightDto in flightTemp)           
-                flights.Add(new Flight(flightDto));
-            
-            return flights;
-        }
-        public List<Flight> searchFlight(string searchString)
-        {
-            List<FlightDto> flightTemp = flightContainer.searchFlight(searchString);
-            List<Flight> flights = new List<Flight>();
-
-            foreach (FlightDto flightDto in flightTemp)
-                flights.Add(new Flight(flightDto));
-
-            return flights;
-        }
-
-        public Flight getById(int id)
-        {
-            FlightDto flightDto = flightContainer.getById(id);
-            Flight flight = new Flight(flightDto);
-            return flight;
-        }
+        public IEnumerable<Flight> getAll() => flightContainer.getAll().Select(flightDto => new Flight(flightDto));
+        public IEnumerable<Flight> searchFlight(string searchString) => flightContainer.searchFlight(searchString).Select(flightDto => new Flight(flightDto));    
+        public Flight getById(int id) => new Flight(flightContainer.getById(id));
     }
 }
