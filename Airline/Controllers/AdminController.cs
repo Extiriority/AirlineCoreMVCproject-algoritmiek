@@ -24,7 +24,7 @@ namespace Airline.Controllers
             flightDetailView.Flights = new List<FlightViewModel>();
 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            IEnumerable<Flight> flights = flightContainer.getAll();
+            IEnumerable<Flight> flights = flightContainer.getAllFlights();
 
             foreach (Flight flight in flights)
             {
@@ -37,7 +37,7 @@ namespace Airline.Controllers
         // GET: Admin/Details/5
         public ActionResult Details(int Id)
         {
-            Flight flight = flightContainer.getById(Id);
+            Flight flight = flightContainer.getFlightById(Id);
             return View(new FlightViewModel(flight));
         }
 
@@ -68,7 +68,7 @@ namespace Airline.Controllers
                         flightStatus = flightViewModel.flightStatus,
                         price = flightViewModel.price
                     };
-                    flight.save(new Flight(flightDto));
+                    flight.saveFlight(new Flight(flightDto));
                     
                     return RedirectToAction("Flight", "Admin");           
                 }
@@ -83,7 +83,7 @@ namespace Airline.Controllers
         // GET: Admin/Edit/5
         public ActionResult Edit(int Id)
         {           
-            Flight flight = flightContainer.getById(Id);
+            Flight flight = flightContainer.getFlightById(Id);
             return View(new FlightViewModel(flight));
         }
 
@@ -110,7 +110,7 @@ namespace Airline.Controllers
                         price = flightViewModel.price
                     };
 
-                    flight.update(new Flight(flightDto));
+                    flight.updateFlight(new Flight(flightDto));
 
                     return RedirectToAction("Flight", "Admin");
                 }
@@ -132,7 +132,7 @@ namespace Airline.Controllers
             {
                 Flight flight = new Flight(new FlightDalMsSql());
 
-                flight.Delete(id);
+                flight.DeleteFlight(id);
 
                 return RedirectToAction("Flight", "Admin");
             }

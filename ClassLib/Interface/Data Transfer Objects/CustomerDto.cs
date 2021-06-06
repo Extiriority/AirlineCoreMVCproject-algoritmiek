@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ClassLib.Interface
 {
-    public struct CustomerDto
+    public class CustomerDto
     {
         public int customerId { get; set; }
         public string firstName { get; set; }

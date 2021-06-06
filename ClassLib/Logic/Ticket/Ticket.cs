@@ -1,14 +1,12 @@
-﻿using ClassLib.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ClassLib.Data;
+using ClassLib.Interface;
 
 namespace ClassLib.Logic
 {
     public class Ticket
     {
-        public ITicketPersist ticket;
-        public Ticket(ITicketPersist ticket)
+        public IPersistDal<TicketDto> ticket;
+        public Ticket(IPersistDal<TicketDto> ticket)
         {
             this.ticket = ticket;
         }
@@ -23,7 +21,7 @@ namespace ClassLib.Logic
         public string classType => data.classType;
         public int numberOfPassengers => data.numberOfPassengers;
 
-        public void save(Ticket ticket) => this.ticket.save(ticket.data);
+        public void saveTicket(Ticket ticket) => this.ticket.save(ticket.data);
     }
 }
 

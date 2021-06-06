@@ -1,15 +1,13 @@
-﻿using ClassLib.Interface;
-using ClassLib.Interface.Customer;
+﻿using ClassLib.Data;
+using ClassLib.Interface;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ClassLib.Logic
 {
     public class Customer
     {
-        public ICustomerPersist customer;
-        public Customer(ICustomerPersist customer)
+        public IPersistDal<CustomerDto> customer;
+        public Customer(IPersistDal<CustomerDto> customer)
         {
             this.customer = customer;
         }
@@ -28,8 +26,8 @@ namespace ClassLib.Logic
         public string gender => data.gender;
         public string password => data.password;
 
-        public void save(Customer customer) => this.customer.save(customer.data);
-        public void update(Customer customer) => this.customer.update(customer.data);       
-        public void delete(int id) => customer.delete(id);
+        public void saveCustomer(Customer customer) => this.customer.save(customer.data);
+        public void updateCustomer(Customer customer) => this.customer.update(customer.data);       
+        public void deleteCustomer(int id) => customer.delete(id);
     }   
 }

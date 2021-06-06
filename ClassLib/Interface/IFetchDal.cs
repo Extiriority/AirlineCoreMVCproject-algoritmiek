@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ClassLib.Data
 {
@@ -9,5 +7,6 @@ namespace ClassLib.Data
         IEnumerable<T> getAll();
         T getById(int id);
         IEnumerable<T> search(string searchString);
+        bool verifyLogin(string email, string password);
     }
 }

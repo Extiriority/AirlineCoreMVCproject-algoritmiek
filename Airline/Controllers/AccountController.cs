@@ -1,4 +1,4 @@
-﻿/*using Airline.Models;
+﻿using Airline.Models;
 using ClassLib.Data.Customer;
 using ClassLib.Interface;
 using ClassLib.Logic;
@@ -11,7 +11,6 @@ namespace Airline.Controllers
     public class AccountController : Controller
     {
 
-
         [HttpPost]
         [HttpGet]
         public IActionResult Logout()
@@ -22,21 +21,19 @@ namespace Airline.Controllers
 
         [HttpPost]
         public IActionResult Login(CustomerLoginViewModel customerLoginViewModel)
-        {
-            
+        {          
             if (ModelState.IsValid)
             {
                 CustomerContainer customer = new CustomerContainer(new CustomerDalMsSql());
-                bool userId = customer.verifyLogin(customerLoginViewModel.email, customerLoginViewModel.password);
+                bool validCustomer = customer.verifyLogin(customerLoginViewModel.email, customerLoginViewModel.password);
 
-                if (userId == false)
+                if (validCustomer != false)
                 {
-                    return RedirectToAction("Index", "Home");
+                    HttpContext.Session.SetString("email", customerLoginViewModel.email);
+                    return RedirectToAction("Dashboard", "Home");
                 }
-                HttpContext.Session.SetString("email", customerLoginViewModel.email);
-                return RedirectToAction("Dashboard", "Home");
+                    return RedirectToAction("Index", "Home");              
             }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -51,7 +48,6 @@ namespace Airline.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(CustomerViewModel customerViewModel)
         {
-
             if (ModelState.IsValid)
             {
                 try
@@ -68,7 +64,7 @@ namespace Airline.Controllers
                         password = customerViewModel.confirmPassword
                     };
 
-                    customer.save(new Customer(customerDto));
+                    customer.saveCustomer(new Customer(customerDto));
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -82,4 +78,3 @@ namespace Airline.Controllers
         }
     }
 }
-*/

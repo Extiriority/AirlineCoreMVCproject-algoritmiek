@@ -1,8 +1,6 @@
 ﻿using ClassLib.Data;
 using ClassLib.Interface;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ClassLib.Logic
 {
@@ -29,9 +27,9 @@ namespace ClassLib.Logic
         public bool flightStatus => data.flightStatus;
         public int price => data.price;
 
-        public void save(Flight flight) => this.flight.save(flight.data);
-        public void update(Flight flight) => this.flight.update(flight.data);
-        public void Delete(int id) => flight.delete(id);
+        public void saveFlight(Flight flight) => this.flight.save(flight.data);
+        public void updateFlight(Flight flight) => this.flight.update(flight.data);
+        public void DeleteFlight(int id) => flight.delete(id);
         
     }
 }

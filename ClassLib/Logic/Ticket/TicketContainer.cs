@@ -1,20 +1,19 @@
-﻿using ClassLib.Interface;
-using System;
+﻿using ClassLib.Data;
+using ClassLib.Interface;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ClassLib.Logic
 {
     public class TicketContainer
     {
-        private readonly ITicketFetch ticketContainer;
+        private readonly IFetchDal<TicketDto> ticketContainer;
 
-        public TicketContainer(ITicketFetch ticketContainer)
+        public TicketContainer(IFetchDal<TicketDto> ticketContainer)
         {
             this.ticketContainer = ticketContainer;
         }      
-        public IEnumerable<Ticket> getAll() => ticketContainer.getAll().Select(ticketDto => new Ticket(ticketDto));
+        public IEnumerable<Ticket> getAllsaveTickets() => ticketContainer.getAll().Select(ticketDto => new Ticket(ticketDto));
     }
 }
 

@@ -2,11 +2,8 @@
 using ClassLib.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using ClassLib.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ClassLib.Interface;
 
 namespace Airline.Controllers
@@ -27,7 +24,7 @@ namespace Airline.Controllers
             flightDetailView.Flights = new List<FlightViewModel>();
 
             FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
-            IEnumerable<Flight> flights = flightContainer.getAll();
+            IEnumerable<Flight> flights = flightContainer.getAllFlights();
 
             foreach (Flight flight in flights)
             {
@@ -59,7 +56,7 @@ namespace Airline.Controllers
             return View();
         }
         // POST: TicketController/Create
-/*        [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TicketViewModel ticketViewModel)
         {
@@ -75,7 +72,7 @@ namespace Airline.Controllers
                         classType = ticketViewModel.classType,
                         numberOfPassengers = ticketViewModel.numberOfpassenger
                     };
-                    ticket.save(new Ticket(ticketDto));
+                    ticket.saveTicket(new Ticket(ticketDto));
 
                     return RedirectToAction("Search");
                 }
@@ -85,7 +82,7 @@ namespace Airline.Controllers
                 }
             }
             return View();
-        }*/
+        }
 
 
         // POST: TicketController/Edit/5
