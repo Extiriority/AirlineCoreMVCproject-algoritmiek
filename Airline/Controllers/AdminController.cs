@@ -35,9 +35,9 @@ namespace Airline.Controllers
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int Id)
+        public ActionResult Details(int id)
         {
-            Flight flight = flightContainer.getFlightById(Id);
+            Flight flight = flightContainer.getFlightById(id);
             return View(new FlightViewModel(flight));
         }
 

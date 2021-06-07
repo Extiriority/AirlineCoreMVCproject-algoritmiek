@@ -22,6 +22,7 @@ namespace ClassLib.Logic
         public int numberOfPassengers => data.numberOfPassengers;
 
         public void saveTicket(Ticket ticket) => this.ticket.save(ticket.data);
+        public void deleteTicket(int id) => this.ticket.delete(id);
     }
 }
 

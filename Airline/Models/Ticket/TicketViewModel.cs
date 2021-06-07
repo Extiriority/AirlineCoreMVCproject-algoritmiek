@@ -1,4 +1,5 @@
 ﻿using ClassLib.Logic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Airline.Models
@@ -15,7 +16,9 @@ namespace Airline.Models
         public string classType { get; set; }
 
         [Required(ErrorMessage = "A class type is required to proceed!")]
-        public int numberOfpassenger { get; set; }
+        public int numberOfPassenger { get; set; }
+
+        public List<FlightViewModel> Flights { get; set; }
 
         public TicketViewModel()
         {
@@ -26,7 +29,7 @@ namespace Airline.Models
             this.ticketId = ticket.ticketId;
             this.travelType = ticket.travelType;
             this.classType = ticket.classType;
-            this.numberOfpassenger = ticket.numberOfPassengers;
+            this.numberOfPassenger = ticket.numberOfPassengers;
         }
     }
 }

@@ -67,8 +67,8 @@
                     <div class="title">Number of passengers:</div>
                     <div class="field">
                         <div class="label">Passengers</div>
-                        <span asp-validation-for="numberOfpassenger" class="text-danger"></span>
-                        <select class="form-control" name="numberOfpassenger" asp-for="numberOfpassenger">
+                        <span asp-validation-for="numberOfPassenger" class="text-danger"></span>
+                        <select class="form-control" name="numberOfpassenger" asp-for="numberOfPassenger">
                             @{
                                 int[] passengers = { 1, 2, 3, 4, 5 };
                                 foreach (var passenger in passengers)
@@ -78,10 +78,10 @@
                             }
                         </select>
                     </div>
-                        <a class="btn btn-primary" style="margin-right: 3px;" asp-controller="Ticket" asp-action="Create">Back  to start</a>
-                    <div class="field btns">
-                        <button class="submit" style="margin-left: 3px;">Submit</button>
-                    </div>
+                        <a class="btn btn-primary" style="margin-right: 3px;" asp-controller="Ticket" asp-action="Create">Back to start</a>
+                        <div class="field btns">
+                            <button class="submit" style="margin-left: 3px;">Submit</button>
+                        </div>
                 </div>
 
             </form>

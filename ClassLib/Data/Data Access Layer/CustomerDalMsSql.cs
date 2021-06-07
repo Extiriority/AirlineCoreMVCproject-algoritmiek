@@ -13,7 +13,7 @@ namespace ClassLib.Data.Customer
         public void save(CustomerDto data)
         {
             Database.execute(
-                "INSERT INTO Customer (FirstName, LastName, Email, PhoneNumber, DateOfBirth, Gender, Password) VALUES (@firstName, @lastName, @email, @phoneNumber, @dateOfBirth, @gender, @password)ON CONFLICT (CustomerId) DO UPDATE SET FirstName = @firstName, LastName = @lastName, Email = @email, PhoneNumber = @phoneNumber, DateOfBirth = @dateOfBirth, Gender = @gender, Password = @password",
+                "INSERT INTO Customer (FirstName, LastName, Email, PhoneNumber, DateOfBirth, Gender, Password) VALUES (@firstName, @lastName, @email, @phoneNumber, @dateOfBirth, @gender, @password)",
                 new
                 {
                     data.firstName,

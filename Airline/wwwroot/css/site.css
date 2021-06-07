@@ -24,6 +24,18 @@ a {
   border-color: #1861ac;
 }
 
+.navbar-nav {
+    display: block;
+}
+
+.nav-floatleft {
+    float: left;
+}
+
+.nav-floatright {
+    float: right;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -275,3 +287,4 @@ form .page .btns button.next {
     display: block;
     color: #fff;
 }
+

@@ -11,6 +11,7 @@ namespace ClassLib.Data
     {
 
         public IEnumerable<FlightDto> getAll() => Database.query<FlightDto>("SELECT * FROM Flight ORDER BY departureDate");
+        public IEnumerable<FlightDto> search(string searchString) => Database.query<FlightDto>("SELECT * FROM Flight WHERE arrivalCountry LIKE '%" + searchString + "%'");
 
         public FlightDto getById(int flightId)
         {
@@ -38,7 +39,7 @@ namespace ClassLib.Data
         public void save(FlightDto data)
         {
             Database.execute(
-                "INSERT INTO Flight (AircraftCode, AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus, Price) VALUES (@aircraftCode, @AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus, @price) ON CONFLICT (FlightId) DO UPDATE SET AircraftCode = @aircraftCode, AircraftType = @aircraftType, DepartureCountry = @departureCountry, ArrivalCountry = @arrivalCountry, DepartureDate = @DepartureDate, ArrivalDate = @ArrivalDate, FlightStatus = @FlightStatus, Price = @price",
+                "INSERT INTO Flight (AircraftCode, AircraftType, DepartureCountry, ArrivalCountry, DepartureDate, ArrivalDate, FlightStatus, Price) VALUES (@aircraftCode, @AircraftType, @DepartureCountry, @ArrivalCountry, @DepartureDate, @ArrivalDate, @FlightStatus, @price)",
                 new
                 {
                     data.aircraftCode,
@@ -71,8 +72,6 @@ namespace ClassLib.Data
                 }
             );
         }
-        public IEnumerable<FlightDto> search(string searchString) => Database.query<FlightDto>("SELECT * FROM Flight WHERE arrivalCountry LIKE '%" + searchString + "%'");
-
         public bool verifyLogin(string email, string password)
         {
             throw new NotImplementedException();

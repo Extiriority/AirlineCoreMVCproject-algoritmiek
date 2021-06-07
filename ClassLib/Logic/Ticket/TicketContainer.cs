@@ -13,7 +13,7 @@ namespace ClassLib.Logic
         {
             this.ticketContainer = ticketContainer;
         }      
-        public IEnumerable<Ticket> getAllsaveTickets() => ticketContainer.getAll().Select(ticketDto => new Ticket(ticketDto));
+        public IEnumerable<Ticket> getAllTickets() => ticketContainer.getAll().Select(ticketDto => new Ticket(ticketDto));
     }
 }
 

@@ -35,7 +35,7 @@ namespace Airline.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Search(string searchString)
+        public ActionResult Search(int id, string searchString)
         {
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
@@ -70,11 +70,11 @@ namespace Airline.Controllers
                         ticketId = ticketViewModel.ticketId,
                         travelType = ticketViewModel.travelType,
                         classType = ticketViewModel.classType,
-                        numberOfPassengers = ticketViewModel.numberOfpassenger
+                        numberOfPassengers = ticketViewModel.numberOfPassenger
                     };
                     ticket.saveTicket(new Ticket(ticketDto));
 
-                    return RedirectToAction("Search");
+                    return RedirectToAction("Confirm"); // procceed abort list ticket info
                 }
                 catch
                 {
@@ -84,6 +84,20 @@ namespace Airline.Controllers
             return View();
         }
 
+        public ActionResult Confirm()
+        {
+            TicketDetailViewModel ticketDetailView = new TicketDetailViewModel();
+            ticketDetailView.Tickets = new List<TicketViewModel>();
+
+            TicketContainer ticketContainer = new TicketContainer(new TicketDalMsSql());
+            IEnumerable<Ticket> tickets = ticketContainer.getAllTickets();
+
+            foreach (Ticket ticket in tickets)
+            {
+                ticketDetailView.Tickets.Add(new TicketViewModel(ticket));
+            }
+            return View(ticketDetailView);
+        }
 
         // POST: TicketController/Edit/5
 
@@ -104,11 +118,13 @@ namespace Airline.Controllers
         // POST: TicketController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Ticket ticket = new Ticket(new TicketDalMsSql());
+                ticket.deleteTicket(id);
+                return RedirectToAction("Confirm", "Ticket");
             }
             catch
             {
