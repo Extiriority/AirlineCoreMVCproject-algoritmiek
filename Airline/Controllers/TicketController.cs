@@ -51,9 +51,10 @@ namespace Airline.Controllers
         }
 
         // GET: TicketController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
-            return View();
+            CustomerDto loggedInUser = HttpContext.Session.getCustomer();
+            return string.IsNullOrEmpty(loggedInUser.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View();           
         }
         // POST: TicketController/Create
         [HttpPost]
@@ -74,7 +75,7 @@ namespace Airline.Controllers
                     };
                     ticket.saveTicket(new Ticket(ticketDto));
 
-                    return RedirectToAction("Confirm"); // procceed abort list ticket info
+                    return RedirectToAction("Confirm"); 
                 }
                 catch
                 {

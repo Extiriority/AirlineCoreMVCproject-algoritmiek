@@ -48,7 +48,7 @@ namespace ClassLib.Data
             throw new NotImplementedException();
         }
 
-        public bool verifyLogin(string email, string password)
+        public TicketDto verifyLogin(string email, string password)
         {
             throw new NotImplementedException();
         }

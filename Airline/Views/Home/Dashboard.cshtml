@@ -12,9 +12,7 @@ da@*
 <body>
 
     <h3>Dashboard Page</h3>
-    Welcome @Context.Session.GetString("email")
+    Welcome @Context.Session.GetString("firstName")
     <br>
-    <a asp-controller="account" asp-action="logout">Logout</a>
-
 </body>
 </html>

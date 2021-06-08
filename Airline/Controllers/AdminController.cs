@@ -131,7 +131,6 @@ namespace Airline.Controllers
             try
             {
                 Flight flight = new Flight(new FlightDalMsSql());
-
                 flight.DeleteFlight(id);
 
                 return RedirectToAction("Flight", "Admin");
@@ -141,6 +140,22 @@ namespace Airline.Controllers
                 return View("Flight", "Admin");
             }
 
+        }
+
+        public IActionResult Customer()
+        {
+            CustomerDetailViewModel customerDetailView = new CustomerDetailViewModel();
+            customerDetailView.Customers = new List<CustomerViewModel>();
+
+            CustomerContainer customerContainer = new CustomerContainer(new CustomerDalMsSql());
+            IEnumerable<Customer> customers = customerContainer.getAllCustomers();
+
+            foreach (Customer customer in customers)
+            {
+                customerDetailView.Customers.Add(new CustomerViewModel(customer));
+            }
+
+            return View(customerDetailView);
         }
     }
 }

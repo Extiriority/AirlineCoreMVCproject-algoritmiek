@@ -12,5 +12,6 @@ namespace ClassLib.Interface
         public DateTime dateOfBirth { get; set; }
         public string gender { get; set; }
         public string password { get; set; }
+        public bool isAdmin { get; set; }
     }
 }

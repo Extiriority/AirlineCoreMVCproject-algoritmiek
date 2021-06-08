@@ -72,7 +72,7 @@ namespace ClassLib.Data
                 }
             );
         }
-        public bool verifyLogin(string email, string password)
+        public FlightDto verifyLogin(string email, string password)
         {
             throw new NotImplementedException();
         }

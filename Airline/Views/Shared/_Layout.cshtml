@@ -25,22 +25,16 @@
                         </li>
                         <li class="nav-item nav-floatleft">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>                        
+                        </li>
                         <li class="nav-item nav-floatleft">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Search">Search</a>
                         </li>
-                        @if (Context.Session.GetString("admin") == "true")
-                        {
-                            <li class="nav-item nav-floatleft">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Flight">Flight Management</a>
-                            </li>
-                        }
-                        @if (!string.IsNullOrEmpty(Context.Session.GetString("email")))
+                        @if (!string.IsNullOrEmpty(Context.Session.GetString("firstName")))
                         {
                             <li class="nav-item">
                                 <div class="nav-floatright dropdown">
                                     <a class="dropdown-toggle nav-link text-dark" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        @Context.Session.GetString("email")
+                                        @Context.Session.GetString("firstName")
                                     </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" asp-controller="Home" asp-action="Dashboard">Account</a>
@@ -79,13 +73,22 @@
                             </div>
                             <a class="nav-link nav-floatright text-dark" asp-area="" asp-controller="Account" asp-action="register">Register</a>
                         }
+                        @if (Context.Session.GetString("admin") == "true")
+                        {
+                            <li class="nav-item nav-floatright">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Flight">Flight Management</a>
+                            </li>
+                            <li class="nav-item nav-floatright">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Customer">Customer Management</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
     <div>
-        <main role="main">
+        <main role="main"
               @RenderBody()
         </main>
     </div>

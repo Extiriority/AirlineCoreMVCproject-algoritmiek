@@ -1,5 +1,5 @@
 ﻿using Airline.Models;
-using ClassLib.Data.Customer;
+using ClassLib.Data;
 using ClassLib.Interface;
 using ClassLib.Logic;
 using Microsoft.AspNetCore.Http;
@@ -11,28 +11,32 @@ namespace Airline.Controllers
     public class AccountController : Controller
     {
 
+
+
         [HttpPost]
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("email");
+            HttpContext.Session.logoutCustomer();
             return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
-        public IActionResult Login(CustomerLoginViewModel customerLoginViewModel)
+        public IActionResult Login(CustomerLoginViewModel customer)
         {          
             if (ModelState.IsValid)
             {
-                CustomerContainer customer = new CustomerContainer(new CustomerDalMsSql());
-                bool validCustomer = customer.verifyLogin(customerLoginViewModel.email, customerLoginViewModel.password);
-
-                if (validCustomer != false)
+                try
                 {
-                    HttpContext.Session.SetString("email", customerLoginViewModel.email);
+                    CustomerContainer customerContainer = new CustomerContainer(new CustomerDalMsSql());
+                    Customer validCustomer = customerContainer.verifyLogin(customer.email, customer.password);
+                    logInCustomer(validCustomer);
                     return RedirectToAction("Dashboard", "Home");
                 }
-                    return RedirectToAction("Index", "Home");              
+                catch 
+                {
+                    return RedirectToAction("Index", "Home");
+                }                        
             }
             return RedirectToAction("Index", "Home");
         }
@@ -61,7 +65,7 @@ namespace Airline.Controllers
                         phoneNumber = customerViewModel.phoneNumber,
                         dateOfBirth = customerViewModel.dateOfBirth,
                         gender = customerViewModel.gender,
-                        password = customerViewModel.confirmPassword
+                        password = new PasswordHash().passwordHash256(customerViewModel.confirmPassword)
                     };
 
                     customer.saveCustomer(new Customer(customerDto));
@@ -75,6 +79,29 @@ namespace Airline.Controllers
             
             }
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                Customer customer = new Customer(new CustomerDalMsSql());
+                customer.deleteCustomer(id);
+
+                return RedirectToAction("Customer", "Admin");
+            }
+            catch
+            {
+                return View("Customer", "Admin");
+            }
+
+        }
+
+        private void logInCustomer(Customer loggedCustomer)
+        {
+            HttpContext.Session.updateCustomer(loggedCustomer);
         }
     }
 }

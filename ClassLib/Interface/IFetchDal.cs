@@ -7,6 +7,6 @@ namespace ClassLib.Data
         IEnumerable<T> getAll();
         T getById(int id);
         IEnumerable<T> search(string searchString);
-        bool verifyLogin(string email, string password);
+        T verifyLogin(string email, string password);
     }
 }

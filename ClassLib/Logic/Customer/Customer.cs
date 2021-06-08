@@ -25,8 +25,9 @@ namespace ClassLib.Logic
         public DateTime dateOfBirth => data.dateOfBirth;
         public string gender => data.gender;
         public string password => data.password;
+        public bool isAdmin => data.isAdmin;
 
-        public void saveCustomer(Customer customer) => this.customer.save(customer.data);
+        public void saveCustomer(Customer customer) => this.customer.save(customer.data);        
         public void updateCustomer(Customer customer) => this.customer.update(customer.data);       
         public void deleteCustomer(int id) => customer.delete(id);
     }   

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Airline.Models
 {
-    public class CostumerDetailViewModel
+    public class CustomerDetailViewModel
     {
         public List<CustomerViewModel> Customers { get; set; }
     }
