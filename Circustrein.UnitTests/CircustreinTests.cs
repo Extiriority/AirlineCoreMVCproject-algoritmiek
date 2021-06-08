@@ -13,7 +13,7 @@ namespace Circustrein.UnitTests
             Animal animal = new Animal("test", AnimalSize.big, AnimalDiet.carnivore);
             Carriage carriage = new Carriage();
 
-            var result = carriage.animalsInCarriageCheck(animal);
+            var result = carriage.IsEligible(animal);
 
             Assert.IsTrue(result);
         }
@@ -37,13 +37,13 @@ namespace Circustrein.UnitTests
                 type = AnimalDiet.herbivore
             });
 
-            var result = carriage.animalsInCarriageCheck(animal);
+            var result = carriage.IsEligible(animal);
 
             Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void AddToCarriage_WhenCarriageContainsCarnivore_ReturnsFalse()
+        public void AddBigHerbivoreToCarriage_WhenCarriageContainsBigCarnivore_ReturnsFalse()
         {
             Animal animal = new Animal("giraffe", AnimalSize.big, AnimalDiet.herbivore);
             Carriage carriage = new Carriage();
@@ -55,9 +55,27 @@ namespace Circustrein.UnitTests
                 type = AnimalDiet.carnivore
             });
 
-            var result = carriage.animalsInCarriageCheck(animal);
+            var result = carriage.IsEligible(animal);
 
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void AddBigHerbivoreToCarriage_WhenCarriageContainsMediumCarnivore_ReturnsTrue()
+        {
+            Animal animal = new Animal("giraffe", AnimalSize.big, AnimalDiet.herbivore);
+            Carriage carriage = new Carriage();
+
+            carriage.animalCarriage.Add(new Animal
+            {
+                name = "test",
+                size = AnimalSize.medium,
+                type = AnimalDiet.carnivore
+            });
+
+            var result = carriage.IsEligible(animal);
+
+            Assert.IsTrue(result);
         }
     }
 }

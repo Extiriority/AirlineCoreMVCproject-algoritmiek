@@ -21,7 +21,7 @@ namespace Airline.UnitTests
             FlightContainer flightContainer = new FlightContainer(new FlightDALStub());
 
             // Act
-            IEnumerable<Flight> flights = flightContainer.getAll();
+            IEnumerable<Flight> flights = flightContainer.getAllFlights();
             List<Flight> asList = flights.ToList();
 
             // Assert
@@ -66,9 +66,9 @@ namespace Airline.UnitTests
             };
 
             // Act
-            flight1.save(new Flight(flightA));
-            flight2.save(new Flight(flightB));
-            IEnumerable<Flight> flights = flightContainer.getAll();
+            flight1.saveFlight(new Flight(flightA));
+            flight2.saveFlight(new Flight(flightB));
+            IEnumerable<Flight> flights = flightContainer.getAllFlights();
             List<Flight> asList = flights.ToList();
             // Assert
             Assert.AreEqual(5, asList.Count, "Not all flights are present.");
@@ -85,7 +85,7 @@ namespace Airline.UnitTests
             FlightContainer flightContainer = new FlightContainer(new FlightDALStub());
 
             // Act
-            Flight flight = flightContainer.getById(1);
+            Flight flight = flightContainer.getFlightById(1);
 
             // Assert
             Assert.AreEqual("Japan", flight.arrivalCountry, "The arrival country and flight id is not equal.");
@@ -108,8 +108,8 @@ namespace Airline.UnitTests
             Flight flight = new Flight(flightDALStub);
 
             // Act
-            flight.Delete(1);
-            IEnumerable<Flight> flights = flightContainer.getAll();
+            flight.DeleteFlight(1);
+            IEnumerable<Flight> flights = flightContainer.getAllFlights();
             List<Flight> asList = flights.ToList();
             // Assert
             Assert.AreEqual(2, asList.Count);

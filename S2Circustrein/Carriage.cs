@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace S2Circustrein
 {
-    class Carriage
+    public class Carriage
     {
         public List<Animal> animalCarriage { get; set; }
         public int carriageSize => this.animalCarriage.Sum(animal => (int)animal.size);

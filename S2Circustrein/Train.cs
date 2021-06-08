@@ -27,33 +27,35 @@ namespace S2Circustrein
             {
                 Carriage carriage = new Carriage();
                 carriage.animalCarriage.Add(carnivore);
-                for (int i = herbivores.Count - 1; i >= 0; i--)
+                if (carnivore.size != AnimalSize.big)
                 {
-                    if (carriage.IsEligible(herbivores[i]))
+                    for (int i = herbivores.Count - 1; i >= 0; i--)
                     {
-                        carriage.animalCarriage.Add(herbivores[i]);
-                        herbivores.RemoveAt(i);
+                        if (carriage.IsEligible(herbivores[i]))
+                        {
+                            carriage.animalCarriage.Add(herbivores[i]);
+                            herbivores.RemoveAt(i);
+                        }
                     }
                 }
                 this.carriages.Add(carriage);
             }
-
             foreach (Animal herbivore in herbivores)
             {
                 placeAnimal(herbivore);
             }
         }
-        private void placeAnimal(Animal animal)
+        private void placeAnimal(Animal herbivore)
         {
             foreach (Carriage carriage in this.carriages)
             {
-                if (carriage.IsEligible(animal))
+                if (carriage.IsEligible(herbivore))
                 {
-                    carriage.animalCarriage.Add(animal);
+                    carriage.animalCarriage.Add(herbivore);
                     return;
                 }
             }
-            this.carriages.Add(new Carriage(animal));
+            this.carriages.Add(new Carriage(herbivore));
         }
         public override string ToString()
         {         
