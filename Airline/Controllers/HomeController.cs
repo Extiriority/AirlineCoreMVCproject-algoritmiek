@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 using Microsoft.AspNetCore.Http;
+using ClassLib.Logic;
+using ClassLib.Interface;
 
 namespace Airline.Controllers
 {
@@ -34,8 +36,9 @@ namespace Airline.Controllers
 
         public IActionResult Dashboard()
         {
-
-            return View();
+            Customer loggedInCustomer = HttpContext.Session.getCustomer();
+            ViewBag.User = loggedInCustomer;
+            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View();            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

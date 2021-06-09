@@ -28,7 +28,7 @@ namespace Airline.UnitTests
 
         public FlightDto getById(int Id)
         {
-            FlightDto flight = flightDtoList.Where(x => x.flightId == Id).FirstOrDefault();
+            FlightDto flight = flightDtoList.Single(x => x.flightId == Id);
             return flight;
         }
 
@@ -45,6 +45,11 @@ namespace Airline.UnitTests
         public void update(FlightDto flight)
         {
             flightDtoList.Add(flight);
+        }
+
+        public FlightDto verifyLogin(string email, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

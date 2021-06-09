@@ -1,9 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http;
-da@*
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -14,5 +13,12 @@ da@*
     <h3>Dashboard Page</h3>
     Welcome @Context.Session.GetString("firstName")
     <br>
+    <h2>Your profile</h2>
+    @ViewBag.User.firstName
+    @ViewBag.User.lastName
+    @ViewBag.User.email
+    @ViewBag.User.phoneNumber
+    @ViewBag.User.dateOfBirth
+    @ViewBag.User.gender
 </body>
 </html>

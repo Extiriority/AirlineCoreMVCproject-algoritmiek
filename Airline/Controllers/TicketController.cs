@@ -53,7 +53,7 @@ namespace Airline.Controllers
         // GET: TicketController/Create
         public IActionResult Create()
         {
-            CustomerDto loggedInUser = HttpContext.Session.getCustomer();
+            Customer loggedInUser = HttpContext.Session.getCustomer();
             return string.IsNullOrEmpty(loggedInUser.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View();           
         }
         // POST: TicketController/Create

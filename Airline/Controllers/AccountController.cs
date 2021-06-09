@@ -12,7 +12,6 @@ namespace Airline.Controllers
     {
 
 
-
         [HttpPost]
         [HttpGet]
         public IActionResult Logout()
@@ -30,6 +29,7 @@ namespace Airline.Controllers
                 {
                     CustomerContainer customerContainer = new CustomerContainer(new CustomerDalMsSql());
                     Customer validCustomer = customerContainer.verifyLogin(customer.email, customer.password);
+                    
                     logInCustomer(validCustomer);
                     return RedirectToAction("Dashboard", "Home");
                 }
@@ -99,9 +99,9 @@ namespace Airline.Controllers
 
         }
 
-        private void logInCustomer(Customer loggedCustomer)
+        private void logInCustomer(Customer validCustomer)
         {
-            HttpContext.Session.updateCustomer(loggedCustomer);
+            HttpContext.Session.updateCustomer(validCustomer);
         }
     }
 }

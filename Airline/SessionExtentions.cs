@@ -1,4 +1,5 @@
-﻿using ClassLib.Interface;
+﻿using ClassLib.Data;
+using ClassLib.Interface;
 using ClassLib.Logic;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -58,27 +59,23 @@ namespace Airline
                 setObject(session, "validCustomer", tempCustomer);
             }
         }
-        public static CustomerDto getCustomer(this ISession session)
+
+        public static Customer getCustomer(this ISession session)
         {
-            CustomerDto tempCustomer = new CustomerDto();
             if (!string.IsNullOrEmpty(session.GetString("firstName")))
             {
-                tempCustomer.customerId = (int)session.GetInt32("id");
-                tempCustomer.firstName = session.GetString("firstName");
-                tempCustomer.lastName = session.GetString("lastName");
-                tempCustomer.email = session.GetString("email");
-                tempCustomer.phoneNumber = session.GetString("phoneNumber");
-                tempCustomer.gender = session.GetString("gender");
+                int id = (int)session.GetInt32("id");
+                CustomerContainer customerContainer = new CustomerContainer(new CustomerDalMsSql());
+                Customer validCustomer = customerContainer.getCustomerById(id);
+                return validCustomer;
             }
             else
             {
-                tempCustomer.firstName = "";
+                CustomerDto customerDto = new CustomerDto { firstName = "" };
+                Customer inValidCustomer = new Customer(customerDto);
+
+                return inValidCustomer;
             }
-            return getObject(session, "validCustomer", tempCustomer);
-        }
-        public static CustomerDto getObject(this ISession session, string key, CustomerDto data)
-        {            
-            return data;
         }
     }
 }
