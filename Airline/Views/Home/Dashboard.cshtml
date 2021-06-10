@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿@model Airline.Models.TicketDetailViewModel
+@using Microsoft.AspNetCore.Http;
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -9,16 +10,49 @@
     <title>Success</title>
 </head>
 <body>
-
-    <h3>Dashboard Page</h3>
+    <h1>Dashboard Page</h1>
     Welcome @Context.Session.GetString("firstName")
     <br>
     <h2>Your profile</h2>
     @ViewBag.User.firstName
+    <br>
     @ViewBag.User.lastName
+    <br>
     @ViewBag.User.email
+    <br>
     @ViewBag.User.phoneNumber
+    <br>
     @ViewBag.User.dateOfBirth
+    <br>
     @ViewBag.User.gender
+    <br>
+    <h2>Unfinished booking process</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ticket Id</th>
+                <th scope="col">Travel</th>
+                <th scope="col">Class</th>
+                <th scope="col">Passengers</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model.Tickets)
+            {
+                <tr>
+                    <td>@ticket.ticketId</td>
+                    <td>@ticket.travelType</td>
+                    <td>@ticket.classType</td>
+                    <td>@ticket.numberOfPassenger</td>
+                    <td>
+                        @Html.ActionLink("Proceed", "Search", "Ticket", new { id = ticket.ticketId }, new { @class = "btn btn-primary" })
+                        <form asp-action="Delete" asp-controller="Ticket" asp-route-id="@ticket.ticketId" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
 </html>

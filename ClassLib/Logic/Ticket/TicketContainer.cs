@@ -14,6 +14,7 @@ namespace ClassLib.Logic
             this.ticketContainer = ticketContainer;
         }      
         public IEnumerable<Ticket> getAllTickets() => ticketContainer.getAll().Select(ticketDto => new Ticket(ticketDto));
+        public Ticket getTicketById(int id) => new Ticket(ticketContainer.getById(id));
     }
 }
 

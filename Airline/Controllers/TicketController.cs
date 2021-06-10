@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ClassLib.Data;
 using System.Collections.Generic;
 using ClassLib.Interface;
+using System;
 
 namespace Airline.Controllers
 {
@@ -18,8 +19,9 @@ namespace Airline.Controllers
         }
 
         // GET:
-        public IActionResult Search()
+        public IActionResult Search(int id)
         {
+            //further ticket id poggg
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
 
@@ -65,16 +67,18 @@ namespace Airline.Controllers
             {
                 try
                 {
+                    Customer loggedInCustomer = HttpContext.Session.getCustomer();
                     Ticket ticket = new Ticket(new TicketDalMsSql());
                     TicketDto ticketDto = new TicketDto
                     {
-                        ticketId = ticketViewModel.ticketId,
+                        customerId = loggedInCustomer.customerId,
                         travelType = ticketViewModel.travelType,
                         classType = ticketViewModel.classType,
                         numberOfPassengers = ticketViewModel.numberOfPassenger
                     };
                     ticket.saveTicket(new Ticket(ticketDto));
 
+                    HttpContext.Session.SetString("ticketId", ticketDto.ticketId.ToString());
                     return RedirectToAction("Confirm"); 
                 }
                 catch
@@ -97,22 +101,37 @@ namespace Airline.Controllers
             {
                 ticketDetailView.Tickets.Add(new TicketViewModel(ticket));
             }
+
             return View(ticketDetailView);
         }
-
         // POST: TicketController/Edit/5
 
-        public ActionResult Book(int id, TicketViewModel ticketViewModel)
+        public ActionResult Book(int flightId)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                TicketContainer ticketFetch = new TicketContainer(new TicketDalMsSql());
+                Ticket ticketPersist = new Ticket(new TicketDalMsSql());
+                int ticketId = Convert.ToInt32(HttpContext.Session.GetString("ticketId"));
+                var ticketdata = ticketFetch.getTicketById(ticketId);
+                TicketDto ticketDto = new TicketDto
+                {
+                    ticketId = ticketdata.ticketId,
+                    flightId = flightId,
+                    customerId = ticketdata.customerId,
+                    travelType = ticketdata.travelType,
+                    classType = ticketdata.classType,
+                    numberOfPassengers = ticketdata.numberOfPassengers
+                };
+                ticketPersist.updateTicket(new Ticket(ticketDto));
+                return View();
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
         }
+
 
 
 
@@ -125,11 +144,11 @@ namespace Airline.Controllers
             {
                 Ticket ticket = new Ticket(new TicketDalMsSql());
                 ticket.deleteTicket(id);
-                return RedirectToAction("Confirm", "Ticket");
+                return RedirectToAction("Search", "Ticket");
             }
             catch
             {
-                return View();
+                return View("Index", "Home");
             }
         }
     }

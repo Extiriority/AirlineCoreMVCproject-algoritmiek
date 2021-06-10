@@ -6,6 +6,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using ClassLib.Logic;
 using ClassLib.Interface;
+using System.Collections.Generic;
+using ClassLib.Data;
 
 namespace Airline.Controllers
 {
@@ -38,7 +40,17 @@ namespace Airline.Controllers
         {
             Customer loggedInCustomer = HttpContext.Session.getCustomer();
             ViewBag.User = loggedInCustomer;
-            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View();            
+            TicketDetailViewModel ticketDetailView = new TicketDetailViewModel();
+            ticketDetailView.Tickets = new List<TicketViewModel>();
+
+            TicketContainer ticketContainer = new TicketContainer(new TicketDalMsSql());
+            IEnumerable<Ticket> tickets = ticketContainer.getAllTickets();
+
+            foreach (Ticket ticket in tickets)
+            {
+                ticketDetailView.Tickets.Add(new TicketViewModel(ticket));
+            }
+            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View(ticketDetailView);            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

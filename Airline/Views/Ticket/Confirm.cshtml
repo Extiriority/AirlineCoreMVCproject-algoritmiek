@@ -1,35 +1,30 @@
 ﻿@model Airline.Models.TicketDetailViewModel
-@{
-    ViewData["Title"] = "Confirm plan?";
-}
-<h1>@ViewData["Title"]</h1>
-
-<p>Tickets.</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">ticket Id</th>
-            <th scope="col">Travel</th>
-            <th scope="col">Class</th>
-            <th scope="col">Passengers</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ticket in Model.Tickets)
-        {
-            <tr>
-                <td>@ticket.ticketId</td>
-                <td>@ticket.travelType</td>
-                <td>@ticket.classType</td>
-                <td>@ticket.numberOfPassenger</td>
-                <td>
-                    @Html.ActionLink("Proceed", "Search", null, new { id = ticket.ticketId }, new { @class = "btn btn-primary" })
-                    <form asp-action="Delete" asp-route-id="@ticket.ticketId" method="post">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ticket Id</th>
+                    <th scope="col">Travel</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Passengers</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ticket in Model.Tickets)
+                {
+                    <tr>
+                        <td>@ticket.ticketId</td>
+                        <td>@ticket.travelType</td>
+                        <td>@ticket.classType</td>
+                        <td>@ticket.numberOfPassenger</td>
+                        <td>
+                            @Html.ActionLink("Proceed", "Search", "Ticket", new { id = ticket.ticketId }, new { @class = "btn btn-primary" })
+                            <form asp-action="Delete" asp-controller="Ticket" asp-route-id="@ticket.ticketId" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>

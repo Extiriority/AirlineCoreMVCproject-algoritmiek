@@ -17,12 +17,15 @@ namespace ClassLib.Logic
             data = ticketDto;
         }
         public int ticketId => data.ticketId;
+        public int customerId => data.customerId;
+        public int flightId => data.customerId;
         public string travelType => data.travelType;
         public string classType => data.classType;
         public int numberOfPassengers => data.numberOfPassengers;
 
         public void saveTicket(Ticket ticket) => this.ticket.save(ticket.data);
         public void deleteTicket(int id) => this.ticket.delete(id);
+        public void updateTicket(Ticket ticket) => this.ticket.update(ticket.data);
     }
 }
 

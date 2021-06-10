@@ -1,6 +1,8 @@
 ﻿using ClassLib.Interface;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace ClassLib.Data
 {
@@ -9,9 +11,10 @@ namespace ClassLib.Data
         public void save(TicketDto data)
         {
             Database.execute(
-                "INSERT INTO Ticket (TravelType, ClassType, NumberOfPassengers) VALUES (@travelType, @classType, @numberOfPassengers)",
+                "INSERT INTO Ticket (TravelType, CustomerId, ClassType, NumberOfPassengers) VALUES (@travelType, @customerId, @classType, @numberOfPassengers)",
                 new
                 {
+                    data.customerId,
                     data.travelType,
                     data.classType,
                     data.numberOfPassengers
@@ -32,15 +35,34 @@ namespace ClassLib.Data
         }
 
 
-        public void update(TicketDto t)
+        public void update(TicketDto data)
         {
-            throw new NotImplementedException();
+            Database.execute(
+                "UPDATE Ticket SET FlightId = @flightId, TravelType = @travelType, ClassType = @classType, NumberOfPassengers = @numberOfPassengers WHERE TicketId = @ticketId",
+                new
+                {
+                    data.ticketId,
+                    data.customerId,
+                    data.flightId,
+                    data.travelType,
+                    data.classType,
+                    data.numberOfPassengers
+                }
+            );
         }
 
 
-        public TicketDto getById(int id)
+        public TicketDto getById(int ticketId)
         {
-            throw new NotImplementedException();
+            var result = Database.query<TicketDto>(
+                "SELECT * FROM Ticket WHERE TicketId = @ticketId",
+                new
+                {
+                    ticketId
+                }
+            ).ToImmutableList();
+
+            return result.Count != 1 ? null : result.Single();
         }
 
         public IEnumerable<TicketDto> search(string searchString)
