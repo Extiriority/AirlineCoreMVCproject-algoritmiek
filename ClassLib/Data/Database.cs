@@ -28,5 +28,9 @@ namespace ClassLib.Data
              return connection.Execute(sql, parameters);
          }
 
+        public static int executeScalar(string sql, object parameters = null)
+        {
+            return connection.ExecuteScalar<Int32>(sql, parameters);
+        }
     }
 }

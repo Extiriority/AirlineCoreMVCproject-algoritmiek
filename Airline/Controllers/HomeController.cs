@@ -13,11 +13,15 @@ namespace Airline.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly TicketContainer ticketContainer;
+
         private readonly ILogger<HomeController> _logger;
         
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            ticketContainer = new TicketContainer(new TicketDalMsSql());
+
         }
 
         public IActionResult Index()
@@ -43,7 +47,6 @@ namespace Airline.Controllers
             TicketDetailViewModel ticketDetailView = new TicketDetailViewModel();
             ticketDetailView.Tickets = new List<TicketViewModel>();
 
-            TicketContainer ticketContainer = new TicketContainer(new TicketDalMsSql());
             IEnumerable<Ticket> tickets = ticketContainer.getAllTickets();
 
             foreach (Ticket ticket in tickets)

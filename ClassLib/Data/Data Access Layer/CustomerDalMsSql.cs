@@ -89,5 +89,10 @@ namespace ClassLib.Data
         {
             throw new NotImplementedException();
         }
+
+        public int saveGetId(CustomerDto t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

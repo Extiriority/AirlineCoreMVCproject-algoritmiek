@@ -76,5 +76,10 @@ namespace ClassLib.Data
         {
             throw new NotImplementedException();
         }
+
+        public int saveGetId(FlightDto t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

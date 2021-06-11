@@ -11,10 +11,13 @@ namespace Airline.Controllers
     public class AdminController : Controller
     {
         private readonly FlightContainer flightContainer;
-
+        private readonly CustomerContainer customerContainer;
+        private readonly Flight flight;
         public AdminController()
         {
             flightContainer = new FlightContainer(new FlightDalMsSql());
+            customerContainer = new CustomerContainer(new CustomerDalMsSql());
+            flight = new Flight(new FlightDalMsSql());
         }
 
         // GET: Admin
@@ -22,8 +25,6 @@ namespace Airline.Controllers
         {
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
-
-            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
             IEnumerable<Flight> flights = flightContainer.getAllFlights();
 
             foreach (Flight flight in flights)
@@ -56,7 +57,6 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Flight flight = new Flight(new FlightDalMsSql());
                     FlightDto flightDto = new FlightDto
                     {
                         aircraftCode = flightViewModel.aircraftCode,
@@ -96,7 +96,6 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Flight flight = new Flight(new FlightDalMsSql());
                     FlightDto flightDto = new FlightDto
                     {
                         flightId = Id,
@@ -130,7 +129,6 @@ namespace Airline.Controllers
         {
             try
             {
-                Flight flight = new Flight(new FlightDalMsSql());
                 flight.DeleteFlight(id);
 
                 return RedirectToAction("Flight", "Admin");
@@ -147,7 +145,6 @@ namespace Airline.Controllers
             CustomerDetailViewModel customerDetailView = new CustomerDetailViewModel();
             customerDetailView.Customers = new List<CustomerViewModel>();
 
-            CustomerContainer customerContainer = new CustomerContainer(new CustomerDalMsSql());
             IEnumerable<Customer> customers = customerContainer.getAllCustomers();
 
             foreach (Customer customer in customers)

@@ -8,10 +8,10 @@ namespace ClassLib.Data
 {
     public class TicketDalMsSql : IPersistDal<TicketDto>, IFetchDal<TicketDto>
     {
-        public void save(TicketDto data)
+        public int saveGetId(TicketDto data)
         {
-            Database.execute(
-                "INSERT INTO Ticket (TravelType, CustomerId, ClassType, NumberOfPassengers) VALUES (@travelType, @customerId, @classType, @numberOfPassengers)",
+            int id = Database.executeScalar(
+                "INSERT INTO Ticket (TravelType, CustomerId, ClassType, NumberOfPassengers) VALUES (@travelType, @customerId, @classType, @numberOfPassengers); SELECT SCOPE_IDENTITY()",
                 new
                 {
                     data.customerId,
@@ -20,6 +20,7 @@ namespace ClassLib.Data
                     data.numberOfPassengers
                 }
             );
+            return id;
         }
         public IEnumerable<TicketDto> getAll() => Database.query<TicketDto>("SELECT * FROM Ticket");
 
@@ -71,6 +72,11 @@ namespace ClassLib.Data
         }
 
         public TicketDto verifyLogin(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void save(TicketDto t)
         {
             throw new NotImplementedException();
         }

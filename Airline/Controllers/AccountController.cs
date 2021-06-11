@@ -10,7 +10,12 @@ namespace Airline.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly Customer customer;
 
+        public AccountController()
+        {
+            customer = new Customer(new CustomerDalMsSql());
+        }
 
         [HttpPost]
         [HttpGet]
@@ -56,7 +61,6 @@ namespace Airline.Controllers
             {
                 try
                 {
-                    Customer customer = new Customer(new CustomerDalMsSql());
                     CustomerDto customerDto = new CustomerDto
                     {
                         firstName = customerViewModel.firstName,
@@ -87,7 +91,6 @@ namespace Airline.Controllers
         {
             try
             {
-                Customer customer = new Customer(new CustomerDalMsSql());
                 customer.deleteCustomer(id);
 
                 return RedirectToAction("Customer", "Admin");

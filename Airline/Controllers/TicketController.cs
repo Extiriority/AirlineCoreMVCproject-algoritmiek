@@ -11,7 +11,17 @@ namespace Airline.Controllers
 {
     public class TicketController : Controller
     {
-
+        private readonly TicketContainer ticketContainer;
+        private readonly Ticket ticket;
+        private readonly FlightContainer flightContainer;
+        private readonly Flight flight;
+        public TicketController()
+        {
+            ticketContainer = new TicketContainer(new TicketDalMsSql());
+            ticket = new Ticket(new TicketDalMsSql());
+            flightContainer = new FlightContainer(new FlightDalMsSql());
+            flight = new Flight(new FlightDalMsSql());
+        }
         // GET: TicketController
         public ActionResult Index()
         {
@@ -19,13 +29,10 @@ namespace Airline.Controllers
         }
 
         // GET:
-        public IActionResult Search(int id)
+        public IActionResult Search()
         {
-            //further ticket id poggg
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
-
-            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
             IEnumerable<Flight> flights = flightContainer.getAllFlights();
 
             foreach (Flight flight in flights)
@@ -37,12 +44,10 @@ namespace Airline.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Search(int id, string searchString)
+        public ActionResult Search(string searchString)
         {
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
-
-            FlightContainer flightContainer = new FlightContainer(new FlightDalMsSql());
             IEnumerable<Flight> flights = flightContainer.searchFlight(searchString);
 
             foreach (Flight flight in flights)
@@ -68,7 +73,6 @@ namespace Airline.Controllers
                 try
                 {
                     Customer loggedInCustomer = HttpContext.Session.getCustomer();
-                    Ticket ticket = new Ticket(new TicketDalMsSql());
                     TicketDto ticketDto = new TicketDto
                     {
                         customerId = loggedInCustomer.customerId,
@@ -76,10 +80,10 @@ namespace Airline.Controllers
                         classType = ticketViewModel.classType,
                         numberOfPassengers = ticketViewModel.numberOfPassenger
                     };
-                    ticket.saveTicket(new Ticket(ticketDto));
+                    int ticketId = ticket.saveTicketAndRetrieveId(new Ticket(ticketDto));
 
-                    HttpContext.Session.SetString("ticketId", ticketDto.ticketId.ToString());
-                    return RedirectToAction("Confirm"); 
+                    HttpContext.Session.SetString("ticketId", ticketId.ToString());
+                    return RedirectToAction("Search"); 
                 }
                 catch
                 {
@@ -89,41 +93,21 @@ namespace Airline.Controllers
             return View();
         }
 
-        public ActionResult Confirm()
-        {
-            TicketDetailViewModel ticketDetailView = new TicketDetailViewModel();
-            ticketDetailView.Tickets = new List<TicketViewModel>();
+        // POST: TicketController/Book/5
 
-            TicketContainer ticketContainer = new TicketContainer(new TicketDalMsSql());
-            IEnumerable<Ticket> tickets = ticketContainer.getAllTickets();
-
-            foreach (Ticket ticket in tickets)
-            {
-                ticketDetailView.Tickets.Add(new TicketViewModel(ticket));
-            }
-
-            return View(ticketDetailView);
-        }
-        // POST: TicketController/Edit/5
-
-        public ActionResult Book(int flightId)
+        public ActionResult Book(int id)
         {
             try
             {
-                TicketContainer ticketFetch = new TicketContainer(new TicketDalMsSql());
-                Ticket ticketPersist = new Ticket(new TicketDalMsSql());
+                updateFlight(id);
+                Customer loggedInCustomer = HttpContext.Session.getCustomer();
+                Flight flight = flightContainer.getFlightById(id);
                 int ticketId = Convert.ToInt32(HttpContext.Session.GetString("ticketId"));
-                var ticketdata = ticketFetch.getTicketById(ticketId);
-                TicketDto ticketDto = new TicketDto
-                {
-                    ticketId = ticketdata.ticketId,
-                    flightId = flightId,
-                    customerId = ticketdata.customerId,
-                    travelType = ticketdata.travelType,
-                    classType = ticketdata.classType,
-                    numberOfPassengers = ticketdata.numberOfPassengers
-                };
-                ticketPersist.updateTicket(new Ticket(ticketDto));
+                Ticket ticket = ticketContainer.getTicketById(ticketId);
+
+                ViewBag.Customer = loggedInCustomer;
+                ViewBag.Flight = flight;
+                ViewBag.Ticket = ticket;
                 return View();
             }
             catch
@@ -132,7 +116,25 @@ namespace Airline.Controllers
             }
         }
 
+        private void updateFlight(int id)
+        {
+            int ticketId = Convert.ToInt32(HttpContext.Session.GetString("ticketId"));
+            var ticketdata = ticketContainer.getTicketById(ticketId);
+            TicketDto ticketDto = new TicketDto
+            {
+                ticketId = ticketdata.ticketId,
+                flightId = id,
+                customerId = ticketdata.customerId,
+                travelType = ticketdata.travelType,
+                classType = ticketdata.classType,
+                numberOfPassengers = ticketdata.numberOfPassengers
+            };
+            ticket.updateTicket(new Ticket(ticketDto));
+        }
+        private void processOrder()
+        {
 
+        }
 
 
         // POST: TicketController/Delete/5
@@ -144,7 +146,7 @@ namespace Airline.Controllers
             {
                 Ticket ticket = new Ticket(new TicketDalMsSql());
                 ticket.deleteTicket(id);
-                return RedirectToAction("Search", "Ticket");
+                return RedirectToAction("Dashboard", "Home");
             }
             catch
             {
