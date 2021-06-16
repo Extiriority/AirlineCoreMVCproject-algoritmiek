@@ -15,7 +15,7 @@ namespace ClassLib.Data
         public void save(CustomerDto data)
         {
             Database.execute(
-                "INSERT INTO Customer (FirstName, LastName, Email, PhoneNumber, DateOfBirth, Gender, Password) VALUES (@firstName, @lastName, @email, @phoneNumber, @dateOfBirth, @gender, @password)",
+                "INSERT INTO Customer (FirstName, LastName, Email, PhoneNumber, DateOfBirth, Gender, Password, IsAdmin) VALUES (@firstName, @lastName, @email, @phoneNumber, @dateOfBirth, @gender, @password, @isAdmin)",
                 new
                 {
                     data.firstName,
@@ -24,7 +24,8 @@ namespace ClassLib.Data
                     data.phoneNumber,
                     data.dateOfBirth,
                     data.gender,
-                    data.password
+                    data.password,
+                    data.isAdmin
                 }
             );  
         }
@@ -91,6 +92,11 @@ namespace ClassLib.Data
         }
 
         public int saveGetId(CustomerDto t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<CustomerDto> getAllByCustomer(int id)
         {
             throw new NotImplementedException();
         }

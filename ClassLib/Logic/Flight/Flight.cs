@@ -1,6 +1,9 @@
 ﻿    using ClassLib.Data;
 using ClassLib.Interface;
 using System;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 
 namespace ClassLib.Logic
 {
@@ -27,9 +30,9 @@ namespace ClassLib.Logic
         public bool flightStatus => data.flightStatus;
         public int price => data.price;
 
-        public void saveFlight(Flight flight) => this.flight.save(flight.data);
+        public void saveFlight(Flight flight) => this.flight.save(flight.data);      
         public void updateFlight(Flight flight) => this.flight.update(flight.data);
-        public void DeleteFlight(int id) => flight.delete(id);
+        public void deleteFlight(int id) => flight.delete(id);
         
     }
 }

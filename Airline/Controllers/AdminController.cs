@@ -129,7 +129,7 @@ namespace Airline.Controllers
         {
             try
             {
-                flight.DeleteFlight(id);
+                flight.deleteFlight(id);
 
                 return RedirectToAction("Flight", "Admin");
             }

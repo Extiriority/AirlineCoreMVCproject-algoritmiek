@@ -80,5 +80,10 @@ namespace ClassLib.Data
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<TicketDto> getAllByCustomer(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

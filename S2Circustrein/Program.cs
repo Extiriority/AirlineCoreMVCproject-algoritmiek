@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace S2Circustrein
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            List<Animal> circusAnimals = new()
-            {
+namespace S2Circustrein {
+    class Program {     
+        static void Main(string[] args) {
+        string title = @"
+          ██████╗██╗██████╗  ██████╗██╗   ██╗███████╗    ████████╗██████╗ ███████╗██╗███╗   ██╗
+         ██╔════╝██║██╔══██╗██╔════╝██║   ██║██╔════╝    ╚══██╔══╝██╔══██╗██╔════╝██║████╗  ██║
+         ██║     ██║██████╔╝██║     ██║   ██║███████╗       ██║   ██████╔╝█████╗  ██║██╔██╗ ██║
+         ██║     ██║██╔══██╗██║     ██║   ██║╚════██║       ██║   ██╔══██╗██╔══╝  ██║██║╚██╗██║
+         ╚██████╗██║██║  ██║╚██████╗╚██████╔╝███████║       ██║   ██║  ██║███████╗██║██║ ╚████║
+          ╚═════╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝       ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝                                                                                     
+                        ";
+            List<Animal> circusAnimals = new() {
                 new Animal("Elephant", AnimalSize.big, AnimalDiet.herbivore),
                 new Animal("Elephant", AnimalSize.big, AnimalDiet.herbivore ),
                 new Animal("Elephant", AnimalSize.big, AnimalDiet.herbivore ),
@@ -43,14 +47,21 @@ namespace S2Circustrein
                 new Animal("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
                 new Animal("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
                 new Animal("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Dog", AnimalSize.small, AnimalDiet.carnivore),
-                new Animal("Dog", AnimalSize.small, AnimalDiet.carnivore)
+                new Animal("Dog", AnimalSize.small, AnimalDiet.carnivore ),
+                new Animal("Dog", AnimalSize.small, AnimalDiet.carnivore )
             };
-            Train train = new Train();
+            Train train = new();
             train.placeAnimal(circusAnimals);
-            Console.WriteLine("36 total circus animals to transport");
-            Console.Write(train);
-            Console.ReadKey();
+
+            Console.WriteLine(title);
+            Console.WriteLine($"{circusAnimals.Count} total circus animals to be transported");
+
+            foreach (Carriage carriage in train.carriages) { 
+                Console.Write($" Carriage {train.carriages.IndexOf(carriage)+1}: Total animal = {carriage.animalCarriage.Count}, Total space taken:{carriage.carriageSize}/{carriage.maxCapacity} = " );
+                for (int i = 0; i < carriage.animalCarriage.Count; i++)               
+                    Console.Write(carriage.animalCarriage[i].name + ", ");                
+                Console.WriteLine();
+            }
         }
     }
 }

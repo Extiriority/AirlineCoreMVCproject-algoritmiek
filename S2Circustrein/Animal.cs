@@ -8,20 +8,16 @@ namespace S2Circustrein
 {
     public class Animal
     {
-        public string name { get; set; }
-        public AnimalSize size { get; set; }
-        public AnimalDiet type { get; set; }
+        public string name { get; }
+        public AnimalSize size { get; }
+        public AnimalDiet type { get; }
 
-        public Animal(string name, AnimalSize size, AnimalDiet type)
-        {
+        public Animal(string name, AnimalSize size, AnimalDiet type) {
             this.name = name;
             this.size = size;
             this.type = type;
         }
 
-        public Animal()
-        {
-
-        }
+        public Animal(){ }
     }
 }

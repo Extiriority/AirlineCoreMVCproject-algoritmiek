@@ -2,37 +2,37 @@
 @{
     ViewData["Title"] = "Customer Management";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>list managable customers.</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">First name</th>
-            <th scope="col">Last name</th>
-            <th scope="col">Year of Birth</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Phone number</th>
-            <th scope="col">Emailadress</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var customer in Model.Customers)
-        {
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@customer.firstName</td>
-                <td>@customer.lastName</td>
-                <td>@customer.dateOfBirth.</td>
-                <td>@customer.gender</td>
-                <td>@customer.phoneNumber</td>
-                <td>@customer.email</td>
-                <td>
-                    <form asp-controller="Account" asp-action="Delete" asp-route-id="@customer.customerId" method="post">
-                        <button type="submit" class="btn btn-danger">Remove</button>
-                    </form>
-                </td>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Year of Birth</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Emailadress</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model.Customers)
+            {
+                <tr>
+                    <td>@customer.firstName</td>
+                    <td>@customer.lastName</td>
+                    <td>@customer.dateOfBirth.</td>
+                    <td>@customer.gender</td>
+                    <td>@customer.phoneNumber</td>
+                    <td>@customer.email</td>
+                    <td>
+                        <form asp-controller="Account" asp-action="Delete" asp-route-id="@customer.customerId" method="post">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -26,9 +26,6 @@
                         <li class="nav-item nav-floatleft">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item nav-floatleft">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Search">Search</a>
-                        </li>
                         @if (!string.IsNullOrEmpty(Context.Session.GetString("firstName")))
                         {
                             <li class="nav-item">

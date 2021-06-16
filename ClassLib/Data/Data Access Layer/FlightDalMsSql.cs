@@ -81,5 +81,10 @@ namespace ClassLib.Data
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<FlightDto> getAllByCustomer(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

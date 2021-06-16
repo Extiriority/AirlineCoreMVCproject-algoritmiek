@@ -69,7 +69,8 @@ namespace Airline.Controllers
                         phoneNumber = customerViewModel.phoneNumber,
                         dateOfBirth = customerViewModel.dateOfBirth,
                         gender = customerViewModel.gender,
-                        password = new PasswordHash().passwordHash256(customerViewModel.confirmPassword)
+                        password = new PasswordHash().passwordHash256(customerViewModel.password),
+                        isAdmin = false
                     };
 
                     customer.saveCustomer(new Customer(customerDto));

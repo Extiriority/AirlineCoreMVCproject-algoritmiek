@@ -6,6 +6,7 @@ namespace ClassLib.Data
     {
         IEnumerable<T> getAll();
         T getById(int id);
+        IEnumerable<T> getAllByCustomer(int id);
         IEnumerable<T> search(string searchString);
         T verifyLogin(string email, string password);
     }

@@ -34,7 +34,7 @@ namespace Airline.Models
         [DataType(DataType.Password)]
         [Compare("password", ErrorMessage = "Confirm password doesn't match")]
         public string confirmPassword { get; set; }
-        
+        public bool isAdmin { get; set; }
 
         public CustomerViewModel()
         {
@@ -50,6 +50,7 @@ namespace Airline.Models
             this.dateOfBirth    = customer.dateOfBirth;
             this.gender         = customer.gender;
             this.password       = customer.password;
+            this.isAdmin        = customer.isAdmin;
         }
     }
 }

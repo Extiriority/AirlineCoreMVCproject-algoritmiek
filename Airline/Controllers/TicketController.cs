@@ -15,12 +15,16 @@ namespace Airline.Controllers
         private readonly Ticket ticket;
         private readonly FlightContainer flightContainer;
         private readonly Flight flight;
+        private readonly BillingContainer billingContainer;
+        private readonly Billing billing;
         public TicketController()
         {
             ticketContainer = new TicketContainer(new TicketDalMsSql());
             ticket = new Ticket(new TicketDalMsSql());
             flightContainer = new FlightContainer(new FlightDalMsSql());
             flight = new Flight(new FlightDalMsSql());
+            billingContainer = new BillingContainer(new BillingDalMsSql());
+            billing = new Billing(new BillingDalMsSql());
         }
         // GET: TicketController
         public ActionResult Index()
@@ -104,16 +108,31 @@ namespace Airline.Controllers
                 Flight flight = flightContainer.getFlightById(id);
                 int ticketId = Convert.ToInt32(HttpContext.Session.GetString("ticketId"));
                 Ticket ticket = ticketContainer.getTicketById(ticketId);
+                CreateBilling(flight, ticket, loggedInCustomer);
 
                 ViewBag.Customer = loggedInCustomer;
                 ViewBag.Flight = flight;
                 ViewBag.Ticket = ticket;
+               
                 return View();
             }
             catch
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+        private void CreateBilling(Flight flight, Ticket ticket, Customer customer)
+        {
+            BillingDto billingDto = new BillingDto
+            {
+                flightId = flight.flightId,
+                customerId = customer.customerId,
+                ticketId = ticket.ticketId,
+                grandTotal = ticket.numberOfPassengers * flight.price,
+                paymentDate = DateTime.Now,
+                paymentStatus = true
+            };
+            billing.saveBilling(new Billing(billingDto));
         }
 
         private void updateFlight(int id)
@@ -130,10 +149,6 @@ namespace Airline.Controllers
                 numberOfPassengers = ticketdata.numberOfPassengers
             };
             ticket.updateTicket(new Ticket(ticketDto));
-        }
-        private void processOrder()
-        {
-
         }
 
 
