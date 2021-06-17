@@ -4,8 +4,7 @@
 }
 
 <div class="container">
-    <h2>@ViewData["Title"]</h2>
-    @Html.ActionLink("+", "Create", "Admin", null, new { @class = "btn btn-primary btn-large" })
+    <h2>@ViewData["Title"]</h2>    
     <table class="table">
         <thead>
             <tr>
@@ -17,6 +16,7 @@
                 <th scope="col">Arrival</th>
                 <th scope="col">Status</th>
                 <th scope="col">Price</th>
+                <th scope="col">@Html.ActionLink("+", "Create", "Admin", null, new { @class = "btn btn-primary btn-large" })</th>
             </tr>
         </thead>
         <tbody>

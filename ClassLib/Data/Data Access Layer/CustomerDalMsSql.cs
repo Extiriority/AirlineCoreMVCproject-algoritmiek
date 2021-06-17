@@ -1,4 +1,5 @@
 ﻿using ClassLib.Interface;
+using ClassLib.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -74,6 +75,18 @@ namespace ClassLib.Data
 
         public void delete(int customerId)
         {
+            Database.execute("DELETE FROM Billing WHERE CustomerId = @customerId",
+                new
+                {
+                    customerId
+                }
+            );
+            Database.execute("DELETE FROM Ticket WHERE CustomerId = @customerId",
+                new
+                {
+                    customerId
+                }
+            );
             Database.execute("DELETE FROM Customer WHERE CustomerId = @customerId",
                 new
                 {
@@ -81,9 +94,22 @@ namespace ClassLib.Data
                 }
             );
         }
-        public void update(CustomerDto customer)
+        public void update(CustomerDto data)
         {
-            throw new NotImplementedException();
+            Database.execute(
+                "UPDATE Customer SET FirstName = @firstName, LastName = @lastName, Email = @email, PhoneNumber = @phoneNumber, DateOfBirth = @dateOfBirth, Gender = @gender, Password = @password WHERE CustomerId = @customerId",
+                new
+                {
+                    data.customerId,
+                    data.firstName,
+                    data.lastName,
+                    data.email,
+                    data.phoneNumber,
+                    data.dateOfBirth,
+                    data.gender,
+                    data.password
+                }
+            );
         }
 
         public IEnumerable<CustomerDto> search(string searchString)
@@ -97,6 +123,11 @@ namespace ClassLib.Data
         }
 
         public IEnumerable<CustomerDto> getAllByCustomer(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<CustomerDto> getAllByCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }

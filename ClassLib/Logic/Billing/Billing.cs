@@ -18,9 +18,11 @@ namespace ClassLib.Logic
             data = billingDto;
         }
         public int billingId => data.billingId;
-        public int flightId => data.flightId;
-        public int customerId => data.customerId;
-        public int ticketId => data.ticketId;
+        public int FlightId => data.flightId;
+        public int CustomerId => data.customerId;
+        public int TicketId => data.ticketId;
+        public string arrivalCountry => data.arrivalCountry;
+        public string firstName => data.firstName;
         public int grandTotal => data.grandTotal;
         public DateTime paymentDate => data.paymentDate;
         public bool paymentStatus => data.paymentStatus;

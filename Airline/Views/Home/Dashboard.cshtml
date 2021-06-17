@@ -1,4 +1,4 @@
-﻿@model Airline.Models.TicketDetailViewModel
+﻿@model Airline.Models.BillingDetailViewModel
  Airline.Models.FlightViewModel
 @using Microsoft.AspNetCore.Http;
 @*
@@ -11,49 +11,81 @@
     <title>Success</title>
 </head>
 <body>
-    <h1>Dashboard Page</h1>
-    Welcome @Context.Session.GetString("firstName")
-    <br>
-    <h2>Your profile</h2>
-    @ViewBag.User.firstName
-    <br>
-    @ViewBag.User.lastName
-    <br>
-    @ViewBag.User.email
-    <br>
-    @ViewBag.User.phoneNumber
-    <br>
-    @ViewBag.User.dateOfBirth
-    <br>
-    @ViewBag.User.gender
-    <br>
-    <h2>Unfinished booking process</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ticket Id</th>
-                <th scope="col">Travel</th>
-                <th scope="col">Class</th>
-                <th scope="col">Passengers</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var ticket in Model.Tickets)
-            {
+    <div class="container">
+        <h1>Dashboard</h1>
+        <hr />
+        <h3>Welcome @Context.Session.GetString("firstName")</h3>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Full name:
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.User.firstName @ViewBag.User.lastName
+            </dd>
+            <dt class="col-sm-2">
+                Email:
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.User.email
+            </dd>
+            <dt class="col-sm-2">
+                Phone number:
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.User.phoneNumber
+            </dd>
+            <dt class="col-sm-2">
+                Date of birth:
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.User.dateOfBirth.ToString("dd MMMM yyyy")
+            </dd>
+            <dt class="col-sm-2">
+                Gender:
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.User.gender
+            </dd>
+        </dl>
+        @Html.ActionLink("Update account", "Update", "Account", new { id = ViewBag.customerId }, new { @class = "btn btn-primary" })
+
+        <hr />
+        <h2>Your bookings</h2>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@ticket.ticketId</td>
-                    <td>@ticket.travelType</td>
-                    <td>@ticket.classType</td>
-                    <td>@ticket.numberOfPassenger</td>
-                    <td>
-                        @Html.ActionLink("Proceed", "Search", "Ticket", new { id = ticket.ticketId }, new { @class = "btn btn-primary" })
-                        <form asp-action="Delete" asp-controller="Ticket" asp-route-id="@ticket.ticketId" method="post">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
+                    <th scope="col">Billing ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Booked on</th>
+                    <th scope="col">Status</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var billing in Model.billings)
+                {
+                    <tr>
+                        <td>@billing.billingId</td>
+                        <td>@billing.firstName</td>
+                        <td>@billing.arrivalCountry</td>
+                        <td>€@billing.grandTotal,-</td>
+                        <td>@billing.paymentDate.ToString("dddd, dd MMMM yyyy HH:mm")</td>
+                        <td>
+                            @if (billing.paymentStatus == false)
+                            {<text>Incomplete</text>}
+                        else
+                        {<text>Complete</text>}
+                        </td>
+                        <td>
+                            <form asp-action="Delete" asp-controller="Ticket" asp-route-id="@billing.billingId" method="post">
+                                <button type="submit" class="btn btn-danger">Cancel booking</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

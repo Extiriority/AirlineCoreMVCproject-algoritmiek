@@ -81,16 +81,16 @@ namespace Airline.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(int id)
         {           
-            Flight flight = flightContainer.getFlightById(Id);
+            Flight flight = flightContainer.getFlightById(id);
             return View(new FlightViewModel(flight));
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int Id, FlightViewModel flightViewModel)
+        public ActionResult Edit(int id, FlightViewModel flightViewModel)
         {          
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace Airline.Controllers
                 {
                     FlightDto flightDto = new FlightDto
                     {
-                        flightId = Id,
+                        flightId = id,
                         aircraftCode = flightViewModel.aircraftCode,
                         aircraftType = flightViewModel.aircraftType,
                         departureCountry = flightViewModel.departureCountry,

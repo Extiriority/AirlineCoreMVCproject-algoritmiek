@@ -8,8 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">First name</th>
-                <th scope="col">Last name</th>
+                <th scope="col">Name</th>
                 <th scope="col">Year of Birth</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Phone number</th>
@@ -20,9 +19,8 @@
             @foreach (var customer in Model.Customers)
             {
                 <tr>
-                    <td>@customer.firstName</td>
-                    <td>@customer.lastName</td>
-                    <td>@customer.dateOfBirth.</td>
+                    <td>@customer.firstName @customer.lastName</td>
+                    <td>@customer.dateOfBirth.ToString("dd MMMM yyyy")</td>
                     <td>@customer.gender</td>
                     <td>@customer.phoneNumber</td>
                     <td>@customer.email</td>

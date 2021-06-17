@@ -4,10 +4,8 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>FlightDto</h4>
+<div class="container"
+    <h1>Flight Detail</h1>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -59,7 +57,7 @@
             @Html.DisplayFor(model => model.price)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Flight">Back to List</a>
+    <div>
+        <a asp-action="Flight">Back to List</a>
+    </div>
 </div>

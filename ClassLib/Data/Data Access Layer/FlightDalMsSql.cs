@@ -1,4 +1,5 @@
 ﻿using ClassLib.Interface;
+using ClassLib.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -83,6 +84,11 @@ namespace ClassLib.Data
         }
 
         public IEnumerable<FlightDto> getAllByCustomer(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<FlightDto> getAllByCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }

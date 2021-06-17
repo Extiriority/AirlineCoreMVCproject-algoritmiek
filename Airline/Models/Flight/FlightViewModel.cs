@@ -10,6 +10,8 @@ namespace Airline.Models
 {
     public class FlightViewModel
     {
+        public FlightViewModel(){}
+
         [Key]
         public int flightId { get; set; }
 
@@ -36,12 +38,7 @@ namespace Airline.Models
 
         [Required(ErrorMessage = "A price is required to proceed!")]
         public int price { get; set; }
-
-        
-        public FlightViewModel()
-        {
-
-        }
+              
         public FlightViewModel(Flight flight)
         {
             this.flightId           = flight.flightId;

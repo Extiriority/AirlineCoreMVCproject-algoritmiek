@@ -1,32 +1,38 @@
 ﻿using ClassLib.Interface;
+using ClassLib.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 
 namespace ClassLib.Data
 {
-    public class BillingDalMsSql : IPersistDal<BillingDto>, IFetchDal<BillingDto>
+    public class BillingDalMsSql : DatabaseBig, IPersistDal<BillingDto>, IFetchDal<BillingDto>
     {
-        public void delete(int id)
+        public void delete(int billingId)
         {
-            throw new NotImplementedException();
-        }
-        public IEnumerable<BillingDto> getAllByCustomer(int billingId)
-        {
-            var result = Database.query<BillingDto>(
-                "SELECT Billing.BillingId, Customer.FirstName, Flight.ArrivalCountry, Billing.GrandTotal, Billing.PaymentStatus FROM ((Billing INNER JOIN Customer ON Billing.CustomerId = Customer.CustomerId) INNER JOIN Flight ON Billing.FlightId = Flight.FlightId WHERE Billing.BillingId=@billingId",
+            Database.execute("DELETE FROM Billing WHERE BillingId = @billingId",
                 new
                 {
                     billingId
                 }
-            ).ToImmutableList();
-            return result;
+            );
+        }
+        
+        public IEnumerable<BillingDto> getAllByCustomer(int customerId)
+        {
+            var billing = Database.query<BillingDto>(
+                "SELECT Billing.BillingId, Customer.FirstName, Flight.ArrivalCountry, Billing.GrandTotal, Billing.PaymentDate, Billing.PaymentStatus FROM((Billing INNER JOIN Customer ON Billing.CustomerId = Customer.CustomerId) INNER JOIN Flight ON Billing.FlightId = Flight.FlightId) WHERE Billing.CustomerId = @customerId",
+                new
+                {
+                    customerId
+                });
+            return billing;
         }
         
            
-        
-
         public BillingDto getById(int id)
         {
             throw new NotImplementedException();
@@ -48,12 +54,22 @@ namespace ClassLib.Data
             );
         }
 
-        public IEnumerable<BillingDto> getAll() {
-            throw new NotImplementedException();
-        }
-        public int saveGetId(BillingDto t)
+        public IEnumerable<BillingDto> getAll() => Database.query<BillingDto>("SELECT * FROM Billing");
+        public int saveGetId(BillingDto data)
         {
-            throw new NotImplementedException();
+            int id = Database.executeScalar(
+                "INSERT INTO Billing (FlightId, CustomerId, TicketId, GrandTotal, PaymentDate, PaymentStatus) VALUES (@flightId, @customerId, @ticketId, @grandTotal, @paymentDate, @paymentStatus); SELECT SCOPE_IDENTITY()",
+                new
+                {
+                    data.flightId,
+                    data.customerId,
+                    data.ticketId,
+                    data.grandTotal,
+                    data.paymentDate,
+                    data.paymentStatus
+                }
+            );
+            return id;
         }
 
         public IEnumerable<BillingDto> search(string searchString)

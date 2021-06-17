@@ -159,13 +159,12 @@ namespace Airline.Controllers
         {
             try
             {
-                Ticket ticket = new Ticket(new TicketDalMsSql());
-                ticket.deleteTicket(id);
+                billing.deleteBilling(id);
                 return RedirectToAction("Dashboard", "Home");
             }
             catch
             {
-                return View("Index", "Home");
+                return RedirectToAction("Dashboard", "Home");
             }
         }
     }

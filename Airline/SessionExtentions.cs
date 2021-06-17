@@ -77,5 +77,17 @@ namespace Airline
                 return inValidCustomer;
             }
         }
+
+        public static void resetCustomer(this ISession session)
+        {
+            if (containsObject(session, "validCustomer"))
+            {
+                session.SetInt32("id", 0);
+                session.SetString("name", string.Empty);
+                session.SetString("admin", "false");
+                deleteObject(session, "validCustomer");
+            }
+            createCustomer(session);
+        }
     }
 }

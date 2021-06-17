@@ -14,6 +14,7 @@ namespace Airline.Controllers
     public class HomeController : Controller
     {
         private readonly TicketContainer ticketContainer;
+        private readonly BillingContainer billingContainer;
 
         private readonly ILogger<HomeController> _logger;
         
@@ -21,7 +22,7 @@ namespace Airline.Controllers
         {
             _logger = logger;
             ticketContainer = new TicketContainer(new TicketDalMsSql());
-
+            billingContainer = new BillingContainer(new BillingDalMsSql());
         }
 
         public IActionResult Index()
@@ -44,16 +45,17 @@ namespace Airline.Controllers
         {
             Customer loggedInCustomer = HttpContext.Session.getCustomer();
             ViewBag.User = loggedInCustomer;
-            TicketDetailViewModel ticketDetailView = new TicketDetailViewModel();
-            ticketDetailView.Tickets = new List<TicketViewModel>();
 
-            IEnumerable<Ticket> tickets = ticketContainer.getAllTickets();
+            BillingDetailViewModel billingDetailView = new BillingDetailViewModel();
+            billingDetailView.billings = new List<BillingViewModel>();
+            IEnumerable<Billing> billings = billingContainer.getAllBillingsById(loggedInCustomer.customerId);
 
-            foreach (Ticket ticket in tickets)
+            foreach (Billing billing in billings)
             {
-                ticketDetailView.Tickets.Add(new TicketViewModel(ticket));
+                billingDetailView.billings.Add(new BillingViewModel(billing));
             }
-            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View(ticketDetailView);            
+
+            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View(billingDetailView);            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
