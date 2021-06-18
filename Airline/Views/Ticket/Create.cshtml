@@ -66,22 +66,35 @@
                 <div class="page">
                     <div class="title">Number of passengers:</div>
                     <div class="field">
-                        <div class="label">Passengers</div>
+                        <div class="label">Adult</div>
                         <span asp-validation-for="numberOfPassenger" class="text-danger"></span>
                         <select class="form-control" name="numberOfpassenger" asp-for="numberOfPassenger">
                             @{
-                                int[] passengers = { 1, 2, 3, 4, 5 };
-                                foreach (var passenger in passengers)
+                                int[] adults = { 1, 2, 3, 4 };
+                                foreach (var passenger in adults)
                                 {
                                     <option value="@passenger">@passenger</option>
                                 }
                             }
                         </select>
                     </div>
-                        <a class="btn btn-primary" style="margin-right: 3px;" asp-controller="Ticket" asp-action="Create">Back to start</a>
-                        <div class="field btns">
-                            <button class="submit" style="margin-left: 3px;">Submit</button>
-                        </div>
+                    <div class="field">
+                        <div class="label">Children</div>
+                        <span asp-validation-for="numberOfPassenger" class="text-danger"></span>
+                        <select class="form-control" name="numberOfpassenger" asp-for="numberOfPassenger">
+                            @{
+                                int[] children = { 1, 2, 3 };
+                                foreach (var passenger in children)
+                                {
+                                    <option value="@passenger">@passenger</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <a class="btn btn-primary" style="margin-right: 3px;" asp-controller="Ticket" asp-action="Create">Back to start</a>
+                    <div class="field btns">
+                        <button class="submit" style="margin-left: 3px;">Submit</button>
+                    </div>
                 </div>
 
             </form>

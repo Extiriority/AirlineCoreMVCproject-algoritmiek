@@ -3,7 +3,6 @@
 *@
 @{
 }
-<h1>Booking Confirmation</h1>
 <div class="invoice-box">
     <table cellpadding="0" cellspacing="0">
         <tr class="top">
@@ -19,7 +18,7 @@
             </td>
         </tr>
         <tr class="information">
-            <td colspan="3">
+            <td colspan="2">
                 <table>
                     <tr>
                         <td>
@@ -44,9 +43,6 @@
                 Payment Method
             </td>
             <td>
-                
-            </td>
-            <td>
                 Status
             </td>
         </tr>
@@ -56,36 +52,29 @@
                 Ideal
             </td>
             <td>
-                
-            </td>
-            <td>
                 Complete
             </td>
         </tr>
 
         <tr class="heading">
             <td>
-                Destination
+                Flight Price Details to @ViewBag.Flight.arrivalCountry
             </td>
             <td>
-                Passengers
-            </td>
-            <td>
-                Price
             </td>
         </tr>
+        @for (int i = 0; i < ViewBag.Passengers; i++)
+        {
+            <tr class="item">
+                <td>
+                    1 adult ticket
+                </td>
+                <td>
+                    €@ViewBag.Flight.price
+                </td>
+            </tr>
 
-        <tr class="item">
-            <td>
-                @ViewBag.Flight.arrivalCountry
-            </td>
-            <td>
-                @ViewBag.Ticket.numberOfPassengers
-            </td>
-            <td>
-                €@ViewBag.Flight.price
-            </td>
-        </tr>
+        }
 
         <tr class="total">
             <td></td>

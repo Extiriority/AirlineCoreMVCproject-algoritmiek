@@ -113,7 +113,8 @@ namespace Airline.Controllers
                 ViewBag.Customer = loggedInCustomer;
                 ViewBag.Flight = flight;
                 ViewBag.Ticket = ticket;
-               
+                ViewBag.Passengers = ticket.numberOfPassengers;
+                ViewBag.TotalPrice = ticket.numberOfPassengers * flight.price;
                 return View();
             }
             catch
