@@ -1,9 +1,6 @@
-﻿    using ClassLib.Data;
+﻿using ClassLib.Data;
 using ClassLib.Interface;
 using System;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 
 namespace ClassLib.Logic
 {
@@ -28,7 +25,7 @@ namespace ClassLib.Logic
         public DateTime departureDate => data.departureDate;
         public DateTime arrivalDate => data.arrivalDate;
         public bool flightStatus => data.flightStatus;
-        public int price => data.price;
+        public double price => data.price;
 
         public void saveFlight(Flight flight) => this.flight.save(flight.data);      
         public void updateFlight(Flight flight) => this.flight.update(flight.data);

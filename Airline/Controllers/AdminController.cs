@@ -3,6 +3,7 @@ using ClassLib.Data;
 using ClassLib.Interface;
 using ClassLib.Logic;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 
@@ -57,6 +58,11 @@ namespace Airline.Controllers
             {
                 try
                 {
+                    if (DateTime.Compare(flightViewModel.departureDate, flightViewModel.arrivalDate) >= 0)
+                    {
+                        flightViewModel.TimeIsNotValid = true;
+                        return View(flightViewModel);
+                    }
                     FlightDto flightDto = new FlightDto
                     {
                         aircraftCode = flightViewModel.aircraftCode,

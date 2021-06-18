@@ -26,7 +26,7 @@
                     <td>@customer.email</td>
                     <td>
                         <form asp-controller="Account" asp-action="Delete" asp-route-id="@customer.customerId" method="post">
-                            <button type="submit" class="btn btn-danger">Remove</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete customer @customer.firstName ?')">Remove</button>
                         </form>
                     </td>
                 </tr>

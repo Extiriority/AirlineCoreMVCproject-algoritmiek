@@ -8,7 +8,7 @@
 <body class="register-body">
     <div class="register-container">
         <header>Booking Form</header>
-        <div class="progress-bar1">
+        <div class="progress-bar2">
             <div class="step">
                 <p>Travel</p>
                 <div class="bullet">
@@ -67,8 +67,8 @@
                     <div class="title">Number of passengers:</div>
                     <div class="field">
                         <div class="label">Adult</div>
-                        <span asp-validation-for="numberOfPassenger" class="text-danger"></span>
-                        <select class="form-control" name="numberOfpassenger" asp-for="numberOfPassenger">
+                        <span asp-validation-for="numberOfAdults" class="text-danger"></span>
+                        <select class="form-control" name="numberOfAdults" asp-for="numberOfAdults">
                             @{
                                 int[] adults = { 1, 2, 3, 4 };
                                 foreach (var passenger in adults)
@@ -79,11 +79,11 @@
                         </select>
                     </div>
                     <div class="field">
-                        <div class="label">Children</div>
-                        <span asp-validation-for="numberOfPassenger" class="text-danger"></span>
-                        <select class="form-control" name="numberOfpassenger" asp-for="numberOfPassenger">
+                        <div class="label">Children 2—11</div>
+                        <span asp-validation-for="numberOfChildren" class="text-danger"></span>
+                        <select class="form-control" name="numberOfChildren" asp-for="numberOfChildren">
                             @{
-                                int[] children = { 1, 2, 3 };
+                                int[] children = { 0, 1, 2, 3 };
                                 foreach (var passenger in children)
                                 {
                                     <option value="@passenger">@passenger</option>

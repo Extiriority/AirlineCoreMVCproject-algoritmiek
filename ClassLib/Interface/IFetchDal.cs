@@ -1,5 +1,4 @@
-﻿using ClassLib.Logic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ClassLib.Data
 {

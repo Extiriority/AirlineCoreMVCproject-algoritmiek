@@ -15,7 +15,7 @@ namespace Airline.Models
         public string arrivalCountry { get; set; }
         public string firstName { get; set; }
         public Ticket ticket { get; set; }
-        public int grandTotal { get; set; }
+        public double grandTotal { get; set; }
         public DateTime paymentDate { get; set; }
         public bool paymentStatus { get; set; }
 

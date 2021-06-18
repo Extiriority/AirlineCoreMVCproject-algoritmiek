@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Where are you going?";
 }
-<h3>@ViewData["Title"]</h3>
 
 <div class="container">
+    <h3>@ViewData["Title"]</h3>
     <form method="post" asp-controller="Ticket" asp-action="Search">
         <div class="input-group">
             <input class="form-control" asp-for="searchString" placeholder="United States" />

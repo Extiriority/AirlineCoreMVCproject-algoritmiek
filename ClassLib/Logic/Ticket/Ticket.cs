@@ -21,7 +21,8 @@ namespace ClassLib.Logic
         public int flightId => data.customerId;
         public string travelType => data.travelType;
         public string classType => data.classType;
-        public int numberOfPassengers => data.numberOfPassengers;
+        public int numberOfAdults => data.numberOfAdults;
+        public int numberOfChildren => data.numberOfChildren;
 
         public void saveTicket(Ticket ticket) => this.ticket.save(ticket.data);
         public int saveTicketAndRetrieveId(Ticket ticket) => this.ticket.saveGetId(ticket.data);

@@ -36,10 +36,18 @@
                     <input asp-for="dateOfBirth" class="form-control" />
                     <span asp-validation-for="dateOfBirth" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="gender" class="control-label"></label>
-                    <input asp-for="gender" class="form-control" />
+                <div class="field">
+                    <div class="label">Gender</div>
                     <span asp-validation-for="gender" class="text-danger"></span>
+                    <select class="form-control" name="Gender" asp-for="gender">
+                        @{
+                            string[] genders = { "Male", "Female", "Other" };
+                            foreach (var gender in genders)
+                            {
+                                <option value="@gender">@gender</option>
+                            }
+                        }
+                    </select>
                 </div>
                 <div class="form-group">
                     <label asp-for="password" class="control-label"></label>

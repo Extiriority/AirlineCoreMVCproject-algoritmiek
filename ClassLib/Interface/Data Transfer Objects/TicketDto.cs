@@ -7,6 +7,7 @@
         public int flightId { get; set; }
         public string travelType { get; set; }
         public string classType { get; set; }
-        public int numberOfPassengers { get; set; }
+        public int numberOfAdults { get; set; }
+        public int numberOfChildren { get; set; }
     }
 }

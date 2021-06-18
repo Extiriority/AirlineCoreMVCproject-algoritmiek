@@ -26,15 +26,11 @@ namespace Airline.Controllers
             billingContainer = new BillingContainer(new BillingDalMsSql());
             billing = new Billing(new BillingDalMsSql());
         }
-        // GET: TicketController
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        // GET:
         public IActionResult Search()
         {
+            Customer loggedInCustomer = HttpContext.Session.getCustomer();
+            
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
             IEnumerable<Flight> flights = flightContainer.getAllFlights();
@@ -43,13 +39,15 @@ namespace Airline.Controllers
             {
                 flightDetailView.Flights.Add(new FlightViewModel(flight));
             }
-            return View(flightDetailView);
+            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View(flightDetailView);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Search(string searchString)
         {
+            Customer loggedInCustomer = HttpContext.Session.getCustomer();
+
             FlightDetailViewModel flightDetailView = new FlightDetailViewModel();
             flightDetailView.Flights = new List<FlightViewModel>();
             IEnumerable<Flight> flights = flightContainer.searchFlight(searchString);
@@ -58,16 +56,15 @@ namespace Airline.Controllers
             {
                 flightDetailView.Flights.Add(new FlightViewModel(flight));
             }
-            return View(flightDetailView);
+            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (ActionResult)RedirectToAction("Index", "Home") : View(flightDetailView);
         }
 
-        // GET: TicketController/Create
         public IActionResult Create()
         {
-            Customer loggedInUser = HttpContext.Session.getCustomer();
-            return string.IsNullOrEmpty(loggedInUser.firstName) ? (IActionResult)RedirectToAction("Index", "Home") : View();           
+            Customer loggedInCustomer = HttpContext.Session.getCustomer();
+            return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (IActionResult)RedirectToAction("Register", "Account") : View();           
         }
-        // POST: TicketController/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TicketViewModel ticketViewModel)
@@ -82,7 +79,8 @@ namespace Airline.Controllers
                         customerId = loggedInCustomer.customerId,
                         travelType = ticketViewModel.travelType,
                         classType = ticketViewModel.classType,
-                        numberOfPassengers = ticketViewModel.numberOfPassenger
+                        numberOfAdults = ticketViewModel.numberOfAdults,
+                        numberOfChildren = ticketViewModel.numberOfChildren
                     };
                     int ticketId = ticket.saveTicketAndRetrieveId(new Ticket(ticketDto));
 
@@ -97,25 +95,42 @@ namespace Airline.Controllers
             return View();
         }
 
-        // POST: TicketController/Book/5
 
         public ActionResult Book(int id)
         {
             try
             {
-                updateFlight(id);
+                updateTicket(id);
                 Customer loggedInCustomer = HttpContext.Session.getCustomer();
                 Flight flight = flightContainer.getFlightById(id);
                 int ticketId = Convert.ToInt32(HttpContext.Session.GetString("ticketId"));
                 Ticket ticket = ticketContainer.getTicketById(ticketId);
                 CreateBilling(flight, ticket, loggedInCustomer);
+                const int firstClassRate = 3;
+                const double childrensRate = 0.75;
+                double adultPrice;
+                double childPrice;
+                double totalPrice;
+                if (ticket.classType == "First Class")
+                {
+                    adultPrice = flight.price * firstClassRate;
+                    childPrice = flight.price * childrensRate * firstClassRate;
+                    totalPrice = ticket.numberOfAdults * (flight.price * firstClassRate) + ticket.numberOfChildren * (flight.price * childrensRate * firstClassRate);
+                }
+                else
+                {
+                    adultPrice = flight.price;
+                    childPrice = flight.price * childrensRate;
+                    totalPrice = ticket.numberOfAdults * flight.price + ticket.numberOfChildren * (flight.price * childrensRate);
+                }
 
                 ViewBag.Customer = loggedInCustomer;
                 ViewBag.Flight = flight;
                 ViewBag.Ticket = ticket;
-                ViewBag.Passengers = ticket.numberOfPassengers;
-                ViewBag.TotalPrice = ticket.numberOfPassengers * flight.price;
-                return View();
+                ViewBag.AdultFarePrice = adultPrice;
+                ViewBag.ChildFarePrice = childPrice;
+                ViewBag.TotalPrice = totalPrice;
+                return string.IsNullOrEmpty(loggedInCustomer.firstName) ? (ActionResult)RedirectToAction("Index", "Home") : View();
             }
             catch
             {
@@ -124,19 +139,30 @@ namespace Airline.Controllers
         }
         private void CreateBilling(Flight flight, Ticket ticket, Customer customer)
         {
+            const int firstClassRate = 3;
+            const double childrensRate = 0.75;
+            double totalPrice;
+            if (ticket.classType == "First Class")
+            {
+                totalPrice = ticket.numberOfAdults * (flight.price * firstClassRate) + ticket.numberOfChildren * (flight.price * childrensRate * firstClassRate);
+            }
+            else
+            {
+                totalPrice = ticket.numberOfAdults * flight.price + ticket.numberOfChildren * (flight.price * childrensRate);
+            }
             BillingDto billingDto = new BillingDto
             {
                 flightId = flight.flightId,
                 customerId = customer.customerId,
                 ticketId = ticket.ticketId,
-                grandTotal = ticket.numberOfPassengers * flight.price,
+                grandTotal = totalPrice,
                 paymentDate = DateTime.Now,
                 paymentStatus = true
             };
             billing.saveBilling(new Billing(billingDto));
         }
 
-        private void updateFlight(int id)
+        private void updateTicket(int id)
         {
             int ticketId = Convert.ToInt32(HttpContext.Session.GetString("ticketId"));
             var ticketdata = ticketContainer.getTicketById(ticketId);
@@ -147,7 +173,8 @@ namespace Airline.Controllers
                 customerId = ticketdata.customerId,
                 travelType = ticketdata.travelType,
                 classType = ticketdata.classType,
-                numberOfPassengers = ticketdata.numberOfPassengers
+                numberOfAdults = ticketdata.numberOfAdults,
+                numberOfChildren = ticketdata.numberOfChildren
             };
             ticket.updateTicket(new Ticket(ticketDto));
         }

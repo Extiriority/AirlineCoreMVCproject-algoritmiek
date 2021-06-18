@@ -23,7 +23,7 @@ namespace ClassLib.Logic
         public int TicketId => data.ticketId;
         public string arrivalCountry => data.arrivalCountry;
         public string firstName => data.firstName;
-        public int grandTotal => data.grandTotal;
+        public double grandTotal => data.grandTotal;
         public DateTime paymentDate => data.paymentDate;
         public bool paymentStatus => data.paymentStatus;
 

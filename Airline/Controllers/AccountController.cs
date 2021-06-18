@@ -115,11 +115,9 @@ namespace Airline.Controllers
                         gender = customerViewModel.gender,
                         password = new PasswordHash().passwordHash256(customerViewModel.password)
                     };
-                    /*validCustomer = updateCustomerInfo(customerDto);
-                    HttpContext.Session.resetCustomer();*/
                     customer.updateCustomer(new Customer(customerDto));
 
-                    return RedirectToAction("Dashboard", "Home");
+                    return RedirectToAction("Logout");
                 }
                 catch
                 {

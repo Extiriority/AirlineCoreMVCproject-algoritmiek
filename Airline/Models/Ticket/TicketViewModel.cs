@@ -15,8 +15,8 @@ namespace Airline.Models
         [Required(ErrorMessage = "A class type is required to proceed!")]
         public string classType { get; set; }
 
-        [Required(ErrorMessage = "A class type is required to proceed!")]
-        public int numberOfPassenger { get; set; }
+        public int numberOfAdults { get; set; }
+        public int numberOfChildren { get; set; }
 
         public List<FlightViewModel> Flights { get; set; }
 
@@ -29,7 +29,8 @@ namespace Airline.Models
             this.ticketId = ticket.ticketId;
             this.travelType = ticket.travelType;
             this.classType = ticket.classType;
-            this.numberOfPassenger = ticket.numberOfPassengers;
+            this.numberOfAdults = ticket.numberOfAdults;
+            this.numberOfChildren = ticket.numberOfChildren;
         }
     }
 }

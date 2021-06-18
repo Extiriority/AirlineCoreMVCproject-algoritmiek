@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace S2Circustrein
 {
-    class Train {
+    public class Train {
         public List<Carriage> carriages = new List<Carriage>();
         public Train() {
             this.carriages = new List<Carriage>();

@@ -58,24 +58,33 @@
 
         <tr class="heading">
             <td>
-                Flight Price Details to @ViewBag.Flight.arrivalCountry
+                Flight Price Details to @ViewBag.Flight.arrivalCountry with @ViewBag.Ticket.classType
             </td>
             <td>
             </td>
         </tr>
-        @for (int i = 0; i < ViewBag.Passengers; i++)
+        @for (int i = 0; i < ViewBag.Ticket.numberOfAdults; i++)
         {
             <tr class="item">
                 <td>
                     1 adult ticket
                 </td>
                 <td>
-                    €@ViewBag.Flight.price
+                    €@ViewBag.AdultFarePrice
                 </td>
             </tr>
-
         }
-
+        @for (int i = 0; i < ViewBag.Ticket.numberOfChildren; i++)
+        {
+            <tr class="item">
+                <td>
+                    1 Child ticket
+                </td>
+                <td>
+                    €@ViewBag.ChildFarePrice
+                </td>
+            </tr>
+        }
         <tr class="total">
             <td></td>
 

@@ -1,15 +1,12 @@
 ﻿using ClassLib.Logic;
-using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Airline.Models
 {
     public class FlightViewModel
     {
+        public bool TimeIsNotValid { get; set; }
         public FlightViewModel(){}
 
         [Key]
@@ -24,20 +21,22 @@ namespace Airline.Models
         [Required(ErrorMessage = "A departure country is required to proceed!")]
         public string departureCountry { get; set; }
 
-        [Required(ErrorMessage = "An arrival country is required to proceed!")]
+        
         public string arrivalCountry { get; set; }
 
-        [Required(ErrorMessage = "An departure date is required to proceed!")]
+        [Required(ErrorMessage = "A departure date is required to proceed!")]
+        [CurrentDate(ErrorMessage = "departure date must be in the future!")]
         public DateTime departureDate { get; set; }
 
-        [Required(ErrorMessage = "A arrival date is required to proceed!")]
+        [Required(ErrorMessage = "An arrival date is required to proceed!")]
+        [MaxDate(ErrorMessage = "Arrival Time is less than a day!")]
         public DateTime arrivalDate { get; set; }
 
         [Required(ErrorMessage = "A flight status is required to proceed!")]
         public bool flightStatus { get; set; }
 
         [Required(ErrorMessage = "A price is required to proceed!")]
-        public int price { get; set; }
+        public double price { get; set; }
               
         public FlightViewModel(Flight flight)
         {

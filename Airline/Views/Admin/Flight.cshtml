@@ -29,13 +29,18 @@
                     <td>@flight.arrivalCountry</td>
                     <td>@flight.departureDate</td>
                     <td>@flight.arrivalDate</td>
-                    <td>@flight.flightStatus</td>
+                    <td>
+                        @if (flight.flightStatus == false)
+                        {<text>Inactive</text>}
+                    else
+                    {<text>Active</text>}
+                    </td>
                     <td>€@flight.price,-</td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Detail", "Details", null, new { id = flight.flightId }, new { @class = "btn btn-primary" })
                         <form asp-action="Delete" asp-route-id="@flight.flightId" method="post">
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete flight @flight.aircraftCode ?')">Delete</button>
                         </form>
                     </td>
                 </tr>

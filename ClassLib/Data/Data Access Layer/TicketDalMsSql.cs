@@ -12,13 +12,14 @@ namespace ClassLib.Data
         public int saveGetId(TicketDto data)
         {
             int id = Database.executeScalar(
-                "INSERT INTO Ticket (TravelType, CustomerId, ClassType, NumberOfPassengers) VALUES (@travelType, @customerId, @classType, @numberOfPassengers); SELECT SCOPE_IDENTITY()",
+                "INSERT INTO Ticket (TravelType, CustomerId, ClassType, NumberOfAdults, NumberOfChildren) VALUES (@travelType, @customerId, @classType, @numberOfAdults, @numberOfChildren); SELECT SCOPE_IDENTITY()",
                 new
                 {
                     data.customerId,
                     data.travelType,
                     data.classType,
-                    data.numberOfPassengers
+                    data.numberOfAdults,
+                    data.numberOfChildren
                 }
             );
             return id;
@@ -40,7 +41,7 @@ namespace ClassLib.Data
         public void update(TicketDto data)
         {
             Database.execute(
-                "UPDATE Ticket SET FlightId = @flightId, TravelType = @travelType, ClassType = @classType, NumberOfPassengers = @numberOfPassengers WHERE TicketId = @ticketId",
+                "UPDATE Ticket SET FlightId = @flightId, TravelType = @travelType, ClassType = @classType, NumberOfAdults = @numberOfAdults, NumberOfChildren = @numberOfChildren WHERE TicketId = @ticketId",
                 new
                 {
                     data.ticketId,
@@ -48,7 +49,8 @@ namespace ClassLib.Data
                     data.flightId,
                     data.travelType,
                     data.classType,
-                    data.numberOfPassengers
+                    data.numberOfAdults,
+                    data.numberOfChildren
                 }
             );
         }
