@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace S2Circustrein {
-    class Program {     
+    public class Program {     
         static void Main(string[] args) {
         string title = @"
           ██████╗██╗██████╗  ██████╗██╗   ██╗███████╗    ████████╗██████╗ ███████╗██╗███╗   ██╗
@@ -13,42 +13,42 @@ namespace S2Circustrein {
           ╚═════╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝       ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝                                                                                     
                         ";
             List<Animal> circusAnimals = new() {
-                new Animal("Elephant", AnimalSize.big, AnimalDiet.herbivore),
-                new Animal("Elephant", AnimalSize.big, AnimalDiet.herbivore ),
-                new Animal("Elephant", AnimalSize.big, AnimalDiet.herbivore ),
-                new Animal("Bear", AnimalSize.big, AnimalDiet.carnivore ),
-                new Animal("Bear", AnimalSize.big, AnimalDiet.carnivore ),
-                new Animal("Giraffe", AnimalSize.big, AnimalDiet.herbivore ),
-                new Animal("Giraffe", AnimalSize.big, AnimalDiet.herbivore ),
-                new Animal("tiger", AnimalSize.medium, AnimalDiet.carnivore ),
-                new Animal("tiger", AnimalSize.medium, AnimalDiet.carnivore ),
-                new Animal("leopard", AnimalSize.medium, AnimalDiet.carnivore ),
-                new Animal("lion", AnimalSize.medium, AnimalDiet.carnivore ),
-                new Animal("lion", AnimalSize.medium, AnimalDiet.carnivore ),
-                new Animal("camel", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("camel", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("lama", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("Alpaca", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("ostrich", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("ostrich", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("kangaroo", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("horse", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("horse", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("horse", AnimalSize.medium, AnimalDiet.herbivore ),
-                new Animal("Parrot", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Parrot", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Parrot", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Dove", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Dove", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Dove", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Dove", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Dove", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
-                new Animal("Dog", AnimalSize.small, AnimalDiet.carnivore ),
-                new Animal("Dog", AnimalSize.small, AnimalDiet.carnivore )
+                new ("Elephant", AnimalSize.big, AnimalDiet.herbivore),
+                new ("Elephant", AnimalSize.big, AnimalDiet.herbivore ),
+                new ("Elephant", AnimalSize.big, AnimalDiet.herbivore ),
+                new ("Bear", AnimalSize.big, AnimalDiet.carnivore ),
+                new ("Bear", AnimalSize.big, AnimalDiet.carnivore ),
+                new ("Giraffe", AnimalSize.big, AnimalDiet.herbivore ),
+                new ("Giraffe", AnimalSize.big, AnimalDiet.herbivore ),
+                new ("tiger", AnimalSize.medium, AnimalDiet.carnivore ),
+                new ("tiger", AnimalSize.medium, AnimalDiet.carnivore ),
+                new ("leopard", AnimalSize.medium, AnimalDiet.carnivore ),
+                new ("lion", AnimalSize.medium, AnimalDiet.carnivore ),
+                new ("lion", AnimalSize.medium, AnimalDiet.carnivore ),
+                new ("camel", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("camel", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("lama", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("Alpaca", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("ostrich", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("ostrich", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("kangaroo", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("horse", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("horse", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("horse", AnimalSize.medium, AnimalDiet.herbivore ),
+                new ("Parrot", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Parrot", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Parrot", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Dove", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Dove", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Dove", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Dove", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Dove", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Monkey", AnimalSize.small, AnimalDiet.herbivore ),
+                new ("Dog", AnimalSize.small, AnimalDiet.carnivore ),
+                new ("Dog", AnimalSize.small, AnimalDiet.carnivore )
             };
             Train train = new();
             train.placeAnimal(circusAnimals);
