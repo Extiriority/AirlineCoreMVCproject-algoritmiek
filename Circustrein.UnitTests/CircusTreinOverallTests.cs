@@ -57,7 +57,7 @@ namespace Circustrein.UnitTests
 
 
         [TestMethod]
-        public void AddAllToTrain_CheckCriteriaInCarriage_AreEqualAndTrueOrFalse()
+        public void AddAllTestAnimalsToTrain_CheckCriteriaPerCarriage_AreEqualAndTrueOrFalse()
         {
             //Arrange
             Train testTrain = new();
@@ -70,16 +70,16 @@ namespace Circustrein.UnitTests
             int actualTotalCarriages = testTrain.carriages.Count;
 
             foreach (Carriage carriage in testTrain.carriages) {
-                if (carriage.carriageSize <= carriage.maxCapacity) {
+                if (carriage.carriageSize <= carriage.maxCapacity) { // check if the total animal size per carriage is less than 10 carriage max capacity
                     checkMaxCapacityIsTrueOrFalse = true;
                     var carnivoresInCarriage = carriage.animalCarriage.Where(animal => animal.type == AnimalDiet.carnivore).ToList();
                     var herbivoresInCarriage = carriage.animalCarriage.Where(animal => animal.type == AnimalDiet.herbivore).ToList();
 
-                    if (carriage.animalCarriage.Count != herbivoresInCarriage.Count) //Only herbivore, so instant good
+                    if (carriage.animalCarriage.Count != herbivoresInCarriage.Count) //Only herbivores in carriage, so only max capacity check
                         for (int i = 0; i < herbivoresInCarriage.Count; i++) {
-                            if (carnivoresInCarriage.Count == 1) {
+                            if (carnivoresInCarriage.Count == 1) { // Only one carnivore check per carriage, because if more = death
                                 checkIfOnlyOneCarnivoreIsTrueOrFalse = true;
-                                if (carnivoresInCarriage.Any(c => herbivoresInCarriage[i].size > c.size)) checkCompatibilityCarnivoreWithHerbivoreIsTrueOrFalse = true; 
+                                if (carnivoresInCarriage.Any(c => herbivoresInCarriage[i].size > c.size)) checkCompatibilityCarnivoreWithHerbivoreIsTrueOrFalse = true; // Check if this carnivore doesn't eat other herbivores in carriage
                                 else checkCompatibilityCarnivoreWithHerbivoreIsTrueOrFalse = false;
                                 Assert.IsTrue(checkCompatibilityCarnivoreWithHerbivoreIsTrueOrFalse);
                             }                               
